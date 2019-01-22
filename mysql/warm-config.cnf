@@ -1,0 +1,33 @@
+## INNODB 
+
+innodb_buffer_pool_size = 128M 
+# MIN(64-bit): 5M 
+# MAX(64-bit): 2^64-1B 
+# SELECT SUM(data_length+index_length) FROM information_schema.tables WHERE engine='InnoDB'; 
+
+innodb_log_file_size = 5M 
+# MIN:1M 
+# MAX(<=5.6.2): 4GB / innodb_log_files_in_group 
+# MAX(>5.6.2): 512GB / innodb_llog_files_in_group 
+# DEFAULT(>=5.6.8): 48G 
+# innodb_log_files_in_group DEFAULT 2 
+
+## MyISAM
+
+key-buffer-size = 8M 
+# SELECT SUM(INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES WHERE ENGINE='MYISAM'; 
+
+#OTHER 
+
+max_connections = 151 
+# SHOW GLOBAL STATUS LIKE 'Max_used_connections';
+
+thread_cache_size = 0 
+# SHOW GLOBAL STATUS LIKE 'Threads_connected'; 
+# 100 ~ 120 : 20 
+# 500 ~ 700 : 200 
+# MAX: 16K 
+# SHOW GLOBAL STATUS LIKE 'Threads_created';
+
+max_allowed_packet = 1M 
+# MAX: 1G 

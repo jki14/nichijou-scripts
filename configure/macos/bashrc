@@ -1,0 +1,11 @@
+export LC_ALL=en_US.UTF-8
+
+export LSCOLORS=ExFxCxDxBxegedabagacad
+alias ll='ls -alG'
+
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] '
+export PATH=$PATH:/Users/jki14/apps/gradle/4.9/bin
+
+alias google-chrome='open -a "Google Chrome"'
+alias sublime='open -a "Sublime Text"'
+alias mts='ts '\''[mts %Y-%m-%d %H:%M:%S]'\'''
