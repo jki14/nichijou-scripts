@@ -14,4 +14,4 @@ autocmd Filetype cpp setlocal tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=
 autocmd Filetype python setlocal tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=120
 " autocmd Filetype php setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
 " autocmd Filetype sh setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-autocmd Filetype gitcommit setlocal tw=72
+autocmd Filetype gitcommit setlocal noautoindent tw=72
