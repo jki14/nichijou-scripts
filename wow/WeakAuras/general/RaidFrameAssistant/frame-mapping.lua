@@ -11,6 +11,8 @@ function aura_env.execute()
                 if frame:IsVisible() and frame:GetName() and (frame:GetName()):find(specific_frame) then
                     local objectunit = frame:GetAttribute('unit')
                     if objectunit then
+                        mapping[objectunit] = frame
+                        --[[
                         local name, realm = UnitName(objectunit)
                         if name then
                             local unitname = name
@@ -19,6 +21,7 @@ function aura_env.execute()
                             end
                             mapping[unitname] = frame
                         end
+                        --]]
                     end
                     return
                 end
