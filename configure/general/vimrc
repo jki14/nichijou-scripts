@@ -1,5 +1,6 @@
 syntax on
 set background=dark
+set term=xterm
 
 set number
 set autoindent
