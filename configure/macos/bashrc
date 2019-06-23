@@ -8,5 +8,6 @@ export PATH=$PATH:/Users/jki14/apps/gradle/4.9/bin
 
 alias google-chrome='open -a "Google Chrome"'
 alias sublime='open -a "Sublime Text"'
+alias tcarena='javaws /Users/jki14/apps/tcarena/ContestAppletProd.jnlp >/dev/null 2>&1 &'
 alias mts='ts '\''[mts %Y-%m-%d %H:%M:%S]'\'''
 alias roll='od -N1 -An -i /dev/random'
