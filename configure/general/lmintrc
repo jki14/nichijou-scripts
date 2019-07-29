@@ -1,0 +1,27 @@
+tmux-init () {
+    # Starlight
+    tmux new-session -d -s Starlight 
+    if [ $? -eq 0 ]; then
+        tmux rename-window Karen
+        tmux new-window -d -n Nana
+        tmux new-window -d -n Hikari
+    fi
+    # Franchouchou
+    tmux new-session -d -s Franchouchou
+    if [ $? -eq 0 ]; then
+        tmux rename-window Sakura
+        tmux new-window -d -n Ai
+        tmux new-window -d -n Junko
+    fi
+    # Aqoars
+    tmux new-session -d -s Aqoars
+    if [ $? -eq 0 ]; then
+        tmux rename-window Riko
+        tmux new-window -d -n Hanamaru
+        tmux new-window -d -n You
+    fi
+}
+
+alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
+
+# vi: set syntax=sh:
