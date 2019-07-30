@@ -1,6 +1,6 @@
 tmux-init () {
     # Starlight
-    tmux new-session -d -s Starlight 
+    tmux new-session -d -s Starlight
     if [ $? -eq 0 ]; then
         tmux rename-window Karen
         tmux new-window -d -n Nana
