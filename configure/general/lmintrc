@@ -23,5 +23,8 @@ tmux-init () {
 }
 
 alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
+alias roll='od -N1 -An -i /dev/random'
+
+alias tcarena='javaws ~/apps/tcarena/ContestAppletProd.jnlp >/dev/null 2>&1 &'
 
 # vi: set syntax=sh:

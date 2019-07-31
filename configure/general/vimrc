@@ -4,20 +4,17 @@ set term=xterm-256color
 set number
 set autoindent
 set hlsearch
-set modeline
 
-setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
+setlocal modelines=1 tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 set backspace=indent,eol,start
 
 set colorcolumn=81
 highlight colorcolumn ctermbg=0*
 
-autocmd Filetype c setlocal tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=120
-autocmd Filetype cpp setlocal tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=120
-autocmd Filetype python setlocal tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=120
-" autocmd Filetype php setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-" autocmd Filetype sh setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-autocmd Filetype gitcommit setlocal noautoindent tw=72
+autocmd Filetype c setlocal modelines=0 tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype cpp setlocal modelines=0 tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype python setlocal modelines=0 tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype gitcommit setlocal modelines=0 noautoindent tw=72
 
 syntax on
