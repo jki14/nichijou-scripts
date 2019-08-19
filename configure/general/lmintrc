@@ -22,6 +22,15 @@ tmux-init () {
     fi
 }
 
+tmux-wsl () {
+    # Wsl
+    tmux new-session -d -s Kiminaru
+    if [ $? -eq 0 ]; then
+        tmux rename-window Yuu
+        tmux split-window -h -p 44
+    fi
+}
+
 alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
 alias roll='od -N1 -An -i /dev/random'
 
