@@ -11,31 +11,23 @@ end
 -- Content
 function()
   local foo = '';
+  local ms = 1.7;
+  local theoretic = {
+    I = 10.0 / UnitStat("player", 4),
+    C = 10.0 / 50.0 / (GetCombatRating(11) / 50.0 + 100.0),
+    H = 10.0 / 70.0 / (GetCombatRating(20) / 70.0 + 100.0),
+    V = 10.0 / 85.0 / (GetCombatRating(29) / 85.0 + 100.0),
+    M = 10.0 * ms / 120.0 / (GetCombatRating(26) * ms / 120.0 + 100.0),
+    L = 10.0 / 40.0 / (GetLifesteal() + 100.0)
+  };
+  theoretic['C'] = theoretic['C'] / theoretic['I'];
+  theoretic['H'] = theoretic['H'] / theoretic['I'];
+  theoretic['M'] = theoretic['M'] / theoretic['I'];
+  theoretic['V'] = theoretic['V'] / theoretic['I'];
+  theoretic['L'] = theoretic['L'] / theoretic['I'];
+  theoretic['I'] = 1.0;
   local scoreTable = {
-    m1 = {
-      I = 1.00,
-      C = 1.51,
-      H = 1.23,
-      M = 1.51,
-      V = 1.35,
-      L = 3.12
-    },
-    m3 = {
-      I = 1.00,
-      C = 1.44,
-      H = 1.30,
-      M = 1.85,
-      V = 1.29,
-      L = 3.37
-    },
-    ba = {
-      I = 1.00,
-      C = 1.77,
-      H = 1.72,
-      M = 1.65,
-      V = 1.60,
-      L = 0.00
-    }
+    smart = theoretic
   };
   local envs = {};
   for env, scores in pairs(scoreTable) do
@@ -61,12 +53,13 @@ function()
       L = itemStats['ITEM_MOD_CR_LIFESTEAL_SHORT'] or 0.0,
       S = itemStats['EMPTY_SOCKET_PRISMATIC'] or 0.0
     };
-    for k, v in pairs(statValue) do
-      foo = foo .. k;
-      foo = foo .. ' = ';
-      foo = foo .. v;
-      foo = foo .. '\n';
-    end
+    foo = foo .. 'I = ' .. string.format('%.4f', theoretic['I']) .. ' : ' .. statValue['I'] .. '\n';
+    foo = foo .. 'C = ' .. string.format('%.4f', theoretic['C']) .. ' : ' .. statValue['C'] .. '\n';
+    foo = foo .. 'H = ' .. string.format('%.4f', theoretic['H']) .. ' : ' .. statValue['H'] .. '\n';
+    foo = foo .. 'M = ' .. string.format('%.4f', theoretic['M']) .. ' : ' .. statValue['M'] .. '\n';
+    foo = foo .. 'V = ' .. string.format('%.4f', theoretic['V']) .. ' : ' .. statValue['V'] .. '\n';
+    foo = foo .. 'L = ' .. string.format('%.4f', theoretic['L']) .. ' : ' .. statValue['L'] .. '\n';
+    foo = foo .. 'S = ' .. statValue['S'] .. '\n';
     for i, env in pairs(envs) do
       local scores = scoreTable[env];
       foo = foo .. env .. ': ';
