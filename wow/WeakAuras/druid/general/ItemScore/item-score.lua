@@ -27,7 +27,8 @@ function()
   theoretic['L'] = theoretic['L'] / theoretic['I'];
   theoretic['I'] = 1.0;
   local scoreTable = {
-    smart = theoretic
+    smart = theoretic,
+    balan = { I = 1.00, C = 1.61, H = 1.74, V = 1.50, M = 1.48, L = 0.00 }
   };
   local envs = {};
   for env, scores in pairs(scoreTable) do
