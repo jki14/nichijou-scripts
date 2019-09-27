@@ -36,4 +36,7 @@ alias roll='od -N1 -An -i /dev/random'
 
 alias tcarena='javaws ~/apps/tcarena/ContestAppletProd.jnlp >/dev/null 2>&1 &'
 
+alias urldecode='python3 -c "import sys; from urllib.parse import unquote; \
+sys.stdout.write(unquote(sys.stdin.read()))"'
+
 # vi: set syntax=sh:
