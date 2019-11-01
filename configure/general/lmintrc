@@ -22,12 +22,13 @@ tmux-init () {
     fi
 }
 
-tmux-wsl () {
+tmux-alt () {
     # Wsl
     tmux new-session -d -s Kiminaru
     if [ $? -eq 0 ]; then
         tmux rename-window Yuu
-        tmux split-window -h -p 44
+        tmux new-window -d -n Touko
+        # tmux split-window -h -p 44
     fi
 }
 
