@@ -28,6 +28,7 @@ tmux-alt () {
     if [ $? -eq 0 ]; then
         tmux rename-window Yuu
         tmux new-window -d -n Touko
+        tmux new-window -d -n Sayaka
         # tmux split-window -h -p 44
     fi
 }
