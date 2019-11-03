@@ -1,3 +1,8 @@
+if grep -q Microsoft /proc/version; then
+    # WSL only
+    alias pbcopy=/mnt/c/WINDOWS/system32/clip.exe
+fi
+
 tmux-init () {
     # Starlight
     tmux new-session -d -s Starlight
@@ -23,7 +28,7 @@ tmux-init () {
 }
 
 tmux-alt () {
-    # Wsl
+    # Kiminaru
     tmux new-session -d -s Kiminaru
     if [ $? -eq 0 ]; then
         tmux rename-window Yuu
