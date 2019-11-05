@@ -38,20 +38,22 @@ def main():
             if num_of_break == 0:
                 sys.stdout.write('%s worked perfectly '
                                  'in %d hours %d minutes\n' % (
-                                 logfile,
-                                 length / 3600,
-                                 length % 3600 / 60))
+                    logfile,
+                    length / 3600,
+                    length % 3600 / 60)
+                )
             else:
                 sys.stdout.write('%s %d / %d (%.2f%% off, %d times of %.2f secs avg) '
                                  'in %d hours %d minutes\n' % (
-                                 logfile,
-                                 sum_of_break,
-                                 length,
-                                 sum_of_break * 100.0 / length,
-                                 num_of_break,
-                                 sum_of_break * 1.0 / num_of_break,
-                                 length / 3600,
-                                 length % 3600 / 60))
+                    logfile,
+                    sum_of_break,
+                    length,
+                    sum_of_break * 100.0 / length,
+                    num_of_break,
+                    sum_of_break * 1.0 / num_of_break,
+                    length / 3600,
+                    length % 3600 / 60)
+                )
 
 if __name__ == '__main__':
     main()
