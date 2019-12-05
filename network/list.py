@@ -1,8 +1,8 @@
-import calendar
 import os
 import re
 import sys
 import time
+from datetime import datetime
 
 '''
 log create command sample:
@@ -21,8 +21,10 @@ def main():
             if recf.match(rec):
                 timepoint = rec[1:20]
                 latency = latf.findall(rec)[0][5:-3]
-                timepoint = time.strptime(timepoint, '%Y-%m-%d %H:%M:%S')
-                timepoint = calendar.timegm(timepoint)
+                timepoint = datetime\
+                                .strptime(timepoint, '%Y-%m-%d %H:%M:%S')\
+                                .timetuple()
+                timepoint = time.mktime(timepoint)
                 latency = float(latency)
                 if latency < 100.0:
                     table[timepoint] = latency
