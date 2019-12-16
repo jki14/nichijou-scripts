@@ -1,4 +1,4 @@
-if grep -q Microsoft /proc/version; then
+if test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL only
     alias pbcopy=/mnt/c/WINDOWS/system32/clip.exe
 fi
