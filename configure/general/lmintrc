@@ -1,6 +1,9 @@
 if test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL only
     alias pbcopy=/mnt/c/WINDOWS/system32/clip.exe
+elif test -f /proc/version && grep -q Ubuntu /proc/version; then
+    # Mint/Ubuntu only
+    alias pbcopy="xclip -sel clip"
 fi
 
 tmux-init () {
