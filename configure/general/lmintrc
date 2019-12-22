@@ -1,9 +1,9 @@
 if test -n "$SSH_TTY"; then
     # Remote Session
     if test -f /proc/version && grep -q Ubuntu /proc/version; then
-        alias pbcopy='nc -q0 127.0.0.1 3084'
+        alias pbcopy='nc -q0 127.0.0.1 3085'
     else
-        alias pbcopy='nc -w0 127.0.0.1 3084'
+        alias pbcopy='nc -w0 127.0.0.1 3085'
     fi
 elif test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL
