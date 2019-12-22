@@ -1,9 +1,19 @@
-if test -f /proc/version && grep -q Microsoft /proc/version; then
-    # WSL only
+if test -n "$SSH_TTY"; then
+    # Remote Session
+    if test -f /proc/version && grep -q Ubuntu /proc/version; then
+        alias pbcopy='nc -q0 127.0.0.1 3084'
+    else
+        alias pbcopy='nc -w0 127.0.0.1 3084'
+    fi
+elif test -f /proc/version && grep -q Microsoft /proc/version; then
+    # WSL
     alias pbcopy=/mnt/c/WINDOWS/system32/clip.exe
 elif test -f /proc/version && grep -q Ubuntu /proc/version; then
-    # Mint/Ubuntu only
-    alias pbcopy="xclip -sel clip"
+    # Mint/Ubuntu
+    alias pbcopy='xclip -sel clip'
+else
+    # OSX
+    alias pbcopy='/usr/bin/pbcopy'
 fi
 
 tmux-init () {

@@ -2,20 +2,30 @@
 # ssh-config: RemoteForward 3084 127.0.0.1:3084
 # remote-cmd: echo 'Hello World' | nc -q0 127.0.0.1 3084
 
-PIDFILE=~/var/run/rpbcopy.pid
-LOGFILE=~/var/log/rpbcopy.log
-
-if test -f /proc/version && grep -q Microsoft /proc/version; then
+if test -n "$SSH_TTY"; then
+    # Remote Session
+    if test -f /proc/version && grep -q Ubuntu /proc/version; then
+        PBCOPY='nc -q0 127.0.0.1 3084'
+    else
+        PBCOPY='nc -w0 127.0.0.1 3084'
+    fi
+elif test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL
     PBCOPY=/mnt/c/WINDOWS/system32/clip.exe
-    COMMAND="while (true); do nc -l -p 3084 | $PBCOPY; done"
-elif test -f /proc/version; then
-    # Linux
-    COMMAND="TODO"
+elif test -f /proc/version && grep -q Ubuntu /proc/version; then
+    # Mint/Ubuntu
+    PBCOPY='xclip -sel clip'
 else
     # OSX
     PBCOPY=/usr/bin/pbcopy
-    COMMAND="while (true); do nc -l 3084 | $PBCOPY; done"
 fi
 
-eval "$COMMAND &"
+if test -f /proc/version && grep -q Ubuntu /proc/version; then
+    # Mint/Ubuntu/WSL
+    RPBCOPY="while (true); do nc -l -p 3084 | $PBCOPY; done"
+else
+    # OSX
+    RPBCOPY="while (true); do nc -l 3084 | $PBCOPY; done"
+fi
+
+eval "$RPBCOPY &"
