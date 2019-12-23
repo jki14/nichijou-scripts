@@ -5,17 +5,17 @@ set number
 set autoindent
 set hlsearch
 
-setlocal modelines=1 tabstop=8 expandtab shiftwidth=4 softtabstop=4
+setlocal modeline tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 set backspace=indent,eol,start
 
 set colorcolumn=81
 highlight colorcolumn ctermbg=darkgray
 
-autocmd Filetype c setlocal modelines=0 tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
-autocmd Filetype cpp setlocal modelines=0 tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
-autocmd Filetype python setlocal modelines=0 tabstop=8 expandtab shiftwidth=4 softtabstop=4 tw=80
-autocmd Filetype lua setlocal modelines=0 tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
-autocmd Filetype gitcommit setlocal modelines=0 noautoindent tw=72
+autocmd Filetype c setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype cpp setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype python setlocal nomodeline tabstop=8 expandtab shiftwidth=4 softtabstop=4 tw=80
+autocmd Filetype lua setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype gitcommit setlocal nomodeline noautoindent tw=72
 
 syntax on
