@@ -3,7 +3,7 @@ if test -n "$SSH_TTY"; then
     alias pbcopy='nc 127.0.0.1 3085'
 elif test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL
-    alias pbcopy=/mnt/c/WINDOWS/system32/clip.exe
+    alias pbcopy='rstrip | /mnt/c/WINDOWS/system32/clip.exe'
 elif test -f /proc/version && grep -q Ubuntu /proc/version; then
     # Mint/Ubuntu
     alias pbcopy='rstrip | xclip -sel clip'
