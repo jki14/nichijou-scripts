@@ -1,19 +1,15 @@
 if test -n "$SSH_TTY"; then
     # Remote Session
-    if test -f /proc/version && grep -q Ubuntu /proc/version; then
-        alias pbcopy='nc -q0 127.0.0.1 3085'
-    else
-        alias pbcopy='nc -w0 127.0.0.1 3085'
-    fi
+    alias pbcopy='nc 127.0.0.1 3085'
 elif test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL
     alias pbcopy=/mnt/c/WINDOWS/system32/clip.exe
 elif test -f /proc/version && grep -q Ubuntu /proc/version; then
     # Mint/Ubuntu
-    alias pbcopy='xclip -sel clip'
+    alias pbcopy='rstrip | xclip -sel clip'
 else
     # OSX
-    alias pbcopy='/usr/bin/pbcopy'
+    alias pbcopy='rstrip | /usr/bin/pbcopy'
 fi
 
 tmux-init () {
@@ -52,7 +48,10 @@ tmux-alt () {
 }
 
 alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
+
 alias roll='od -N1 -An -i /dev/random'
+
+alias rstrip='python3 -c "import sys; sys.stdout.write(sys.stdin.read().rstrip())"'
 
 alias tcarena='javaws ~/apps/tcarena/ContestAppletProd.jnlp >/dev/null 2>&1 &'
 
