@@ -61,4 +61,7 @@ sys.stdout.write(unquote(sys.stdin.read()))\""
 alias htmlunescape="python3 -c \"import sys; from html import unescape; \
 sys.stdout.write(unescape(sys.stdin.read()))\""
 
+alias spaceescape="python3 -c \"import sys; \
+sys.stdout.write(sys.stdin.read().replace(' ', '\ '))\""
+
 # vi: set syntax=sh:
