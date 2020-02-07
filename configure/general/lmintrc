@@ -58,6 +58,9 @@ alias tcarena='javaws ~/apps/tcarena/ContestAppletProd.jnlp >/dev/null 2>&1 &'
 alias urldecode="python3 -c \"import sys; from urllib.parse import unquote; \
 sys.stdout.write(unquote(sys.stdin.read()))\""
 
+alias htmlescape="python3 -c \"import sys; from html import escape; \
+sys.stdout.write(escape(sys.stdin.read()))\""
+
 alias htmlunescape="python3 -c \"import sys; from html import unescape; \
 sys.stdout.write(unescape(sys.stdin.read()))\""
 
