@@ -51,6 +51,8 @@ alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
 
 alias roll='od -N1 -An -i /dev/random'
 
+alias vim14='vim -u ~/.vimrc14'
+
 alias rstrip='python3 -c "import sys; sys.stdout.write(sys.stdin.read().rstrip())"'
 
 alias tcarena='javaws ~/apps/tcarena/ContestAppletProd.jnlp >/dev/null 2>&1 &'
