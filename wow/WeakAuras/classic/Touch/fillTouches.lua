@@ -32,7 +32,7 @@ function fillTouches()
         for i = 1, GetNumTalents(tabIndex) do
           local name, _, _, _, spent = GetTalentInfo(tabIndex, i)
           if name == keyName then
-            return 1.0 + spent * 0.2
+            return 1.0 + spent * 0.02
           end
         end
       end
