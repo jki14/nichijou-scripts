@@ -4,9 +4,9 @@ function (event, code, msg)
   or msg == ERR_NOT_WHILE_MOUNTED
   or msg == ERR_TAXIPLAYERALREADYMOUNTED
   or msg == SPELL_FAILED_NOT_MOUNTED then
-    Dismount();
+    Dismount()
   elseif msg == SPELL_FAILED_NOT_STANDING then
-    DoEmote("STAND");
+    DoEmote("STAND")
   end
-  return false;
+  return false
 end
