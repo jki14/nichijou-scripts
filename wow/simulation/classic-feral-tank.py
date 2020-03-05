@@ -4,6 +4,13 @@ def armor_dr(amount):
     # Armor / (Armor + 400 + 85 * (AttackerLevel + 4.5 * (AttackerLevel - 59)))
     return amount / (amount + 7285.)
 
+def coefficient(dodge, defense):
+    miss = dodge + 0.05 + (defense - 315) * 0.0004
+    crit = 0.05 + (315 - defense) * 0.0004
+    crush = max(min(1.0 - crit - miss, 0.15), 0.0)
+    hit = max(1.0 - miss - crit - crush, 0.0)
+    return crit * 2.0 + crush * 1.5 + hit * 1.0
+
 def stamina_hp(amount):
     return amount * 1.2 * 10. * 1.05
 
@@ -23,8 +30,16 @@ def one_stamina(health, armor):
     dr_required = 1. - health / total_damage
     return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
 
+def one_dodge(health, armor, dodge, defense):
+    total_damage = health / (1. - armor_dr(armor))
+    total_damage = total_damage / coefficient(dodge + 0.01, defense)
+    dr_required = 1. - health / coefficient(dodge, defense) / total_damage
+    return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
+
 def main():
-    print(one_stamina(float(sys.argv[1]), float(sys.argv[2])))
+    health, armor, dodge, defense = [float(i) for i in sys.argv[1:]]
+    print(one_stamina(health, armor))
+    print(one_dodge(health, armor, dodge, defense))
 
 if __name__ == '__main__':
     main()
