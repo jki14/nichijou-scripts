@@ -36,6 +36,13 @@ def one_stamina(health, armor):
     return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
 
 
+def one_agility(health, armor, dodge, defense):
+    total_damage = health / (1. - armor_dr(armor + 2))
+    total_damage = total_damage / coefficient(dodge + 0.0005, defense)
+    dr_required = 1. - health / coefficient(dodge, defense) / total_damage
+    return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
+
+
 def one_dodge(health, armor, dodge, defense):
     total_damage = health / (1. - armor_dr(armor))
     total_damage = total_damage / coefficient(dodge + 0.01, defense)
@@ -53,6 +60,7 @@ def one_defense(health, armor, dodge, defense):
 def main():
     health, armor, dodge, defense = [float(i) for i in sys.argv[1:]]
     print('1 stamina ~ %.6f armor' % one_stamina(health, armor))
+    print('1 agility ~ %.6f armor' % one_agility(health, armor, dodge, defense))
     print('1 doddge ~ %.6f armor' % one_dodge(health, armor, dodge, defense))
     print('1 defense ~ %.6f armor' % one_defense(health, armor, dodge, defense))
 
