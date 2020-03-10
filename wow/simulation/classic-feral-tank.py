@@ -3,7 +3,11 @@ import sys
 
 def armor_dr(amount):
     # Armor / (Armor + 400 + 85 * (AttackerLevel + 4.5 * (AttackerLevel - 59)))
-    return amount / (amount + 7285.)
+    # Hard Cap: 21855
+    # return amount / (amount + 7285.)
+    # Armor / (Armor + 400 + 85 * AttackerLevel)
+    # Hard Cap: 17265
+    return amount / (amount + 5755)
 
 
 def coefficient(dodge, defense):
