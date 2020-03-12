@@ -64,6 +64,7 @@ def one_defense(health, armor, dodge, defense):
 def main():
     try:
         health, armor, dodge, defense = [float(i) for i in sys.argv[1:]]
+        assert(0.0 <= dodge and dodge <= 1.0)
         with open('classic-feral-tank.txt', 'w') as curr:
             curr.write('%.0f %.0f %.4f %.0f' % (health, armor, dodge, defense))
     except ValueError:
