@@ -69,7 +69,8 @@ def main():
             curr.write('%.0f %.0f %.4f %.0f' % (health, armor, dodge, defense))
     except ValueError:
         with open('classic-feral-tank.txt', 'r') as prev:
-            health, armor, dodge, defense = [float(i) for i in prev.read()]
+            health, armor, dodge, defense = \
+                    [float(i) for i in prev.read().strip().split()]
     print('1 stamina ~ %.6f armor' % one_stamina(health, armor))
     print('1 agility ~ %.6f armor' % one_agility(health, armor, dodge, defense))
     print('1 doddge ~ %.6f armor' % one_dodge(health, armor, dodge, defense))
