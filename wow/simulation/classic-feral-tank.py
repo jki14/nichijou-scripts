@@ -1,5 +1,7 @@
 import sys
 
+from texttable import Texttable
+
 
 def armor_dr(amount):
     # Armor / (Armor + 400 + 85 * (AttackerLevel + 4.5 * (AttackerLevel - 59)))
@@ -71,10 +73,33 @@ def main():
         with open('classic-feral-tank.txt', 'r') as prev:
             health, armor, dodge, defense = \
                     [float(i) for i in prev.read().strip().split()]
-    print('1 stamina ~ %.6f armor' % one_stamina(health, armor))
-    print('1 agility ~ %.6f armor' % one_agility(health, armor, dodge, defense))
-    print('1 doddge ~ %.6f armor' % one_dodge(health, armor, dodge, defense))
-    print('1 defense ~ %.6f armor' % one_defense(health, armor, dodge, defense))
+
+    weights = {
+        'armor': 1.,
+        'stamina': one_stamina(health, armor),
+        'agility': one_agility(health, armor, dodge, defense),
+        'dodge': one_dodge(health, armor, dodge, defense),
+        'defense': one_defense(health, armor, dodge, defense)
+    }
+
+    status = Texttable()
+    status.header(['health', 'armor', 'dodge', 'defense'])
+    status.set_cols_align(['r' for i in range(4)])
+    status.add_row(['%d' % health, '%d' % armor,
+                    '%.2f%%' % (dodge * 100.), '%d' % defense])
+    print(status.draw())
+
+    table = Texttable()
+    dims = ['armor', 'stamina', 'agility', 'dodge', 'defense']
+    table.header([''] + dims)
+    table.set_cols_dtype(['t' for i in range(len(dims) + 1)])
+    table.set_cols_align(['r' for i in range(len(dims) + 1)])
+    for att in dims:
+        row = [att]
+        for col in dims:
+            row.append('%.6f' % (weights[att] / weights[col]))
+        table.add_row(row)
+    print(table.draw())
 
 
 if __name__ == '__main__':
