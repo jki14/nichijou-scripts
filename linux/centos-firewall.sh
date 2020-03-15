@@ -10,7 +10,7 @@ firewall-cmd --zone=sisters --add-source=47.52.165.199 --permanent
 firewall-cmd --zone=sisters --remove-source=47.52.165.199 --permanent
 firewall-cmd --zone=sisters --add-source=3.114.17.227 --permanent
 firewall-cmd --zone=sisters --add-source=27.0.3.0/24 --permanent
-firewall-cmd --zone=sisters --add-source=115.165.113.0/24 --permanent
+firewall-cmd --zone=sisters --add-source=115.165.95.0/24 --permanent
 firewall-cmd --zone=sisters --add-port=21/tcp --permanent
 firewall-cmd --zone=sisters --add-port=21/udp --permanent
 firewall-cmd --reload
