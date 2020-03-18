@@ -66,7 +66,7 @@ function fillTouches()
     return foo
   end
 
-  touch = wa_global and wa_global.touch or { }
+  local touch = wa_global and wa_global.touch or { }
   touch.predicted = { }
   for i = 1, 11 do
     table.insert(touch.predicted, math.floor(predictTouch(i)))
