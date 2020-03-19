@@ -1,6 +1,13 @@
 if test -n "$SSH_TTY"; then
     # Remote Session
-    alias pbcopy='nc 127.0.0.1 3085'
+    # alias pbcopy='nc 127.0.0.1 3085'
+    if test -f /proc/version && grep -q 'Red Hat' /proc/version; then
+        # Red Hat
+        alias pbcopy='nc -w0 127.0.0.1 3085'
+    elif test -f /proc/version && grep -q Ubuntu /proc/version; then
+        # Mint/Ubuntu
+        alias pbcopy='nc -q0 127.0.0.1 3085'
+    fi
 elif test -f /proc/version && grep -q Microsoft /proc/version; then
     # WSL
     alias pbcopy='rstrip | /mnt/c/WINDOWS/system32/clip.exe'
