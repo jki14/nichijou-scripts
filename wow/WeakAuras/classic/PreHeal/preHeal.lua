@@ -7,12 +7,13 @@ function(_, timestamp, event, hideCaster, sourceGUID, sourceName,
     end
 
     local keySpell = { }
-    keySpell[10184] = {spellName = 'Flame Breath', castTime = 2.0}
-    keySpell[13020] = {spellName = 'Flame Breath', castTime = 2.0}
-    keySpell[11983] = {spellName = 'Shadow Flame', castTime = 2.0}
-    keySpell[14601] = {spellName = 'Shadow Flame', castTime = 2.0}
-    keySpell[11981] = {spellName = 'Shadow Flame', castTime = 2.0}
-    keySpell[11583] = {spellName = 'Shadow Flame', castTime = 2.0}
+    keySpell['10184'] = {spellName = 'Flame Breath', castTime = 2.0}
+    keySpell['13020'] = {spellName = 'Flame Breath', castTime = 2.0}
+    keySpell['11983'] = {spellName = 'Shadow Flame', castTime = 2.0}
+    keySpell['14601'] = {spellName = 'Shadow Flame', castTime = 2.0}
+    keySpell['11981'] = {spellName = 'Shadow Flame', castTime = 2.0}
+    keySpell['11583'] = {spellName = 'Shadow Flame', castTime = 2.0}
+    keySpell['3131'] = {spellName = 'Lizard Bolt', castTime = 2.0}
     local npcId = select(6, strsplit("-", sourceGUID))
     if npcId and keySpell[npcId] and spellName == keySpell[npcId].spellName then
       local preheal = wa_global and wa_global.preheal or { }
