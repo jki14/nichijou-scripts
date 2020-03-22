@@ -1,0 +1,1 @@
+/run bgcnt = (bgprv and time() - bgprv < 16.0) and (bgcnt + 1) or 1; bgprv = time(); local msg = GetMinimapZoneText() .. ' 发现敌人(累计 ' .. tostring(bgcnt) .. ')'; SendChatMessage(msg, 'RAID_WARNING'); SendChatMessage(msg, 'INSTANCE_CHAT');
