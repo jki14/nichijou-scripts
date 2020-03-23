@@ -1,28 +1,3 @@
-[General]
-SyntaxVersion=2
-BeginHotkey=69
-BeginHotkeyMod=1
-PauseHotkey=0
-PauseHotkeyMod=0
-StopHotkey=0
-StopHotkeyMod=0
-RunOnce=1
-EnableWindow=
-MacroID=f55c5846-e77e-48f2-8b99-843f7e927e48
-Description=CheatTouches
-Enable=1
-AutoRun=0
-[Repeat]
-Type=0
-Number=1
-[SetupUI]
-Type=2
-QUI=
-[Relative]
-SetupOCXFile=
-[Comment]
-
-[Script]
 IfColor 16,16,"551C09",2 Then
 KeyDown "Ctrl", 1
 KeyDown "F1", 1
