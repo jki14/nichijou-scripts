@@ -8,9 +8,10 @@ function(e, timestamp, event, hideCaster, sourceGUID, sourceName,
       return false
     end
 
-    local npcId = select(6, strsplit("-", sourceGUID))
-    if npcId == '13020' and wa_global and wa_global.vaelastrasz then
-      if wa_global.vaelastrasz.start then
+    local src = select(6, strsplit("-", sourceGUID))
+    local dst = select(6, strsplit("-", destGUID))
+    if (src == '13020' or dst == '13020') and wa_global then
+      if wa_global.vaelastrasz and wa_global.vaelastrasz.start then
         wa_global.vaelastrasz.expiration = wa_global.vaelastrasz.start + 15.0
         wa_global.vaelastrasz.start = nil
         return true
