@@ -6,7 +6,9 @@ function(_, timestamp, event, hideCaster, sourceGUID, sourceName,
       return false
     end
 
-    if sourceGUID == UnitGUID("player") and spellName == 'Faerie Fire' then
+    if sourceGUID == UnitGUID("player") and
+       spellName == 'Faerie Fire' or
+       spellName == 'Faerie Fire (Feral)' then
       return true
     end
 
