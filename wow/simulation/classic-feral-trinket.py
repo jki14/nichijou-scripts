@@ -7,10 +7,10 @@ def isCrital(cr):
     foo = int(os.urandom(4).hex(), 16)
     return foo < bar
 
-def zandalarian(cr):
+def zandalarian(cr, sec):
     total = 0
     energe, star, extra = 80, 0, 40
-    for i in range(20):
+    for i in range(sec):
         if i % 2 == 0:
             energe = min(energe + 20, 100)
         # cast
@@ -36,13 +36,13 @@ def zandalarian(cr):
         else:
             total += extra
         extra = max(extra - 2, 0)
-    return total / 20.0
+    return total / sec
 
 
-def earthstrike(cr):
+def earthstrike(cr, sec):
     total = 0
     energe, star = 80, 0
-    for i in range(20):
+    for i in range(sec):
         if i % 2 == 0:
             energe = min(energe + 20, 100)
         # cast
@@ -67,13 +67,13 @@ def earthstrike(cr):
             total += 40
         else:
             total += 20
-    return total / 20.0
+    return total / sec
 
 
-def slayerscrest(cr):
+def slayerscrest(cr, sec):
     total = 0
     energe, star = 80, 0
-    for i in range(20):
+    for i in range(sec):
         if i % 2 == 0:
             energe = min(energe + 20, 100)
         # cast
@@ -98,33 +98,61 @@ def slayerscrest(cr):
             total += 46
         else:
             total += 23
-    return total / 20.0
+    return total / sec
 
 
 def solution(cr):
-    zug = [zandalarian(cr) for i in range(1000000)]
-    zug = sorted(zug)
-    sys.stdout.write('zandalarian\n')
-    sys.stdout.write('  min: %.6f\n' % zug[0])
-    sys.stdout.write('  max: %.6f\n' % zug[-1])
-    sys.stdout.write('  p50: %.6f\n' % statistics.median(zug))
-    sys.stdout.write('  avg: %.6f\n' % statistics.mean(zug))
+    sys.stdout.write('10 sec:\n')
 
-    aq2 = [earthstrike(cr) for i in range(1000000)]
+    zug = [zandalarian(cr, 10) for i in range(1000000)]
+    zug = sorted(zug)
+    sys.stdout.write('  zandalarian\n')
+    sys.stdout.write('    min: %.6f\n' % zug[0])
+    sys.stdout.write('    max: %.6f\n' % zug[-1])
+    sys.stdout.write('    p50: %.6f\n' % statistics.median(zug))
+    sys.stdout.write('    avg: %.6f\n' % statistics.mean(zug))
+
+    aq2 = [earthstrike(cr, 10) for i in range(1000000)]
     aq2 = sorted(aq2)
-    sys.stdout.write('zandalarian\n')
-    sys.stdout.write('  min: %.6f\n' % aq2[0])
-    sys.stdout.write('  max: %.6f\n' % aq2[-1])
-    sys.stdout.write('  p50: %.6f\n' % statistics.median(aq2))
-    sys.stdout.write('  avg: %.6f\n' % statistics.mean(aq2))
-    
-    nax = [slayerscrest(cr) for i in range(1000000)]
+    sys.stdout.write('  earthstrike\n')
+    sys.stdout.write('    min: %.6f\n' % aq2[0])
+    sys.stdout.write('    max: %.6f\n' % aq2[-1])
+    sys.stdout.write('    p50: %.6f\n' % statistics.median(aq2))
+    sys.stdout.write('    avg: %.6f\n' % statistics.mean(aq2))
+
+    nax = [slayerscrest(cr, 10) for i in range(1000000)]
     nax = sorted(nax)
-    sys.stdout.write('slayerscrest\n')
-    sys.stdout.write('  min: %.6f\n' % nax[0])
-    sys.stdout.write('  max: %.6f\n' % nax[-1])
-    sys.stdout.write('  p50: %.6f\n' % statistics.median(nax))
-    sys.stdout.write('  avg: %.6f\n' % statistics.mean(nax))
+    sys.stdout.write('  slayerscrest\n')
+    sys.stdout.write('    min: %.6f\n' % nax[0])
+    sys.stdout.write('    max: %.6f\n' % nax[-1])
+    sys.stdout.write('    p50: %.6f\n' % statistics.median(nax))
+    sys.stdout.write('    avg: %.6f\n' % statistics.mean(nax))
+
+    sys.stdout.write('20 sec:\n')
+
+    zug = [zandalarian(cr, 20) for i in range(1000000)]
+    zug = sorted(zug)
+    sys.stdout.write('  zandalarian\n')
+    sys.stdout.write('    min: %.6f\n' % zug[0])
+    sys.stdout.write('    max: %.6f\n' % zug[-1])
+    sys.stdout.write('    p50: %.6f\n' % statistics.median(zug))
+    sys.stdout.write('    avg: %.6f\n' % statistics.mean(zug))
+
+    aq2 = [earthstrike(cr, 20) for i in range(1000000)]
+    aq2 = sorted(aq2)
+    sys.stdout.write('  earthstrike\n')
+    sys.stdout.write('    min: %.6f\n' % aq2[0])
+    sys.stdout.write('    max: %.6f\n' % aq2[-1])
+    sys.stdout.write('    p50: %.6f\n' % statistics.median(aq2))
+    sys.stdout.write('    avg: %.6f\n' % statistics.mean(aq2))
+
+    nax = [slayerscrest(cr, 20) for i in range(1000000)]
+    nax = sorted(nax)
+    sys.stdout.write('  slayerscrest\n')
+    sys.stdout.write('    min: %.6f\n' % nax[0])
+    sys.stdout.write('    max: %.6f\n' % nax[-1])
+    sys.stdout.write('    p50: %.6f\n' % statistics.median(nax))
+    sys.stdout.write('    avg: %.6f\n' % statistics.mean(nax))
 
 
 def main():
