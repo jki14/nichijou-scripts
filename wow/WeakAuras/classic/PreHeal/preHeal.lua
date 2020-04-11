@@ -17,8 +17,8 @@ function(_, timestamp, event, hideCaster, sourceGUID, sourceName,
     local npcId = select(6, strsplit("-", sourceGUID))
     if npcId and keySpell[npcId] and spellName == keySpell[npcId].spellName then
       local preheal = wa_global and wa_global.preheal or { }
-      preheal.window_start = timestamp
-      preheal.window_end = timestamp + keySpell[npcId].castTime + 4.0
+      preheal.window_start = timestamp + keySpell[npcId].castTime
+      preheal.window_end = timestamp + keySpell[npcId].castTime + 3.5
       wa_global = wa_global or { }
       wa_global.preheal = preheal
     end
