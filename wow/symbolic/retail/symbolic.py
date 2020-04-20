@@ -24,8 +24,7 @@ def characters():
   foo = os.path.join(prefix, 'Tichondrius', 'Masoshonen')
   bar = [
     'Tichondrius - Morgiane', 'Tichondrius - Morgianu',
-    '凤凰之神 - 依然活著', '凤凰之神 - 依然抹布洗', '凤凰之神 - 仍然活著',
-    '熊猫酒仙 - 魔装少年'
+    '熊猫酒仙 - 魔装少年', '凤凰之神 - 依然活著', '凤凰之神 - 仍然活著',
   ]
   for path in [os.path.join(prefix, *c.split(' - ')) for c in bar]:
     os.symlink(foo, path)
