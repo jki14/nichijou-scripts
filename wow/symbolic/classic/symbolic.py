@@ -16,8 +16,9 @@ def accounts():
   foo = os.path.join(prefix, '150998550#2')
   bar = ['150998550#1']
   for path in [os.path.join(prefix, e) for e in bar]:
+    if sys.platform.startswith('win'):
+      win.symlink(foo, path)
     os.symlink(foo, path)
-    # win.symlink(foo, path)
 
 def characters():
   prefix = os.path.join('WTF', 'Account', '150998550#2')
@@ -26,8 +27,9 @@ def characters():
     '比格沃斯 - 仍然活着'
   ]
   for path in [os.path.join(prefix, *c.split(' - ')) for c in bar]:
+    if sys.platform.startswith('win'):
+      win.symlink(foo, path)
     os.symlink(foo, path)
-    # win.symlink(foo, path)
  
 def main():
   accounts()
