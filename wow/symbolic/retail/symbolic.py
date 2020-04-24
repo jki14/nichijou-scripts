@@ -16,8 +16,10 @@ def accounts():
   foo = os.path.join(prefix, '83215426#1')
   bar = ['150998550#1', '150998550#2', '223607616#1', '223607616#2', 'WOW_TAB']
   for path in [os.path.join(prefix, e) for e in bar]:
-    os.symlink(foo, path)
-    # win.symlink(foo, path)
+    if sys.platform.startswith('win'):
+      win.symlink(foo, path)
+    else:
+      os.symlink(foo, path)
 
 def characters():
   prefix = os.path.join('WTF', 'Account', '83215426#1')
@@ -27,8 +29,10 @@ def characters():
     '熊猫酒仙 - 魔装少年', '凤凰之神 - 依然活著', '凤凰之神 - 仍然活著',
   ]
   for path in [os.path.join(prefix, *c.split(' - ')) for c in bar]:
-    os.symlink(foo, path)
-    # win.symlink(foo, path)
+    if sys.platform.startswith('win'):
+      win.symlink(foo, path)
+    else:
+      os.symlink(foo, path)
  
 def main():
   accounts()
