@@ -20,3 +20,9 @@ ufw allow from 115.165.95.0/24 to any port 22 proto tcp
 ufw allow from 115.165.95.0/24 to any port 22 proto udp
 ufw allow from 115.165.95.0/24 to any port 21 proto tcp
 ufw allow from 115.165.95.0/24 to any port 21 proto udp
+
+# ts3server
+ufw allow 9987/udp
+ufw allow 30033/tcp
+ufw allow 10011/tcp
+ufw allow 10022/tcp
