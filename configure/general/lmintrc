@@ -76,4 +76,7 @@ sys.stdout.write(unescape(sys.stdin.read()))\""
 alias spaceescape="python3 -c \"import sys; \
 sys.stdout.write(sys.stdin.read().replace(' ', '\ '))\""
 
+alias xmlformat="python3 -c \"import sys;from xml.dom import minidom; \
+sys.stdout.write(minidom.parseString(sys.stdin.read()).toprettyxml('  '))\""
+
 # vi: set syntax=sh:
