@@ -14,7 +14,7 @@ class win:
 def accounts():
   prefix = os.path.join('WTF', 'Account')
   foo = os.path.join(prefix, '150998550#2')
-  bar = ['150998550#1', '602893969#1', '150713399#1']
+  bar = ['150998550#1', '602893969#1', '150713399#1', '555095699#1']
   for path in [os.path.join(prefix, e) for e in bar]:
     if sys.platform.startswith('win'):
       win.symlink(foo, path)
