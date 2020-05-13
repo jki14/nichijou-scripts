@@ -32,7 +32,7 @@ def main():
         length = healthy[-1] - healthy[0] + 1
         num_of_break, sum_of_break = 0, 0
         for i in range(len(healthy) - 1):
-            if healthy[i] + 5 < healthy[i + 1]:
+            if healthy[i] + 16 < healthy[i + 1]:
                 num_of_break += 1
                 sum_of_break += healthy[i + 1] - healthy[i]
                 sys.stdout.write('%s - %s (%d secs)\n' % (
