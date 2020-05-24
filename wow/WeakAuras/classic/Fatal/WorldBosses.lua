@@ -17,3 +17,12 @@ function()
   end
   return false
 end
+
+-- macro
+/tar Azuregos
+/tar Lord Kazzak
+/tar Lethon
+/tar Emeriss
+/tar Taerar
+/tar Ysondre
+/castsequence Life Tap(Rank 1), Demon Skin
