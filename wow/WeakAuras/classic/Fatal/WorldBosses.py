@@ -1,7 +1,7 @@
 import os
 import sys
 
-from pyautogui import press
+from pyautogui import click, moveTo, press
 from time import sleep
 
 
@@ -26,10 +26,29 @@ def oneround():
     shoot('p')
 
 
+def relogin():
+    sleep(urandom32(4, 8))
+    press('esc')
+    sleep(urandom32(4, 8))
+    moveTo(720, 525)
+    sleep(urandom32(4, 8))
+    click(720, 525)
+    sleep(urandom32(4, 8))
+    click(720, 525)
+    sleep(urandom32(32, 48))
+    press('enter')
+    sleep(urandom32(4, 8))
+    press('enter')
+    sys.stdout.write('re-login\n')
+    sys.stdout.flush()
+
+
 def main():
     try:
         while True:
-            oneround()
+            for i in range(50):
+                oneround()
+            relogin()
     except KeyboardInterrupt:
         pass
 
