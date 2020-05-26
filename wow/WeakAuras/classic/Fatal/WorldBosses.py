@@ -22,8 +22,10 @@ def shoot(key):
 def oneround():
     sleep(urandom32(8, 16))
     shoot('space')
+    shoot('p')
     sleep(urandom32(8, 16))
     shoot('p')
+    shoot('space')
 
 
 def relogin():
