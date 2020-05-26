@@ -25,4 +25,4 @@ end
 /tar Emeriss
 /tar Taerar
 /tar Ysondre
-/castsequence Life Tap(Rank 1), Demon Skin
+/cast !Stealth
