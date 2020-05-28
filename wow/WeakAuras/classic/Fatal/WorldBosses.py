@@ -1,6 +1,7 @@
 import os
 import sys
 
+from datetime import datetime
 from pyautogui import click, moveTo, press
 from time import sleep
 
@@ -15,7 +16,8 @@ def urandom32(low, hig):
 
 def shoot(key):
     press(key)
-    sys.stdout.write('%s pressed\n' % key)
+    sys.stdout.write('[%s] %s pressed\n'
+                     % (datetime.now().strftime('%Y-%m-%d %H-%M-%S'), key))
     sys.stdout.flush()
 
 
@@ -41,7 +43,8 @@ def relogin():
     press('enter')
     sleep(urandom32(4, 8))
     press('enter')
-    sys.stdout.write('re-login\n')
+    sys.stdout.write('[%s] re-login\n'
+                     % (datetime.now().strftime('%Y-%m-%d %H-%M-%S')))
     sys.stdout.flush()
 
 
