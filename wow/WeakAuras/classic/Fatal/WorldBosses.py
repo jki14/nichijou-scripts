@@ -17,7 +17,7 @@ def urandom32(low, hig):
 def shoot(key):
     press(key)
     sys.stdout.write('[%s] %s pressed\n'
-                     % (datetime.now().strftime('%Y-%m-%d %H-%M-%S'), key))
+                     % (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), key))
     sys.stdout.flush()
 
 
@@ -44,7 +44,7 @@ def relogin():
     sleep(urandom32(4, 8))
     press('enter')
     sys.stdout.write('[%s] re-login\n'
-                     % (datetime.now().strftime('%Y-%m-%d %H-%M-%S')))
+                     % (datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     sys.stdout.flush()
 
 
