@@ -10,7 +10,8 @@ def armor_dr(amount):
     # return amount / (amount + 7285.)
     # Armor / (Armor + 400 + 85 * AttackerLevel)
     # Hard Cap: 17265
-    return amount / (amount + 5755)
+    amount *= 1.25
+    return min(amount / (amount + 5755), 0.75)
 
 
 def coefficient(dodge, defense):
@@ -21,53 +22,47 @@ def coefficient(dodge, defense):
     return crit * 2.0 + crush * 1.5 + hit * 1.0
 
 
-def stamina_hp(amount):
-    return amount * 1.2 * 10. * 1.05
+def one_stamina():
+    return 1.2 * 10. * 1.05
 
 
-def find(lef, rig, value, func):
-    if value > 0.75:
-        raise ValueError
-    while lef + 1e-2 < rig:
-        mid = (lef + rig) / 2.
-        if func(mid) > value:
-            rig = mid
-        else:
-            lef = mid
-    return rig
-
-
-def one_stamina(health, armor):
-    total_damage = (health + stamina_hp(1)) / (1. - armor_dr(armor))
-    dr_required = 1. - health / total_damage
-    return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
+def one_armor(health, armor, dodge, defense):
+    total_damage = health / (1. - armor_dr(armor + 5.06))
+    total_damage = total_damage / coefficient(dodge, defense)
+    hp_required = total_damage * (1. - armor_dr(armor))
+    hp_required = hp_required * coefficient(dodge, defense)
+    return hp_required - health
 
 
 def one_agility(health, armor, dodge, defense):
     total_damage = health / (1. - armor_dr(armor + 2))
     total_damage = total_damage / coefficient(dodge + 0.0005, defense)
-    dr_required = 1. - health / coefficient(dodge, defense) / total_damage
-    return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
+    hp_required = total_damage * (1. - armor_dr(armor))
+    hp_required = hp_required * coefficient(dodge, defense)
+    return hp_required - health
 
 
 def one_dodge(health, armor, dodge, defense):
     total_damage = health / (1. - armor_dr(armor))
     total_damage = total_damage / coefficient(dodge + 0.01, defense)
-    dr_required = 1. - health / coefficient(dodge, defense) / total_damage
-    return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
+    hp_required = total_damage * (1. - armor_dr(armor))
+    hp_required = hp_required * coefficient(dodge, defense)
+    return hp_required - health
 
 
 def one_defense(health, armor, dodge, defense):
     total_damage = health / (1. - armor_dr(armor))
     total_damage = total_damage / coefficient(dodge + 0.0004, defense + 1)
-    dr_required = 1. - health / coefficient(dodge, defense) / total_damage
-    return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
+    hp_required = total_damage * (1. - armor_dr(armor))
+    hp_required = hp_required * coefficient(dodge, defense)
+    return hp_required - health
 
 
 def process(health, armor, dodge, defense):
     weights = {
-        'armor': 1.,
-        'stamina': one_stamina(health, armor),
+        'hitpoint': 1.,
+        'armor': one_armor(health, armor, dodge, defense),
+        'stamina': one_stamina(),
         'agility': one_agility(health, armor, dodge, defense),
         'dodge': one_dodge(health, armor, dodge, defense),
         'defense': one_defense(health, armor, dodge, defense)
@@ -85,10 +80,13 @@ def process(health, armor, dodge, defense):
     table.header([''] + dims)
     table.set_cols_dtype(['t' for i in range(len(dims) + 1)])
     table.set_cols_align(['r' for i in range(len(dims) + 1)])
-    for att in dims:
+    for att in ['hitpoint'] + dims:
         row = [att]
         for col in dims:
-            row.append('%.6f' % (weights[att] / weights[col]))
+            try:
+                row.append('%.6f' % (weights[att] / weights[col]))
+            except ZeroDivisionError:
+                row.append('inf')
         table.add_row(row)
     print(table.draw())
 
