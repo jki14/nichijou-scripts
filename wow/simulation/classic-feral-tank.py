@@ -1,3 +1,4 @@
+import json
 import sys
 
 from texttable import Texttable
@@ -63,17 +64,7 @@ def one_defense(health, armor, dodge, defense):
     return (find(0., 22000., dr_required, armor_dr) - armor) / 5.06
 
 
-def main():
-    try:
-        health, armor, dodge, defense = [float(i) for i in sys.argv[1:]]
-        assert(0.0 <= dodge and dodge <= 1.0)
-        with open('classic-feral-tank.txt', 'w') as curr:
-            curr.write('%.0f %.0f %.4f %.0f' % (health, armor, dodge, defense))
-    except ValueError:
-        with open('classic-feral-tank.txt', 'r') as prev:
-            health, armor, dodge, defense = \
-                    [float(i) for i in prev.read().strip().split()]
-
+def process(health, armor, dodge, defense):
     weights = {
         'armor': 1.,
         'stamina': one_stamina(health, armor),
@@ -100,6 +91,17 @@ def main():
             row.append('%.6f' % (weights[att] / weights[col]))
         table.add_row(row)
     print(table.draw())
+
+
+def main():
+    with open('classic-feral-tank.json', 'r') as json_file:
+        profiles = json.load(json_file)
+        for key, value in profiles.items():
+            print('#### %s:' % key)
+            process(value['health'],
+                    value['armor'],
+                    value['dodge'],
+                    value['defense'])
 
 
 if __name__ == '__main__':
