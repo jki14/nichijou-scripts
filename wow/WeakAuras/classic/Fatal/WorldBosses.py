@@ -31,14 +31,15 @@ def oneround():
 
 
 def relogin():
+    xpos, ypos = 720, 525
     sleep(urandom32(4, 8))
     press('esc')
     sleep(urandom32(4, 8))
-    moveTo(720, 525)
+    moveTo(xpos, ypos)
     sleep(urandom32(4, 8))
-    click(720, 525)
+    click(xpos, ypos)
     sleep(urandom32(4, 8))
-    click(720, 525)
+    click(xpos, ypos)
     sleep(urandom32(32, 48))
     press('enter')
     sleep(urandom32(4, 8))
