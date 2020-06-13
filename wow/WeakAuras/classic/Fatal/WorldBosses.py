@@ -22,27 +22,27 @@ def shoot(key):
 
 
 def oneround():
-    sleep(urandom32(8, 16))
+    sleep(urandom32(2, 6))
     # shoot('space')
     shoot('p')
-    sleep(urandom32(8, 16))
+    sleep(urandom32(2, 6))
     shoot('p')
     # shoot('space')
 
 
 def relogin():
     xpos, ypos = 720, 525
-    sleep(urandom32(4, 8))
+    sleep(urandom32(2, 6))
     press('esc')
-    sleep(urandom32(4, 8))
+    sleep(urandom32(2, 6))
     moveTo(xpos, ypos)
-    sleep(urandom32(4, 8))
+    sleep(urandom32(2, 6))
     click(xpos, ypos)
-    sleep(urandom32(4, 8))
+    sleep(urandom32(2, 6))
     click(xpos, ypos)
-    sleep(urandom32(32, 48))
+    sleep(urandom32(24, 28))
     press('enter')
-    sleep(urandom32(4, 8))
+    sleep(urandom32(2, 6))
     press('enter')
     sys.stdout.write('[%s] re-login\n'
                      % (datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
@@ -52,7 +52,7 @@ def relogin():
 def main():
     try:
         while True:
-            for i in range(50):
+            for i in range(150):
                 oneround()
             relogin()
     except KeyboardInterrupt:
