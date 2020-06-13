@@ -4,6 +4,7 @@ function(a, event, unit, power)
   local currMana = UnitPower('player', 0)
   local currEnergy = UnitPower('player', 3)
   if event == 'ENERGYTICK' then
+    aura_env.inflight = aura_env.inflight - 1
     if currMana == UnitPowerMax('player', 0) then
       flag = true
     end
@@ -34,9 +35,13 @@ function(a, event, unit, power)
       s.duration = duration
       s.expirationTime = GetTime() + duration
       s.show = true
-      C_Timer.After(duration, function()
-        WeakAuras.ScanEvents("ENERGYTICK", true)
-      end)
+      aura_env.inflight = aura_env.inflight or 0
+      if aura_env.inflight == 0 then
+        C_Timer.After(duration, function()
+          WeakAuras.ScanEvents("ENERGYTICK", true)
+        end)
+        aura_env.inflight = aura_env.inflight + 1
+      end
     end
   end
   aura_env.lastMana = currMana
