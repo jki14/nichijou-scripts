@@ -12,8 +12,14 @@ function(a, event, unit, power)
         currEnergy == UnitPowerMax('player', 3) then
       flag = true
     end
+    if 4 == select(2, UnitClassBase('player')) and
+        currEnergy == UnitPowerMax('player', 3) then
+      flag = true
+    end
   elseif unit == 'player' then
-    if power == 'MANA' and currMana > (aura_env.lastMana or 0) then
+    if power == 'MANA' and
+        11 == select(2, UnitClassBase('player')) and
+        currMana > (aura_env.lastMana or 0) then
       flag = true
     elseif power == 'ENERGY' and currEnergy > (aura_env.lastEnergy or 0) then
       flag = true
