@@ -2,7 +2,7 @@ import os
 import sys
 
 from datetime import datetime
-from pyautogui import click, moveTo, press
+from pyautogui import click, moveTo, press, size
 from time import sleep
 
 
