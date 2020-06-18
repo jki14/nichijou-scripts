@@ -34,6 +34,8 @@ def relogin():
     xpos, ypos = 720, 525
     if size() == (3440, 1440):
         xpos, ypos = 1720, 805
+    if size() == (2560, 1440):
+        xpos, ypos = 1280, 840
     sleep(urandom32(2, 6))
     press('esc')
     sleep(urandom32(2, 6))
