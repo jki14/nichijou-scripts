@@ -16,9 +16,9 @@ def urandom32(low, hig):
 
 def shoot(key):
     press(key)
-    # sys.stdout.write('[%s] %s pressed\n'
-    #                  % (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), key))
-    # sys.stdout.flush()
+    sys.stdout.write('[%s] %s pressed\n'
+                     % (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), key))
+    sys.stdout.flush()
 
 
 def oneround():
@@ -48,9 +48,9 @@ def relogin():
     press('enter')
     sleep(urandom32(2, 6))
     press('enter')
-    # sys.stdout.write('[%s] re-login\n'
-    #                  % (datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    # sys.stdout.flush()
+    sys.stdout.write('[%s] re-login\n'
+                     % (datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    sys.stdout.flush()
 
 
 def main():
