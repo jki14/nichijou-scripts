@@ -33,6 +33,7 @@ function WorldBossesMsg()
   foo['Jademir Oracle'] = '加德米尔龙族 (调试信息)'
 
   foo['Azshara'] = '艾萨拉'
+  foo['Blasted Lands'] = '诅咒之地'
   foo['Duskwood'] = '暮色森林'
   foo['The Hinterlands'] = '辛特兰'
   foo['Feralas'] = '菲拉斯'
