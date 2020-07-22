@@ -9,6 +9,9 @@ find . -name '*.lua' -not -path './.git/*' -exec git add {} \;
 #add *.sh files
 find . -name '*.sh' -not -path './.git/*' -exec git add {} \;
 
+#add *.json files
+find . -name '*.json' -not -path './.git/*' -exec git add {} \;
+
 #add *.terminal files
 find . -name '*.terminal' -not -path './.git/*' -exec git add {} \;
 
