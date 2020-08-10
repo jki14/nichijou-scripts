@@ -10,7 +10,7 @@ function()
       local foo = UnitHealthMax("target") - UnitHealth("target")
       if foo > 0 then
         local bar = 1
-        while bar < 10 and wa_global.touch.predicted[bar + 1] <= foo do
+        while bar < 11 and wa_global.touch.predicted[bar + 1] <= foo do
           bar = bar + 1
         end
         local r = (bar / 9) / 3.0

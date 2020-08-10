@@ -67,6 +67,14 @@ KeyDown "F10", 1
 Delay 56
 KeyUp "F10", 1
 KeyUp "Ctrl", 1
+Else
+IfColor 16, 16, "AA3968", 0 Then
+KeyDown "Ctrl", 1
+KeyDown "F11", 1
+Delay 56
+KeyUp "F11", 1
+KeyUp "Ctrl", 1
+End If
 End If
 End If
 End If
