@@ -32,14 +32,20 @@ def characters(prefix, foo, bar):
 def main():
   accounts(os.path.join('WTF', 'Account'),
            os.path.join('WTF', 'Account', '150998550#2'),
-           ['150998550#1', '602893969#1', '150713399#1', '555095699#1'])
+           ['150998550#1',
+            '602893969#1',
+            '150713399#1',
+            '555095699#1',
+            '153384600#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
                           '150998550#2',
                           '比格沃斯',
                           '依然活着'),
-             [ '比格沃斯 - 仍然活着', '比格沃斯 - 筱狐狸', '比格沃斯 - 八六' ])
+             ['比格沃斯 - 仍然活着',
+              '比格沃斯 - 筱狐狸',
+              '比格沃斯 - 八六' ])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
