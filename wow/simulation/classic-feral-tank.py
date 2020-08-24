@@ -11,6 +11,7 @@ def armor_dr(amount):
     # Armor / (Armor + 400 + 85 * AttackerLevel)
     # Hard Cap: 17265
     amount *= 1.25
+    amount += 416 + 450
     return min(amount / (amount + 5755), 0.75)
 
 
