@@ -55,6 +55,22 @@ function(e, text, _, _, _, _, _, _, _, _, _, _, guid, ...)
       '5. 绿龙在自身血量75%,50%,25%左右会释放三次大招：'
     }
 
+    guide['L'] = { }
+    for i, v in ipairs(nightmare_dragons) do table.insert(guide['L'], v) end
+    guide['L'][1] = '莱索恩 (绿龙: 暗影) 注意事项:'
+    table.insert(guide['L'], '   莱索恩会昏迷所有人5秒并召唤影子向绿龙移动')
+    table.insert(guide['L'], '   每个影子接触到Boss回为Boss恢复8k+血量')
+    table.insert(guide['L'], '   a. 昏迷期间坦克持续受到伤害治疗无法抬血')
+    table.insert(guide['L'], '      **大招前保证坦克血量健康并保持所有HOT**')
+    table.insert(guide['L'], '   b. 每个影子拥有500血量，不吃控制，不吃AOE')
+    table.insert(guide['L'], '      **近战提前离开Boss在远程治疗位置就位**')
+    table.insert(guide['L'], '      **昏迷结束所有输出职业全力点杀影子**')
+    table.insert(guide['L'], '6. 暗影龙周期对身体一侧释放高额伤害群体暗影箭')
+    table.insert(guide['L'], '   a. 当前坦外所有人在Boss一侧垂直分布')
+    table.insert(guide['L'], '   b. 坦克不断使Boss转向避免团队连续吃到伤害')
+    table.insert(guide['L'], '   c. 由于Boss龙头位置持续调整，时刻留意吐息扫尾')
+    table.insert(guide['L'], '   d. 治疗切记以维持坦克血线为主，空隙缓慢补团')
+
     guide['E'] = { }
     for i, v in ipairs(nightmare_dragons) do table.insert(guide['E'], v) end
     guide['E'][1] = '艾莫莉丝 (绿龙: 蘑菇) 注意事项:'
