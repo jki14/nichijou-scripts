@@ -113,6 +113,17 @@ function(e, text, _, _, _, _, _, _, _, _, _, _, guid, ...)
     table.insert(guide['T'], '      **恐惧结束后注意调整自己位置**')
     table.insert(guide['T'], '      **恐惧结束后注意坦克血量**')
 
+    guide['Y'] = { }
+    for i, v in ipairs(nightmare_dragons) do table.insert(guide['Y'], v) end
+    guide['Y'][1] = '伊森德雷 (绿龙: 德鲁伊) 注意事项:'
+    table.insert(guide['Y'], '   伊森德雷会召唤等同参战人数的德鲁伊之魂')
+    table.insert(guide['Y'], '   a. 魂2500血量, 会沉默/月火/攻击目标')
+    table.insert(guide['Y'], '   　 **所有输出飞当前主坦克最快速度清理魂**')
+    table.insert(guide['Y'], '   　 **保持主坦健康, 治疗队友会有被沉默风险**')
+    table.insert(guide['Y'], '   　 **非主坦谨慎使用群嘲, 以免Boss喷吐团队**')
+    table.insert(guide['Y'], '8. 德鲁伊龙会释放闪电箭')
+    table.insert(guide['Y'], '   　 **适当分散**')
+
     if guide[boss] then
       for i, v in ipairs(guide[boss]) do
         SendChatMessage(v, 'RAID_WARNING')
