@@ -15,7 +15,7 @@ highlight colorcolumn ctermbg=darkgray
 autocmd Filetype c setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
 autocmd Filetype cpp setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
 autocmd Filetype python setlocal nomodeline tabstop=8 expandtab shiftwidth=4 softtabstop=4 tw=80
-autocmd Filetype lua setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2 tw=80
+autocmd Filetype lua setlocal nomodeline tabstop=8 expandtab shiftwidth=4 softtabstop=4 tw=80
 autocmd Filetype gitcommit setlocal nomodeline noautoindent tw=72
 
 syntax on
