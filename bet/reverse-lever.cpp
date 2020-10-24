@@ -11,15 +11,17 @@ void process(const double a, const double x) {
             printf("--------\n");
             negative = false;
         }
-        printf("b = %.2f?, y = %.2f, g = %.2f\n", b, yk * x, gk * x);
+        printf("b = %.2f, y = %.2f, g = %.2f\n", b, yk * x, gk * x);
     }
 }
 
 int main(int argc, char *argv[]) {
-    assert(argc == 3);
-    double a, x;
+    double a, x = 1.0;
+    assert(argc == 2 || argc == 3);
     sscanf(argv[1], "%lf", &a);
-    sscanf(argv[2], "%lf", &x);
+    if (argc == 3) {
+      sscanf(argv[2], "%lf", &x);
+    }
     process(a, x);
     return 0;
 }
