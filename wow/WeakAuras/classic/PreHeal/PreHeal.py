@@ -17,11 +17,11 @@ def distance2(lhs, rhs):
 def run():
     cords = [
         (0, 0, 0),          # 0
-        (255, 124, 10)      # 1
+        (173, 127, 168)     # 1
     ]
 
     wait('j')
-    point = pixel(16, 64)
+    point = pixel(112, 64)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
     if idx != 0:
         press('k')
