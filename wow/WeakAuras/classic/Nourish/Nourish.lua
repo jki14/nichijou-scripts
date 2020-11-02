@@ -13,7 +13,15 @@ function()
     return false
 end
 
--- trigger-3
+-- trigger-3 Every Frame
+function()
+    if GetShapeshiftForm(true) == 0 then
+        return true
+    end
+    return false
+end
+
+-- trigger-4
 -- UNIT_SPELLCAST_START,UNIT_SPELLCAST_DELAYED,UNIT_SPELLCAST_STOP,UNIT_SPELLCAST_FAILED,UNIT_SPELLCAST_INTERRUPTED
 function(e, unit, castGUID, spellID)
     if unit ~= 'player' or spellID ~= 5188 then

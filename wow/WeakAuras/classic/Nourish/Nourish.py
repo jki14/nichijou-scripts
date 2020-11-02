@@ -17,17 +17,19 @@ def distance2(lhs, rhs):
 def run():
     cords = [
         (0, 0, 0),          # 0
-        (255, 124, 10)      # 1
+        (113, 159, 207),    # 1
+        (173, 127, 168)     # 2
     ]
 
     wait('shift+3')
     point = pixel(64, 64)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
-    if idx != 0:
+    if idx == 2:
         press('k')
     sleep(0.010)
-    hotkey('ctrl', 'f4')
-    sys.stdout.write('[%s] PreHeal index %d with %d epsilon.\n' % (
+    if idx != 0:
+        hotkey('ctrl', 'f4')
+    sys.stdout.write('[%s] Nourish index %d with %d epsilon.\n' % (
                      datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                      idx, eps))
     sleep(0.010)
