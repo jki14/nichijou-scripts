@@ -40,6 +40,9 @@ wa_global.mostDamaged.map()
 function()
   if wa_global and wa_global.mostDamaged and wa_global.mostDamaged.map then
     wa_global.mostDamaged.map()
+    C_Timer.After(0.2, function()
+        wa_global.mostDamaged.map()
+    end)
   end
   return false
 end
