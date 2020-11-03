@@ -14,6 +14,9 @@ end
 function()
   if wa_global and wa_global.touch and wa_global.touch.update then
     wa_global.touch.update()
+    C_Timer.After(0.2, function()
+        wa_global.touch.update()
+    end)
   end
   return false
 end

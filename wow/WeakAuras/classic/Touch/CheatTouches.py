@@ -2,7 +2,7 @@ import sys
 
 from datetime import datetime
 from keyboard import wait
-from pyautogui import pixel, hotkey
+from pyautogui import pixel, press, hotkey
 from time import sleep
 
 
@@ -12,6 +12,20 @@ def distance2(lhs, rhs):
     for i in range(m):
         foo += (lhs[i] - rhs[i]) ** 2
     return foo
+
+
+def halt_touch():
+    cords = [
+        (0, 0, 0),          # 0
+        (173, 127, 168)     # 1
+    ]
+    point = pixel(16, 64)
+    eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
+    if idx == 1:
+        press('k')
+    sys.stdout.write('[%s] Halt Touch index %d with %d epsilon.\n' % (
+                     datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                     idx, eps))
 
 
 def run():
@@ -31,6 +45,7 @@ def run():
     ]
 
     wait('shift+e')
+    halt_touch()
     point = pixel(16, 16)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
     if idx != 0:
