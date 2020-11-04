@@ -10,11 +10,12 @@ function()
   return ''
 end
 
--- trigger custom-trigger
+-- trigger-2
+-- PLAYER_LEVEL_UP,PLAYER_TALENT_UPDATE,PLAYER_EQUIPMENT_CHANGED,PLAYER_TARGET_CHANGED
 function()
   if wa_global and wa_global.touch and wa_global.touch.update then
     wa_global.touch.update()
-    C_Timer.After(0.2, function()
+    C_Timer.After(0.1, function()
         wa_global.touch.update()
     end)
   end
