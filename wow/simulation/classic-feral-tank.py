@@ -10,8 +10,10 @@ def armor_dr(amount):
     # return amount / (amount + 7285.)
     # Armor / (Armor + 400 + 85 * AttackerLevel)
     # Hard Cap: 17265
-    amount *= 1.25
-    amount += 416 + 450
+    amount *= 1.25          # Inspiration
+    amount += 384 + 16 * 2  # Improved Mark of the Wild
+    amount += 450           # Elixir of Superior Defense
+    amount += 25 * 2        # Elixir of Greater Agility
     return min(amount / (amount + 5755), 0.75)
 
 
