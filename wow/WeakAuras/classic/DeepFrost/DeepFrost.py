@@ -19,7 +19,10 @@ def run():
         (0, 0, 0),          # 0
         (113, 159, 207),    # 1
         (154, 226, 52),     # 2
-        (173, 127, 168)     # 3
+        (173, 127, 168),    # 3
+        (238, 238, 238),    # 4
+        (52, 226, 226),     # 5
+        (85, 87, 83)        # 6
     ]
 
     point = pixel(16, 16)
@@ -30,6 +33,12 @@ def run():
         press('h')
     elif idx == 3:
         press('t')
+    elif idx == 4:
+        hotkey('alt', ']')
+    elif idx == 5:
+        hotkey('alt', '[')
+    elif idx == 6:
+        hotkey('alt', 'shift', '3')
     sys.stdout.write('[%s] Nourish index %d with %d epsilon.\n' % (
                      datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                      idx, eps))
