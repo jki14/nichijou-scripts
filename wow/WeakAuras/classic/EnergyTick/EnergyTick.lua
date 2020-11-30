@@ -1,4 +1,4 @@
--- Trigger: UNIT_POWER_FREQUENT ENERGYTICK
+-- Trigger: UNIT_POWER_FREQUENT:player,ENERGYTICK
 function(a, event, unit, power)
   local flag = false
   local currMana = UnitPower('player', 0)
