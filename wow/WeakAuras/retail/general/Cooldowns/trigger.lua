@@ -209,7 +209,7 @@ function (e_event, e_timestamp, e_type, e_hideCaster, e_sourceGUID, e_sourceName
         end
     )
     WA_CD = foo
-    -- common triger
+    -- common trigger
     local foo = WA_CD and WA_CD[1]
     if foo then
         return true
