@@ -2,17 +2,16 @@
 local healerList = { }
 healerList['尐酒窝'] = 1
 healerList['霪雨滑人'] = 2
-healerList['小琪琪'] = 3
+healerList['丑尼娜萨德星'] = 3
 healerList['依然活着'] = 4
-healerList['犇犇萌牛丶'] = 5
+healerList['菅田将晖'] = 5
 healerList['假女乃亮'] = 6
-healerList['上古巨神'] = 7
-healerList['Pioa'] = 8
-healerList['存款为零'] = 9
-healerList['菅田将晖'] = 10
-healerList['Yellowkitty'] = 11
-healerList['皮皮卡'] = 12
-healerList['丑尼娜萨德星'] = 13
+healerList['犇犇萌牛丶'] = 7
+healerList['盼望'] = 8
+healerList['一株小盆栽'] = 9
+healerList['元气森林'] = 10
+healerList['暮雪宸'] = 11
+healerList['Pioa'] = 12
 
 wa_global = wa_global or { }
 wa_global.loatheb = wa_global.loatheb or { }
