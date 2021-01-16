@@ -2,6 +2,7 @@
 function()
     local function rotate(trinkets, slotId)
         local effectiveWindow = { }
+        effectiveWindow[23041] = 102 -- Slayer's Crest
         effectiveWindow[21180] = 102 -- Earthstrike
         effectiveWindow[19949] = 102 -- Zandalarian Hero Medallion
         effectiveWindow[23558] = 102 -- The Burrower's Shell
@@ -36,8 +37,8 @@ function()
     end
     
     local feral_offensive = { 
+        23041, -- Slayer's Crest
         21180, -- Earthstrike
-        19949, -- Zandalarian Hero Medallion
         11815  -- Hand of Justice
     }
     rotate(feral_offensive, 13)
