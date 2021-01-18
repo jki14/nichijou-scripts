@@ -66,8 +66,8 @@ function corruptedMindCompile()
     local numDruid = #druidList
     local numHealer = numPriest + numShaman + numDruid
 
-    local majorGap= math.floor(numHealer / numPriest)
-    local minorGap = math.floor((numHealer - numPriest) / numDruid)
+    local majorGap= math.floor(numHealer / numPriest + 0.5)
+    local minorGap = math.floor((numHealer - numPriest) / numDruid + 0.5)
 
     local healers = { }
     local j = 0
@@ -84,9 +84,15 @@ function corruptedMindCompile()
             if minor == 0 and next(druidList) then
                 healers[i] = druidList[1]
                 table.remove(druidList, 1)
-            else
+            elseif next(shamanList) then
                 healers[i] = shamanList[1]
                 table.remove(shamanList, 1)
+            elseif next(druidList) then
+                healers[i] = druidList[1]
+                table.remove(druidList, 1)
+            else
+                healers[i] = priestList[1]
+                table.remove(priestList, 1)
             end
         end
     end
