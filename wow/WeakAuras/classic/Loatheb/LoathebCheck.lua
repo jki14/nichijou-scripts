@@ -47,16 +47,18 @@ function corruptedMindCompile()
         if UnitExists(unit) then
             local _, _, classId = UnitClass(unit)
             local name, _ = UnitName(unit)
-            if GetPartyAssignment('MAINTANK', unit) or
-                    GetPartyAssignment('MAINASSIST', unit) then
-                print('[Warning] skip ' .. name)
-            else
-                if classId == 5 then
-                    table.insert(priestList, name)
-                elseif classId == 7 then
-                    table.insert(shamanList, name)
-                elseif classId == 11 then
-                    table.insert(druidList, name)
+            if classId == 5 or classId == 7 or classId == 11 then
+                if GetPartyAssignment('MAINTANK', unit) or
+                        GetPartyAssignment('MAINASSIST', unit) then
+                    print('[Warning] skip ' .. name)
+                else
+                    if classId == 5 then
+                        table.insert(priestList, name)
+                    elseif classId == 7 then
+                        table.insert(shamanList, name)
+                    elseif classId == 11 then
+                        table.insert(druidList, name)
+                    end
                 end
             end
         end
