@@ -58,7 +58,7 @@ def main():
                           'Account',
                           '150998550#2',
                           '比格沃斯',
-                          '水果店搬运工'),
+                          'Pekorinu'),
              ['比格沃斯 - 意大力炮' ])
 
   if win.batch:
