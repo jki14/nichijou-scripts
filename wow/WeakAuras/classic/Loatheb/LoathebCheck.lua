@@ -11,6 +11,7 @@ healerList['飞天小肚兜'] = 8
 healerList['一株小盆栽'] = 9
 healerList['Deerlight'] = 10
 healerList['寇斯'] = 11
+healerList['上古巨神'] = 12
 
 wa_global = wa_global or { }
 wa_global.loatheb = wa_global.loatheb or { }
