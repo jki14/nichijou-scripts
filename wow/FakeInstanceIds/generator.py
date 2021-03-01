@@ -4,7 +4,7 @@ from random import randint
 def solution(n):
     foo = []
     for i in range(n):
-        foo.append('hack-108%07d' % randint(1, 9999999))
+        foo.append('hack-108%08d' % randint(1, 99999999))
     return list(set(foo))
 
 
