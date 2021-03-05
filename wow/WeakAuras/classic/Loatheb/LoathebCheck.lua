@@ -1,17 +1,18 @@
 -- on-init
 local healerList = { }
-healerList['尐酒窝'] = 1
-healerList['Promisedland'] = 2
-healerList['皮皮卡'] = 3
-healerList['羴羴萌咩丶'] = 4
-healerList['你是真的狗'] = 5
-healerList['霪雨滑人'] = 6
-healerList['游城哈子'] = 7
-healerList['飞天小肚兜'] = 8
-healerList['一株小盆栽'] = 9
-healerList['Deerlight'] = 10
-healerList['寇斯'] = 11
+healerList['Deerlight'] = 1
+healerList['麥哲倫'] = 2
+healerList['霪雨滑人'] = 3
+healerList['尐酒窝'] = 4
+healerList['一株小盆栽'] = 5
+healerList['皮皮卡'] = 6
+healerList['怀旧狗尾巴艹'] = 7
+healerList['Promisedland'] = 8
+healerList['你是真的狗'] = 9
+healerList['小坏不在'] = 10
+healerList['哈棒豆爺'] = 11
 healerList['上古巨神'] = 12
+healerList['Llxx'] = 13
 
 wa_global = wa_global or { }
 wa_global.loatheb = wa_global.loatheb or { }
