@@ -1,5 +1,5 @@
 -- Actions: On-Init
-C_Timer.After(2, function()
+C_Timer.After(1, function()
     if not UnitInRaid('player') then
         SendChatMessage('123', 'WHISPER', nil, '二舅的姐夫')
     end
