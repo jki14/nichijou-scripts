@@ -4,6 +4,7 @@ function()
         local effectiveWindow = { }
         effectiveWindow[23041] = 102 -- Slayer's Crest
         effectiveWindow[21180] = 102 -- Earthstrike
+        effectiveWindow[21670] = 162 -- Badge of the Swarmguard
         effectiveWindow[19949] = 102 -- Zandalarian Hero Medallion
         effectiveWindow[23558] = 102 -- The Burrower's Shell
 
@@ -23,7 +24,7 @@ function()
                 if itemId ~= otherId then
                     local startTime, duration, _ = GetItemCooldown(itemId)
                     local cooldown = startTime + duration - GetTime()
-                    if cooldown < 40 then
+                    if cooldown < 40 or i == #trinkets then
                         EquipItemByName(itemId, slotId)
                         break
                     end
@@ -39,7 +40,8 @@ function()
     local feral_offensive = { 
         23041, -- Slayer's Crest
         21180, -- Earthstrike
-        11815  -- Hand of Justice
+        21670, -- Badge of the Swarmguard
+        23041  -- Slayer's Crest
     }
     rotate(feral_offensive, 13)
 
