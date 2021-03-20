@@ -1,12 +1,40 @@
+-- action on-init
+function checkTalent(spellId)
+    local keyName = GetSpellInfo(spellId)
+    for tabIndex = 1, GetNumTalentTabs() do
+        for i = 1, GetNumTalents(tabIndex) do
+            local name, _, _, _, spent = GetTalentInfo(tabIndex, i)
+            if name == keyName then
+                return spent > 0 and true or false
+            end
+        end
+    end
+    return false
+end
+
+wa_global = wa_global or { }
+wa_global.spec5 = nil
+if checkTalent(16952) then
+    wa_global.spec5 = 'feral'
+elseif checkTalent(17116) then
+    wa_global.spec5 = 'resto'
+end
+
+
 -- Trigger: PLAYER_REGEN_ENABLED
 function()
     local function rotate(trinkets, slotId)
         local effectiveWindow = { }
+        -- Feral Trinkets
         effectiveWindow[23041] = 102 -- Slayer's Crest
         effectiveWindow[21180] = 102 -- Earthstrike
         effectiveWindow[21670] = 162 -- Badge of the Swarmguard
         effectiveWindow[19949] = 102 -- Zandalarian Hero Medallion
         effectiveWindow[23558] = 102 -- The Burrower's Shell
+        -- Resto Trinkets
+        effectiveWindow[23047] = 92  -- Eye of the Dead
+        effectiveWindow[20636] = 77  -- Hibernation Crystal
+        effectiveWindow[19955] = 167 -- Wushoolay's Charm of Nature
 
         local itemId, _ = GetInventoryItemID('player', slotId)
         local startTime, duration, _ = GetItemCooldown(itemId)
@@ -33,24 +61,43 @@ function()
         end
     end
 
+    if not wa_global or not wa_global.spec5 then
+        return false
+    end
+
     if InCombatLockdown() then
         return false
     end
     
-    local feral_offensive = { 
-        23041, -- Slayer's Crest
-        21180, -- Earthstrike
-        21670, -- Badge of the Swarmguard
-        23041  -- Slayer's Crest
-    }
-    rotate(feral_offensive, 13)
+    if wa_global.spec5 == 'feral' then
+        local feral_offensive = {
+            23041, -- Slayer's Crest
+            21180, -- Earthstrike
+            21670, -- Badge of the Swarmguard
+            23041  -- Slayer's Crest
+        }
+        rotate(feral_offensive, 13)
 
-    local feral_defensive = {
-        18853, -- Insignia of the Horde
-        23558, -- The Burrower's Shell
-        13966  -- Mark of Tyranny
-    }
-    rotate(feral_defensive, 14)
+        local feral_defensive = {
+            18853, -- Insignia of the Horde
+            23558, -- The Burrower's Shell
+            13966  -- Mark of Tyranny
+        }
+        rotate(feral_defensive, 14)
+    elseif wa_global.spec5 == 'resto' then
+        local resto_active = {
+            23047, -- Eye of the Dead
+            20636, -- Hibernation Crystal
+            19955, -- Wushoolay's Charm of Nature
+            23047  -- Eye of the Dead
+        }
+        rotate(resto_active, 13)
+
+        local resto_passive = {
+            19394  -- Rejuvenating Gem
+        }
+        rotate(resto_passive, 14)
+    end
 
     return false
 end
