@@ -37,9 +37,11 @@ function(e, timestamp, event, hideCaster, sourceGUID, sourceName,
             end
         end
         local msg = cur .. ' 已治疗; ' .. nxt .. ' 准备'
-        SendChatMessage(msg, 'RAID')
-        SendChatMessage(msg, 'RAID')
-        SendChatMessage(msg, 'RAID')
+        if UnitIsGroupAssistant('player') or destGUID == UnitGUID('player') then
+            SendChatMessage(msg, 'RAID')
+            SendChatMessage(msg, 'RAID')
+            SendChatMessage(msg, 'RAID')
+        end
     end
 
     return false
