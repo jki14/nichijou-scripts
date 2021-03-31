@@ -9,9 +9,9 @@ healerList['上杉和也'] = 6
 healerList['檬味小西几'] = 7
 healerList['请叫牛奶'] = 8
 healerList['满大街到处是'] = 9
-healerList['依然活着'] = 10
-healerList['她走远了丶'] = 11
-healerList['熊熊族的钢蛋'] = 12
+healerList['拾这一抹残妆'] = 10
+healerList['依然活着'] = 11
+healerList['火风雷电'] = 12
 healerList['裂空无痕'] = 13
 
 wa_global = wa_global or { }
