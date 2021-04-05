@@ -65,39 +65,41 @@ function()
         return false
     end
 
-    if InCombatLockdown() then
-        return false
-    end
-    
-    if wa_global.spec5 == 'feral' then
-        local feral_offensive = {
-            23041, -- Slayer's Crest
-            21180, -- Earthstrike
-            21670, -- Badge of the Swarmguard
-            23041  -- Slayer's Crest
-        }
-        rotate(feral_offensive, 13)
+    C_Timer.After(0.1, function()
+        if InCombatLockdown() then
+            return false
+        end
 
-        local feral_defensive = {
-            18853, -- Insignia of the Horde
-            23558, -- The Burrower's Shell
-            13966  -- Mark of Tyranny
-        }
-        rotate(feral_defensive, 14)
-    elseif wa_global.spec5 == 'resto' then
-        local resto_active = {
-            23047, -- Eye of the Dead
-            20636, -- Hibernation Crystal
-            19955, -- Wushoolay's Charm of Nature
-            23047  -- Eye of the Dead
-        }
-        rotate(resto_active, 13)
+        if wa_global.spec5 == 'feral' then
+            local feral_offensive = {
+                23041, -- Slayer's Crest
+                21180, -- Earthstrike
+                21670, -- Badge of the Swarmguard
+                23041  -- Slayer's Crest
+            }
+            rotate(feral_offensive, 13)
 
-        local resto_passive = {
-            19394  -- Rejuvenating Gem
-        }
-        rotate(resto_passive, 14)
-    end
+            local feral_defensive = {
+                18853, -- Insignia of the Horde
+                23558, -- The Burrower's Shell
+                13966  -- Mark of Tyranny
+            }
+            rotate(feral_defensive, 14)
+        elseif wa_global.spec5 == 'resto' then
+            local resto_active = {
+                23047, -- Eye of the Dead
+                20636, -- Hibernation Crystal
+                19955, -- Wushoolay's Charm of Nature
+                23047  -- Eye of the Dead
+            }
+            rotate(resto_active, 13)
+
+            local resto_passive = {
+                19394  -- Rejuvenating Gem
+            }
+            rotate(resto_passive, 14)
+        end
+    end)
 
     return false
 end
