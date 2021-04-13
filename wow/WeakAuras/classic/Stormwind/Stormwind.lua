@@ -17,6 +17,6 @@ function()
 end
 
 -- macro
-/targetexact Officer Pomeroy
-/targetexact Officer Jaxon
 /targetexact Officer Brady
+/targetexact Officer Jaxon
+/targetexact Officer Pomeroy
