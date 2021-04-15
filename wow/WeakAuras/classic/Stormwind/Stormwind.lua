@@ -4,6 +4,9 @@ function()
     officiers['14438'] = 2
     officiers['14423'] = 6
     officiers['14439'] = 3
+    officiers['14363'] = 2
+    officiers['14367'] = 6
+    officiers['14365'] = 3
 
     local guid = select(6, strsplit("-", UnitGUID('target')))
     if guid and officiers[guid] then
@@ -20,3 +23,6 @@ end
 /targetexact Officer Brady
 /targetexact Officer Jaxon
 /targetexact Officer Pomeroy
+/targetexact Thief Catcher Farmountain
+/targetexact Thief Catcher Thunderbrew
+/targetexact Thief Catcher Shadowdelve
