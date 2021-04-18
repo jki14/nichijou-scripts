@@ -1,27 +1,44 @@
 #include <cassert>
 #include <cstdio>
+#include <utility>
 
-void process(const double a, const double x) {
-    bool negative = true;
-    for (int i = 1; i <= 999; ++i) {
-        const double b = i * 0.01;
-        const double yk = (a + 1.0) / (b + 1.0);
-        const double gk = a - yk;
-        if (negative && gk > -1e-6) {
-            printf("--------\n");
-            negative = false;
+void process(double const a, double const x, double const b) {
+    static auto const solution =
+            [](double const a, double const x, double const b)
+                    -> std::pair<double, double> {
+        double const yk = (a + 1.0) / (b + 1.0);
+        double const gk = a - yk;
+        return std::make_pair(yk * x, gk * x);
+    };
+    if (b < 0.0) {
+        bool lose = true;
+        for (int i = 1; i <= 999; ++i) {
+            double const b = i * 0.01;
+            auto const foobar = solution(a, x, b);
+            if (lose && foobar.second > -1e-6) {
+                printf("--------\n");
+                lose = false;
+            }
+            printf("b = %.2f, y = %.2f, g = %.2f\n",
+                   b, foobar.first, foobar.second);
         }
-        printf("b = %.2f, y = %.2f, g = %.2f\n", b, yk * x, gk * x);
+    } else {
+        auto const foobar = solution(a, x, b);
+        printf("b = %.2f, y = %.2f, g = %.2f\n",
+               b, foobar.first, foobar.second);
     }
 }
 
 int main(int argc, char *argv[]) {
-    double a, x = 1.0;
-    assert(argc == 2 || argc == 3);
+    double a, x = 1.0, b = -1.0;
+    assert(2 <= argc && argc <= 4);
     sscanf(argv[1], "%lf", &a);
-    if (argc == 3) {
+    if (argc >= 3) {
       sscanf(argv[2], "%lf", &x);
     }
-    process(a, x);
+    if (argc == 4) {
+      sscanf(argv[3], "%lf", &b);
+    }
+    process(a, x, b);
     return 0;
 }
