@@ -23,6 +23,10 @@ void process(double const a, double const x, double const b) {
                    b, foobar.first, foobar.second);
         }
     } else {
+        double const c = (a + 1.0) / a - 1.0;
+        auto const foocar = solution(a, x, c);
+        printf("b = %.2f, y = %.2f, g = %.2f\n",
+               c, foocar.first, foocar.second);
         auto const foobar = solution(a, x, b);
         printf("b = %.2f, y = %.2f, g = %.2f\n",
                b, foobar.first, foobar.second);
