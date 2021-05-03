@@ -21,16 +21,16 @@ def shoot(key):
     sys.stdout.flush()
 
 
-def oneround(xpos, ypos):
+def oneround(xpos, ypos, dy = -370):
     sleep(urandom32(2, 6))
-    click(xpos, ypos)
+    click(xpos, ypos + dy)
     sleep(urandom32(2, 6))
     shoot('p')
 
 
-def relogin(xpos, ypos):
+def relogin(xpos, ypos, dy = -370):
     sleep(urandom32(2, 6))
-    click(xpos, ypos)
+    click(xpos, ypos + dy)
     sleep(urandom32(2, 6))
     press('esc')
     sleep(urandom32(2, 6))
