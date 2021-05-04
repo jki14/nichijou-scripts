@@ -31,7 +31,7 @@ def oneround():
 
 
 def relogin():
-    xpos, ypos = 720, 525
+    xpos, ypos = 1040, 655
     if size() == (3440, 1440):
         xpos, ypos = 1720, 805
     if size() == (2560, 1440):
