@@ -1,4 +1,4 @@
--- trigger-2 Every Frame
+-- trigger-3 Every Frame
 function()
     local ts = GetTime() * 1000
     if wa_global and wa_global.nourish and wa_global.nourish.window_start then
@@ -9,14 +9,6 @@ function()
                 return true
             end
         end
-    end
-    return false
-end
-
--- trigger-3 Every Frame
-function()
-    if GetShapeshiftForm(true) == 0 then
-        return true
     end
     return false
 end
