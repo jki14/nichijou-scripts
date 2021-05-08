@@ -55,21 +55,30 @@ end
 
 
 -- trigger-3
--- UNIT_SPELLCAST_START,UNIT_SPELLCAST_STOP,UNIT_SPELLCAST_FAILED,UNIT_SPELLCAST_INTERRUPTED
+-- UNIT_SPELLCAST_START,UNIT_SPELLCAST_DELAYED,UNIT_SPELLCAST_STOP,UNIT_SPELLCAST_FAILED,UNIT_SPELLCAST_INTERRUPTED
 function(e, unit, castGUID, spellID)
-    local touches = { }
-    touches[5185] = 1
-    touches[5186] = 2
-    touches[5187] = 3
-    touches[5188] = 4
-    touches[5189] = 5
-    touches[6778] = 6
-    touches[8903] = 7
-    touches[9758] = 8
-    touches[9888] = 9
-    touches[9889] = 10
-    touches[25297] = 11
-    if unit ~= 'player' or not touches[spellID] then
+    local directHeals = { }
+    directHeals[5185] = 'T1'
+    directHeals[5186] = 'T2'
+    directHeals[5187] = 'T3'
+    directHeals[5188] = 'T4'
+    directHeals[5189] = 'T5'
+    directHeals[6778] = 'T6'
+    directHeals[8903] = 'T7'
+    directHeals[9758] = 'T8'
+    directHeals[9888] = 'T9'
+    directHeals[9889] = 'T10'
+    directHeals[25297] = 'T11'
+    directHeals[8936] = 'R1'
+    directHeals[8938] = 'R2'
+    directHeals[8939] = 'R3'
+    directHeals[8940] = 'R4'
+    directHeals[8941] = 'R5'
+    directHeals[9750] = 'R6'
+    directHeals[9856] = 'R7'
+    directHeals[9857] = 'R8'
+    directHeals[9858] = 'R9'
+    if unit ~= 'player' or not directHeals[spellID] then
         return false
     end
     wa_global = wa_global or { }
