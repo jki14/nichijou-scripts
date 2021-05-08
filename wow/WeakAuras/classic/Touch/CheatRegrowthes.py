@@ -44,9 +44,9 @@ def run():
         (104, 57, 170)      # 11
     ]
 
-    wait('alt+2')
+    wait('ctrl+e')
     halt_touch()
-    point = pixel(160, 64)
+    point = pixel(64, 64)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
     if idx != 0:
         hotkey('alt', 'f%d' % (4 + idx))

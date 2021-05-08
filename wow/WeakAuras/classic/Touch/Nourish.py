@@ -22,7 +22,7 @@ def run():
     ]
 
     wait('shift+3')
-    point = pixel(64, 64)
+    point = pixel(112, 64)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
     if idx == 2:
         press('k')

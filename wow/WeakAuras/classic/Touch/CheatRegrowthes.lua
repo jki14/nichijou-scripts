@@ -1,6 +1,6 @@
 -- actions on-init
 for i = 1, 6 do
-  SetBindingSpell('ALT-F' .. tostring(4 + i), 'Regrowth(Rank ' .. tostring(i) .. ')')
+  SetBindingSpell('ALT-CTRL-F' .. tostring(4 + i), 'Regrowth(Rank ' .. tostring(i) .. ')')
 end
 
 -- animations main color
