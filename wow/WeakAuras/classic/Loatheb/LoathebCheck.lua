@@ -9,7 +9,7 @@ healerList['超可爱的圈妹'] = 6
 healerList['绯月滢'] = 7
 healerList['依然在一起丶'] = 8
 healerList['小熊餠干'] = 9
-healerList['依然活着'] = 10
+healerList['筱狐狸'] = 10
 healerList['马苏'] = 11
 healerList['莫棄'] = 12
 
