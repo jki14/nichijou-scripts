@@ -2,8 +2,8 @@
 local healerList = { }
 healerList['疯狂牧牧'] = 1
 healerList['无情的工具萨'] = 2
-healerList['花爷丶'] = 3
-healerList['念无念念'] = 4
+healerList['依然活着'] = 3
+healerList['嫂子不如饺子'] = 4
 healerList['漩渦'] = 5
 healerList['超可爱的圈妹'] = 6
 healerList['绯月滢'] = 7
