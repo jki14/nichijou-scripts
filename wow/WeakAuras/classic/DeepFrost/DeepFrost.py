@@ -25,7 +25,7 @@ def run():
         (85, 87, 83)        # 6
     ]
 
-    point = pixel(16, 16)
+    point = pixel(650, 310)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
     if idx == 1:
         press('g')
