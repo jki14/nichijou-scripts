@@ -48,7 +48,7 @@ def run():
     point = pixel(16, 64)
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
     if idx != 0:
-        hotkey('ctrl', 'num%d' % (idx % 10))
+        hotkey('num%d' % (idx % 10))
     sys.stdout.write('[%s] Regrowth index %d with %d epsilon.\n' % (
                      datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                      idx, eps))
