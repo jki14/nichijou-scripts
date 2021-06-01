@@ -10,11 +10,11 @@ function()
       local foo = UnitHealthMax("target") - UnitHealth("target")
       if foo > 0 then
         local bar = 1
-        while bar < 9 and wa_global.regrowth.predicted[bar + 1] < foo do
+        while wa_global.regrowth.predicted[bar + 1] and wa_global.regrowth.predicted[bar + 1] < foo do
           bar = bar + 1
         end
-        local r = (bar / 9) / 3.0
-        local g = ((bar % 9) / 3) / 3.0
+        local r = math.floor(bar / 9) / 3.0
+        local g = math.floor((bar % 9) / 3) / 3.0
         local b = (bar % 3) / 3.0
         return r, g, b
       end
