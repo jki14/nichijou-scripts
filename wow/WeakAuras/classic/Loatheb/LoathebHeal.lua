@@ -8,7 +8,7 @@ function(e, timestamp, event, hideCaster, sourceGUID, sourceName,
         wa_global.loatheb.start = GetTime()
         return false
     elseif wa_global and wa_global.loatheb and wa_global.loatheb.start then
-        if GetTime() - wa_global.loatheb.start < 3 then
+        if GetTime() - wa_global.loatheb.start < 8 then
             return false
         end
     end
