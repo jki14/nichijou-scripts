@@ -32,6 +32,7 @@ function()
         effectiveWindow[19949] = 102 -- Zandalarian Hero Medallion
         effectiveWindow[23558] = 102 -- The Burrower's Shell
         -- Resto Trinkets
+        effectiveWindow[29376] = 102 -- Essence of the Martyr
         effectiveWindow[23047] = 92  -- Eye of the Dead
         effectiveWindow[20636] = 77  -- Hibernation Crystal
         effectiveWindow[19955] = 167 -- Wushoolay's Charm of Nature
@@ -87,6 +88,7 @@ function()
             rotate(feral_defensive, 14)
         elseif wa_global.spec5 == 'resto' then
             local resto_active = {
+                29376, -- Essence of the Martyr
                 23047, -- Eye of the Dead
                 20636, -- Hibernation Crystal
                 19955, -- Wushoolay's Charm of Nature
