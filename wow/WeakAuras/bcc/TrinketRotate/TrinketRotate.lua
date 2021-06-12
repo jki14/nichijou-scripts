@@ -36,6 +36,8 @@ function()
         effectiveWindow[23047] = 92  -- Eye of the Dead
         effectiveWindow[20636] = 77  -- Hibernation Crystal
         effectiveWindow[19955] = 167 -- Wushoolay's Charm of Nature
+        -- General Trinkets
+        effectiveWindow[4397] = 3590 -- Gnomish Cloaking Device
 
         local itemId, _ = GetInventoryItemID('player', slotId)
         local startTime, duration, _ = GetItemCooldown(itemId)
