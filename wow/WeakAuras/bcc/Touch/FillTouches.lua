@@ -7,6 +7,12 @@ function()
       foo = foo .. ', ' .. tostring(wa_global.touch.predicted[i])
     end
   end
+  if wa_global and wa_global.rejuv and wa_global.rejuv.predicted then
+    if foo ~= '' then
+      foo = foo .. '\n'
+    end
+    foo = foo .. 'R: ' .. tostring(wa_global.rejuv.predicted)
+  end
   if wa_global and wa_global.regrowth and wa_global.regrowth.predicted then
     if foo ~= '' then
       foo = foo .. '\n'
@@ -92,6 +98,34 @@ function fillTouches()
     return foo
   end
 
+  local function predictRejuv(playerLevel, healingPower,
+                              improvedRejuvCoefficient,
+                              giftOfNatureCoefficient,
+                              empoweredRejuvCoefficient)
+    local rejuvs = {
+      level = {4, 10, 16, 22, 28, 34, 40, 46, 52, 58, 60, 63, 69},
+      value = {32, 56, 116, 180, 244, 304, 388, 488, 608, 756, 888, 932, 1060}
+    }
+
+    local index = 1
+    while rejuvs.level[index + 1] and rejuvs.level[index + 1] <= playerLevel do
+        index = index + 1
+    end
+    if not rejuvs.level[index] or rejuvs.level[index] > playerLevel then
+        return nil
+    end
+
+    local foo = rejuvs.value[index]
+
+    local ext = healingPower * 0.8 * empoweredRejuvCoefficient
+
+    foo = foo + ext
+    foo = foo * (giftOfNatureCoefficient + improvedRejuvCoefficient - 1.0)
+    foo = math.floor(foo + 0.5)
+
+    return foo
+  end
+
   local function predictRegrowth(index, playerLevel, healingPower,
                                  giftOfNatureCoefficient,
                                  improvedRegrowthCoefficient)
@@ -133,9 +167,11 @@ function fillTouches()
 
   local playerLevel = UnitLevel('player')
   local healingPower = GetSpellBonusHealing()
+  local improvedRejuvCoefficient = 1.0 + getTalentSpent(17111) * 0.05
   local giftOfNatureCoefficient = 1.0 + getTalentSpent(17104) * 0.02
   local improvedRegrowthCoefficient = 1.0 + getTalentSpent(17074) * 0.10
   local empoweredTouchCoefficient = 1.0 + getTalentSpent(33879) * 0.10
+  local empoweredRejuvCoefficient = 1.0 + getTalentSpent(33886) * 0.04
 
   local touch = wa_global and wa_global.touch or { }
   touch.predicted = { }
@@ -148,6 +184,11 @@ function fillTouches()
     end
     table.insert(touch.predicted, foo)
   end
+
+  local rejuv = {predicted = predictRejuv(playerLevel, healingPower,
+                                          improvedRejuvCoefficient,
+                                          giftOfNatureCoefficient,
+                                          empoweredRejuvCoefficient)}
 
   local regrowth = wa_global and wa_global.regrowth or { }
   regrowth.predicted = { }
@@ -163,6 +204,7 @@ function fillTouches()
 
   wa_global = wa_global or { }
   wa_global.touch = touch
+  wa_global.rejuv = rejuv
   wa_global.regrowth = regrowth
 end
 
