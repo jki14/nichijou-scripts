@@ -5,9 +5,8 @@ end
 
 -- trigger duration
 function()
-  local index = 13
   local foo = wa_global and wa_global.touch and wa_global.touch.predicted and
-              wa_global.touch.predicted[index] or 0
+              wa_global.touch.predicted[#wa_global.touch.predicted] or 0
   local bar = UnitHealthMax("target")
   return foo, bar, true
 end
