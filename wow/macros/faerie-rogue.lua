@@ -1,0 +1,1 @@
+/run for k=1,3 do local c=select(3,UnitClass(string.format('arena%d',k)))if not c or c==4 then local i={133252,133242} EditMacro(121,'!faerieRogue',i[k]or 133269,string.format('#showtooltips Faerie Fire\n/cast [@arena%d]Faerie Fire',k))break end end
