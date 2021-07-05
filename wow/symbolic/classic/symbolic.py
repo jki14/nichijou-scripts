@@ -70,7 +70,8 @@ def main():
             '602893969#1',
             '150713399#1',
             '555095699#1',
-            '153384600#1'])
+            '153384600#1',
+            '158551774#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
@@ -80,6 +81,7 @@ def main():
              ['比格沃斯 - 仍然活着',
               '比格沃斯 - 筱狐狸',
               '比格沃斯 - 八六',
+              '比格沃斯 - 打工仔丶',
               '碧空之歌 - 依然活着'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
