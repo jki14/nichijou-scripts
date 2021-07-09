@@ -34,12 +34,18 @@ function WorldBossesMsg()
   foo['Dreamstalker'] = '巡梦者 (调试信息)'
   foo['Jademir Oracle'] = '加德米尔龙族 (调试信息)'
 
+  foo['Doom Lord Kazzak'] = '末日领主卡扎克'
+  foo['Doomwalker'] = '末日行者'
+
   foo['Azshara'] = '艾萨拉'
   foo['Blasted Lands'] = '诅咒之地'
   foo['Duskwood'] = '暮色森林'
   foo['The Hinterlands'] = '辛特兰'
   foo['Feralas'] = '菲拉斯'
   foo['Ashenvale'] = '灰谷'
+
+  foo['Hellfire Peninsula'] = '地狱火半岛'
+  foo['Shadowmoon Valley'] = '影月谷'
 
   local bar = select(1, UnitName('target'))
   bar = foo[bar] or bar
