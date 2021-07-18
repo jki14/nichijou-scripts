@@ -17,9 +17,7 @@ function(e, text, _, _, _, _, _, _, _, _, _, _, guid, ...)
                            dt.year, dt.month, dt.monthDay,
                            dt.hour, dt.minute)
         local name, realm = UnitName('target')
-        if not realm then
-            realm = GetRealmName()
-        end
+        realm = realm and realm ~= '' and realm or GetRealmName()
         name = string.format('%s - %s', name, realm)
         local foo = '%s 于 %s 在 %s 中高度疑似利用第三方工具恶意战场挂机获利, 望严查.'
         foo = string.format(foo, name, dt, bg)
