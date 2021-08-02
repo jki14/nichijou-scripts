@@ -26,6 +26,7 @@ function()
     local function rotate(trinkets, slotId)
         local effectiveWindow = { }
         -- Feral Trinkets
+        effectiveWindow[29383] = 102 -- Bloodlust Brooch
         effectiveWindow[23041] = 102 -- Slayer's Crest
         effectiveWindow[21180] = 102 -- Earthstrike
         effectiveWindow[21670] = 162 -- Badge of the Swarmguard
@@ -75,25 +76,19 @@ function()
 
         if wa_global.spec5 == 'feral' then
             local feral_offensive = {
+                29383, -- Bloodlust Brooch
                 23041, -- Slayer's Crest
-                21180, -- Earthstrike
-                21670, -- Badge of the Swarmguard
-                23041  -- Slayer's Crest
+                29383  -- Bloodlust Brooch
             }
             rotate(feral_offensive, 13)
 
             local feral_defensive = {
-                18853, -- Insignia of the Horde
-                23558, -- The Burrower's Shell
-                13966  -- Mark of Tyranny
+                28241  -- Insignia of the Horde
             }
             rotate(feral_defensive, 14)
         elseif wa_global.spec5 == 'resto' then
             local resto_active = {
                 29376, -- Essence of the Martyr
-                23047, -- Eye of the Dead
-                20636, -- Hibernation Crystal
-                19955, -- Wushoolay's Charm of Nature
                 23047  -- Eye of the Dead
             }
             rotate(resto_active, 13)
