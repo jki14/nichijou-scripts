@@ -1,0 +1,6 @@
+C_Timer.After(0.4, function()
+    SetCVar('cameraDistanceMaxZoomFactor', 3.34)
+end)
+C_Timer.After(1.4, function()
+    SetCVar('cameraDistanceMaxZoomFactor', 3.34)
+end)
