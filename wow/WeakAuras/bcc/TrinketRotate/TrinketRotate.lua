@@ -33,6 +33,7 @@ function()
         effectiveWindow[19949] = 102 -- Zandalarian Hero Medallion
         effectiveWindow[23558] = 102 -- The Burrower's Shell
         -- Resto Trinkets
+        effectiveWindow[38288] = 102 -- Direbrew Hops
         effectiveWindow[29376] = 102 -- Essence of the Martyr
         effectiveWindow[28370] = 102 -- Bangle of Endless Blessings
         effectiveWindow[23047] = 92  -- Eye of the Dead
@@ -95,6 +96,7 @@ function()
             rotate(resto_active, 13)
 
             local resto_passive = {
+                38288, -- Direbrew Hops
                 19394  -- Rejuvenating Gem
             }
             rotate(resto_passive, 14)
