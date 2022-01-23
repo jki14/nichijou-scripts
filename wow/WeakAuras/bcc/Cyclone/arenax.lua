@@ -1,4 +1,14 @@
-function(allstates)
+--trigger state updater: event(s): COMBAT_LOG_EVENT_UNFILTERED
+function(allstates, event, ...)
+    local _, subevent, _, _, _, _, _, destGUID = ...
+    if string.sub(subevent, 1, 6) ~= 'SPELL_' then
+        return false
+    else
+        local spellId = select(12, ...)
+        if spellId ~= 33786 and (spellId ~= 2825 and spellId ~= 32182 or destGUID ~= UnitGUID('player')) then
+            return false
+        end
+    end
     local flag = false
     local castTime = select(4, GetSpellInfo(33786)) * 0.001
     for i = 1, 5 do
