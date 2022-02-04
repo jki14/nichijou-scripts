@@ -5,7 +5,7 @@ function(allstates, event, ...)
         return false
     else
         local spellId = select(12, ...)
-        if spellId ~= 33786 and (spellId ~= 2825 and spellId ~= 32182 or destGUID ~= UnitGUID('player')) then
+        if spellId ~= 33786 and (spellId ~= 2825 and spellId ~= 32182 and spellId ~= 11719 or destGUID ~= UnitGUID('player')) then
             return false
         end
     end
