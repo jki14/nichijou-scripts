@@ -4,8 +4,13 @@ function(allstates, event, ...)
     if string.sub(subevent, 1, 6) ~= 'SPELL_' then
         return false
     else
+        local modifiedBy = { }
+        modifiedBy[2825] = 'Bloodlust'
+        modifiedBy[32182] = 'Heroism'
+        modifiedBy[11719] = 'Curse of Tongues'
+        modifiedBy[1714] = 'Curse of Tongues'
         local spellId = select(12, ...)
-        if spellId ~= 33786 and (spellId ~= 2825 and spellId ~= 32182 and spellId ~= 11719 or destGUID ~= UnitGUID('player')) then
+        if spellId ~= 33786 and (not modifiedBy[spellId] or destGUID ~= UnitGUID('player')) then
             return false
         end
     end
