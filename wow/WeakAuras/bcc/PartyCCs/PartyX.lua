@@ -7,5 +7,10 @@ function()
     mapping['party2'] = 'ElvUF_PartyGroup1UnitButton3'
     mapping['party3'] = 'ElvUF_PartyGroup1UnitButton4'
     mapping['party4'] = 'ElvUF_PartyGroup1UnitButton5'
-    return unit and mapping[unit] or nil
+    for k, v in pairs(mapping) do
+        if unit and UnitIsUnit(unit, k) then
+            return v
+        end
+    end
+    return nil
 end
