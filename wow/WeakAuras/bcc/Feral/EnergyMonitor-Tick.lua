@@ -1,58 +1,49 @@
--- Trigger: UNIT_POWER_FREQUENT:player,ENERGYTICK
-function(a, event, unit, power)
-  local flag = false
-  local currMana = UnitPower('player', 0)
-  local currEnergy = UnitPower('player', 3)
-  if event == 'ENERGYTICK' then
-    aura_env.inflight = math.max((aura_env.inflight or 0) - 1, 0)
-    if aura_env.inflight == 0 then
-      if currMana == UnitPowerMax('player', 0) then
-        flag = true
-      end
-      if 3 == GetShapeshiftForm(true) and
-          currEnergy == UnitPowerMax('player', 3) then
-        flag = true
-      end
-      if 4 == select(2, UnitClassBase('player')) and
-          currEnergy == UnitPowerMax('player', 3) then
-        flag = true
-      end
+-- trigger state updater: event(s): UNIT_POWER_UPDATE:player,ENERGYTICK
+function(allstates, event, unit, power)
+    if event == 'UNIT_POWER_UPDATE' and power ~= 'ENERGY' then
+        return false
     end
-  elseif unit == 'player' then
-    aura_env.inflight = (aura_env.inflight or 0)
-    if aura_env.inflight == 0 then
-      if power == 'MANA' and
-          11 == select(2, UnitClassBase('player')) and
-          currMana > (aura_env.lastMana or 0) + UnitLevel('player') / 2 then
-        flag = true
-      elseif power == 'ENERGY' and currEnergy > (aura_env.lastEnergy or 0) then
-        flag = true
-      end
+
+    wa_global = wa_global or { }
+    wa_global.feral = wa_global.feral or { }
+    wa_global.feral.last_energy = wa_global.feral.last_energy or 0
+
+    local timestamp = GetTime()
+
+    if event == 'UNIT_POWER_UPDATE' then
+        local curr_energy = UnitPower('player', 3)
+        local ignore = GetInventoryItemID('player', 1) == 8345 and 60 or 40
+        if curr_energy ~= ignore and curr_energy > wa_global.feral.last_energy then
+            wa_global.feral.last_gaints = timestamp
+            wa_global.feral.last_energy = curr_energy
+        end
     end
-  end
-  if flag then
-    local duration = 2
-    if not a[''] then
-      a[''] = {
-        show = true,
-        changed = true,
-        duration = duration,
-        expirationTime = GetTime() + duration,
-        progressType = "timed"
-      }
-    else
-      local s = a['']
-      s.changed = true
-      s.duration = duration
-      s.expirationTime = GetTime() + duration
-      s.show = true
+
+    if wa_global.feral.last_gaints then
+        local lastms = math.floor(wa_global.feral.last_gaints * 1000)
+        local currms = math.floor(timestamp * 1000)
+        local tailms = (currms - lastms) % 2000
+        local k = math.floor((currms - tailms - lastms) / 2000) + 1
+        local nextms = lastms + k * 2000
+        wa_global.feral.next_gaints = nextms * 0.001
     end
-    C_Timer.After(duration, function()
-      WeakAuras.ScanEvents("ENERGYTICK", true)
-    end)
-    aura_env.inflight = (aura_env.inflight or 0) + 1
-  end
-  aura_env.lastMana = currMana
-  aura_env.lastEnergy = currEnergy
-  return true
+
+    local nextts = wa_global.feral.next_gaints or nil
+    if nextts then
+        if not allstates[''] or allstates[''].expirationTime ~= nextts then
+            allstates[''] = {
+                changed = true,
+                show = true,
+                progressType = 'timed',
+                duration = 2,
+                expirationTime = nextts,
+            }
+            C_Timer.After(nextts - GetTime(), function()
+                WeakAuras.ScanEvents("ENERGYTICK", true)
+            end)
+            return true
+        end
+    end
+
+    return false
 end
