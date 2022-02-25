@@ -1,10 +1,5 @@
 -- Trigger 1: Custom / Status / Every Frame
 function()
-    if 3 ~= GetShapeshiftForm() then
-        aura_env.region:Color(0, 0, 0, 1)
-        return true
-    end
-
     if not IsMouseButtonDown('Button4') and not IsMouseButtonDown('Button5') then
         aura_env.region:Color(0, 0, 0, 1)
         return true
@@ -26,6 +21,13 @@ function()
         return true
     end
 
+    if 3 ~= GetShapeshiftForm() then
+        aura_env.region:Color(1, 1, 1, 1)
+        return true
+    end
+
+    local powershift = false
+
     local tickts = wa_global and wa_global.feral and wa_global.feral.next_gaints or currts + 1
     local power = UnitPower('player', 3)
     local pwrsts = castts + math.max(select(4, GetSpellInfo(2908)) / 1000, 1.0) + 0.2
@@ -40,12 +42,8 @@ function()
             if cost <= power then
                 aura_env.region:Color(1, 0, 0, 1)
                 return true
-            elseif cost <= power + 20 and (pwrsts >= tickts or IsMouseButtonDown('Button5')) then
-                aura_env.region:Color(0, 0, 0, 1)
-                return true
-            else
-                aura_env.region:Color(1, 0, 1, 1)
-                return true
+            elseif cost > power + 20 or (pwrsts < tickts and not IsMouseButtonDown('Button5')) then
+                powershift = true
             end
         else
             -- Bite
@@ -53,12 +51,8 @@ function()
             if cost <= power then
                 aura_env.region:Color(0, 1, 0, 1)
                 return true
-            elseif cost <= power + 20 then
-                aura_env.region:Color(0, 0, 0, 1)
-                return true
-            else
-                aura_env.region:Color(1, 0, 1, 1)
-                return true
+            elseif cost > power + 20 then
+                powershift = true
             end
         end
     else
@@ -68,12 +62,8 @@ function()
             if cost <= power then
                 aura_env.region:Color(1, 1, 0, 1)
                 return true
-            elseif cost <= power + 20 and (pwrsts >= tickts or IsMouseButtonDown('Button5')) then
-                aura_env.region:Color(0, 0, 0, 1)
-                return true
-            else
-                aura_env.region:Color(1, 0, 1, 1)
-                return true
+            elseif cost > power + 20 or (pwrsts < tickts and not IsMouseButtonDown('Button5')) then
+                powershift = true
             end
         else
             -- Mangle
@@ -81,11 +71,27 @@ function()
             if cost <= power then
                 aura_env.region:Color(0, 0, 1, 1)
                 return true
-            elseif cost <= power + 20 and (pwrsts >= tickts or IsMouseButtonDown('Button5')) then
-                aura_env.region:Color(0, 0, 0, 1)
+            elseif cost > power + 20 or (pwrsts < tickts and not IsMouseButtonDown('Button5')) then
+                powershift = true
+            end
+        end
+    end
+
+    if powershift then
+        local cost = GetSpellPowerCost(768)[1].cost
+        local mana = UnitPower('player', 0)
+        if cost <= mana then
+            aura_env.region:Color(1, 0, 1, 1)
+            return true
+        elseif UnitLevel('target') == -1 then
+            if GetItemCooldown(33093) == 0 then
+                aura_env.region:Color(1, 1 / 3, 1, 1)
                 return true
-            else
-                aura_env.region:Color(1, 0, 1, 1)
+            elseif GetItemCooldown(20520) == 0 then
+                aura_env.region:Color(1, 2 / 3, 1, 1)
+                return true
+            elseif GetSpellCooldown(29166) == 0 then
+                aura_env.region:Color(0, 1, 1, 1)
                 return true
             end
         end

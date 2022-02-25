@@ -2,7 +2,7 @@ import sys
 
 from datetime import datetime
 from keyboard import wait
-from pyautogui import pixel, press
+from pyautogui import pixel, press, hotkey
 from time import sleep
 
 
@@ -23,16 +23,22 @@ def run():
         (0, 0, 255),    # 4
         (255, 0, 255),  # 5
         (0, 255, 255),  # 6
+        (255, 255, 255),# 7
+        (255, 85, 255), # 8
+        (255, 170, 255),# 9
     ]
 
     keys = [
-        '',   # 0
-        '1',  # 1
-        '2',  # 2
-        '4',  # 3
-        'e',  # 4
-        '3',  # 5
-        '3',  # 6
+        (),                     # 0
+        ('1'),                  # 1
+        ('2'),                  # 2
+        ('4'),                  # 3
+        ('e'),                  # 4
+        ('3'),                  # 5
+        ('alt', 'shift', 'h'),  # 6
+        ('c'),                  # 7
+        ('alt', '3'),           # 8
+        ('alt', '2'),           # 9
     ]
 
     point = pixel(16, 16)
@@ -49,7 +55,7 @@ def run():
         return False
 
     if idx != 0:
-        press(keys[idx])
+        hotkey(*keys[idx])
         sys.stdout.write('[%s] Feral index %d with %d epsilon.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                          idx, eps))
