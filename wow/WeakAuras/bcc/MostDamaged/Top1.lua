@@ -1,5 +1,5 @@
--- trigger-1 custom states every frame
-function ()
+-- Trigger 1: Custom States / Every Frame
+function()
     local index = 1
     if wa_global and wa_global.mostDamaged and wa_global.mostDamaged.top3 then
         if wa_global.mostDamaged.top3[index] then
