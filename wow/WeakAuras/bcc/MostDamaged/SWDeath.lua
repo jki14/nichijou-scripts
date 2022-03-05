@@ -1,6 +1,6 @@
 -- Trigger State Updater: Event(s): COMBAT_LOG_EVENT_UNFILTERED
 function(allstates, _, _, event, _, sourceGUID, _, _, _, _, _, _, _, spellId, ...)
-    if 'SPELL_CAST_SUCCESS' == event and 26982 == spellId then
+    if 'SPELL_CAST_SUCCESS' == event and 32996 == spellId then
         local frame = wa_global and wa_global.mostDamaged and wa_global.mostDamaged.guidframes and wa_global.mostDamaged.guidframes[sourceGUID] or nil
         if frame then
             local duration = 12
