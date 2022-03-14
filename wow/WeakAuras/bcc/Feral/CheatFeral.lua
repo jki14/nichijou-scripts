@@ -1,5 +1,10 @@
 -- Trigger 1: Custom / Status / Every Frame
 function()
+    if IsModifierKeyDown() then
+        aura_env.region:Color(0, 0, 0, 1)
+        return true
+    end
+
     if not IsMouseButtonDown('Button4') and not IsMouseButtonDown('Button5') then
         aura_env.region:Color(0, 0, 0, 1)
         return true
