@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iomanip>
 #include <iostream>
 using namespace std;
 
@@ -16,6 +17,8 @@ int main() {
   cin >> yw >> yh;
   double ratio1d = xh / yh;
   double ys = xs / sqrt(xw * xh) * sqrt(yw * yh * ratio1d * ratio1d);
-  cout << ys << endl;
+  cout << fixed << setprecision(2)
+       << "main: " << xs << " (" << xw << " : " << xh <<")" << endl
+       << "secondary: " << ys << " (" << yw << " : " << yh <<")" << endl;
   return 0;
 }
