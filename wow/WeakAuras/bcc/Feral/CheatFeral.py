@@ -61,6 +61,7 @@ def run():
         sys.stdout.write('[%s] Feral index %d with %d epsilon.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                          idx, eps))
+        sleep(0.100)
     sleep(0.030)
 
 
