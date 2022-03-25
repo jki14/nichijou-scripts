@@ -104,6 +104,14 @@ function()
         end
     end
 
+    if castts + 1.2 < tickts then
+        local ffs, ffd = GetSpellCooldown(27011)
+        if ffs < 0.01 or ffs + ffd - 0.11 < castts then
+            aura_env.region:Color(2 / 3, 2 / 3, 2 / 3, 1)
+            return true
+        end
+    end
+
     aura_env.region:Color(0, 0, 0, 1)
     return true
 end
