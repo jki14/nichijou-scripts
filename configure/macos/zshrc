@@ -1,0 +1,15 @@
+if [ -f ~/.lmintrc ]; then
+    . ~/.lmintrc
+fi
+
+export LC_ALL=en_US.UTF-8
+
+export LSCOLORS=ExFxCxDxBxegedabagacad
+alias ll='ls -alG'
+
+export PS1='%F{113}%n@%m%f %F{74}%1~%f %# '
+
+alias google-chrome='open -a "Google Chrome"'
+alias sublime='open -a "Sublime Text"'
+
+# vi: set syntax=sh:
