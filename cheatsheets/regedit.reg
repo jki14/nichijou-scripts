@@ -1,0 +1,4 @@
+Windows Registry Editor Version 5.00
+
+; Windows 7/10 Multi-Monitors Configuration
+; [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration]
