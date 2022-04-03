@@ -1,0 +1,7 @@
+#! /bin/bash
+
+# HTTP_USER_AGENT
+# HTTP_X_FORWARDED_FOR
+# HTTP_CLIENT_IP
+# REMOTE_ADDR
+curl -H "X-FORWARDED-FOR: 8.8.8.8" -H "CLIENT-IP: 7.7.7.7" http://127.0.0.1/test.php
