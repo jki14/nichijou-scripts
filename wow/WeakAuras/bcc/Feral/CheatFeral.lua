@@ -1,6 +1,6 @@
 -- Trigger 1: Custom / Status / Every Frame
 function()
-    local ffenable = true
+    local ffenable = false
 
     if IsModifierKeyDown() then
         aura_env.region:Color(0, 0, 0, 1)
