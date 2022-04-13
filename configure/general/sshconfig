@@ -1,0 +1,6 @@
+Host github.com
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/com.github.jki14
+
+Host kaguya tohka
+    RemoteForward 3085 127.0.0.1:3084
