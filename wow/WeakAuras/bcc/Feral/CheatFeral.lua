@@ -1,6 +1,7 @@
 -- Trigger 1: Custom / Status / Every Frame
 function()
     local ffenable = false
+    local latepot = false
 
     if IsModifierKeyDown() then
         aura_env.region:Color(0, 0, 0, 1)
@@ -93,7 +94,7 @@ function()
             aura_env.region:Color(1, 0, 1, 1)
             return true
         elseif UnitLevel('target') == -1 then
-            if GetItemCooldown(33093) == 0 then
+            if not latepot and GetItemCooldown(33093) == 0 then
                 aura_env.region:Color(1, 1 / 3, 1, 1)
                 return true
             elseif GetItemCooldown(20520) == 0 then
@@ -101,6 +102,9 @@ function()
                 return true
             elseif GetSpellCooldown(29166) == 0 then
                 aura_env.region:Color(0, 1, 1, 1)
+                return true
+            elseif latepot and GetItemCooldown(33093) == 0 then
+                aura_env.region:Color(1, 1 / 3, 1, 1)
                 return true
             end
         end
