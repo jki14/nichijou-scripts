@@ -29,7 +29,7 @@ function()
         return true
     end
 
-    local npcId = select(6, strsplit("-", target))
+    local npcId = tonumber(select(6, strsplit("-", target))) or 0
 
     if 3 ~= GetShapeshiftForm() then
         aura_env.region:Color(1, 1, 1, 1)
@@ -46,7 +46,7 @@ function()
     local mng_expire = wa_global and wa_global.feral and wa_global.feral.mangles and wa_global.feral.mangles[target] or 0
 
     if GetComboPoints('player', 'target') == 5 then
-        if castts > rip_expire and castts + 2.2 < mng_expire and UnitHealth('target') > 432000 and npcId ~= '22887' then
+        if castts > rip_expire and castts + 2.2 < mng_expire and UnitHealth('target') > 432000 and npcId ~= 22887 then
             -- Rip
             local cost = GetSpellPowerCost(27008)[1].cost
             if cost <= power then
