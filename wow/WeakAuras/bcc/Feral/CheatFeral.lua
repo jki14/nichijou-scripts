@@ -1,7 +1,7 @@
 -- Trigger 1: Custom / Status / Every Frame
 function()
     local ffenable = false
-    local latepot = false
+    local latepot = nil
 
     if IsModifierKeyDown() then
         aura_env.region:Color(0, 0, 0, 1)
@@ -30,6 +30,9 @@ function()
     end
 
     local npcId = tonumber(select(6, strsplit("-", target))) or 0
+    if latepot == nil then
+        latepot = npcId == 17767 or npcId == 22947
+    end
 
     if 3 ~= GetShapeshiftForm() then
         aura_env.region:Color(1, 1, 1, 1)
