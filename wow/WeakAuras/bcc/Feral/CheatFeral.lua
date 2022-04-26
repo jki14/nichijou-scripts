@@ -29,7 +29,8 @@ function()
         return true
     end
 
-    local npcId = tonumber(select(6, strsplit("-", target))) or 0
+    local npcId = select(6, strsplit("-", target))
+    local npcId = tonumber(npcId) or 0
     if latepot == nil then
         latepot = npcId == 17767 or npcId == 22947
     end
