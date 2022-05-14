@@ -1,7 +1,7 @@
 -- Trigger State Updater: Event(s): COMBAT_LOG_EVENT_UNFILTERED
 function(allstates, _, _, event, _, _, _, _, _, destGUID, _, _, _, spellId, ...)
-    destGUID = destGUID or UnitGUID('focustarget')
     if 'SPELL_CAST_START' == event and 45342 == spellId then
+        destGUID = destGUID or UnitGUID('focustarget')
         local frame = wa_global and wa_global.mostDamaged and wa_global.mostDamaged.guidframes and wa_global.mostDamaged.guidframes[destGUID] or nil
         if frame then
             local duration = 3.5
