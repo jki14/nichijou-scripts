@@ -24,7 +24,7 @@ def shoot(key):
 def main():
     try:
         while True:
-            sleep(urandom32(16, 32) * 0.01)
+            sleep(urandom32(160, 320) * 0.001)
             shoot('g')
     except KeyboardInterrupt:
         pass
