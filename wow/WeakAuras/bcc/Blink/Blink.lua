@@ -42,13 +42,15 @@ function(allstates, event, ...)
 end
 
 
---custom text
-function()
-    return aura_env and aura_env.state and aura_env.state.name or ''
-end
-
-
 --custom anchor
 function()
-    return aura_env.state and aura_env.state.unit and C_NamePlate.GetNamePlateForUnit(aura_env.state.unit) or nil
+    local nameplate = aura_env.state and aura_env.state.unit and C_NamePlate.GetNamePlateForUnit(aura_env.state.unit) or nil
+    if nameplate then
+        aura_env.region:Color(1,1,1,1)
+        aura_env.region:SetCooldownSwipe(true)
+    else
+        aura_env.region:Color(1,1,1,0)
+        aura_env.region:SetCooldownSwipe(false)
+    end
+    return nameplate
 end
