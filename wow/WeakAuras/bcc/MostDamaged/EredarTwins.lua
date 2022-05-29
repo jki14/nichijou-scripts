@@ -1,18 +1,22 @@
--- Trigger State Updater: Event(s): COMBAT_LOG_EVENT_UNFILTERED, MD_CONFLAGRATION
-function(allstates, event, _, subevent, _, _, _, _, _, _, _, _, _, spellId, ...)
-    if 'COMBAT_LOG_EVENT_UNFILTERED' == event and 'SPELL_CAST_START' == subevent and 45342 == spellId then
-        C_Timer.After(0.2, function()
-            WeakAuras.ScanEvents('MD_CONFLAGRATION', true)
-        end)
-    elseif 'MD_CONFLAGRATION' == event then
-        local destGUID = UnitGUID('focustarget')
-        local frame = wa_global and wa_global.mostDamaged and wa_global.mostDamaged.guidframes and wa_global.mostDamaged.guidframes[destGUID] or nil
-        if frame then
-            local duration = 3.3
-            allstates[destGUID] = {
+-- Trigger State Updater: Event(s): UNIT_SPELLCAST_START, MD_CONFLAGRATION
+function(allstates, event, ...)
+    if 'UNIT_SPELLCAST_START' == event then
+        local unit, token, spellId = ...
+        if spellId == 45342 or spellId == 5401 and string.find(unit, '^nameplate') then
+            C_Timer.After(0.2, function()
+                WeakAuras.ScanEvents('MD_CONFLAGRATION', token, unit .. 'target')
+            end)
+        end
+    else
+        local token, dest = ...
+        local guid = UnitGUID(dest)
+        local frame = wa_global and wa_global.mostDamaged and wa_global.mostDamaged.guidframes and wa_global.mostDamaged.guidframes[guid] or nil
+        if frame and not allstates[token] then
+            local duration = 3.5 - 0.2
+            allstates[token] = {
                 changed = true,
                 show = true,
-                name = '',
+                name = token,
                 progressType = 'timed',
                 duration = duration,
                 expirationTime = GetTime() + duration,
