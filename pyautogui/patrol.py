@@ -1,6 +1,6 @@
 import os
 
-from pyautogui import easeInOutQuad, moveTo
+from pyautogui import FAILSAFE, easeInOutQuad, moveTo
 from time import sleep
 
 
@@ -21,6 +21,7 @@ def oneround():
 
 
 def main():
+    FAILSAFE = False
     try:
         while True:
             oneround()
