@@ -2,6 +2,7 @@
 function mapFrames()
     local raidframes = { }
     local guidframes = { }
+    local guidunits = { }
     local raid40_frame = "^ElvUF_Raid40Group"
     local raidpet_frame= "^ElvUF_RaidpetGroup"
     local function recursive(frame)
@@ -16,6 +17,7 @@ function mapFrames()
                         local objectguid = UnitGUID(objectunit)
                         if objectguid then
                             guidframes[objectguid] = framename
+                            guidunits[objectguid] = objectunit
                         end
                     end
                     return
@@ -32,6 +34,7 @@ function mapFrames()
     if wa_global and wa_global.mostDamaged then
         wa_global.mostDamaged.raidframes = raidframes
         wa_global.mostDamaged.guidframes = guidframes
+        wa_global.mostDamaged.guidunits = guidunits
     end
 end
 
