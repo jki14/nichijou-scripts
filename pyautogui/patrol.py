@@ -1,7 +1,8 @@
 import os
 
 from pyautogui import FAILSAFE, easeInOutQuad, moveTo
-from time import sleep
+from sys import argv
+from time import sleep, time
 
 
 def urandom32(low, hig):
@@ -22,9 +23,13 @@ def oneround():
 
 def main():
     FAILSAFE = False
+    ttl = int(argv[1]) if len(argv) > 1 else None
+    t0 = time()
     try:
         while True:
             oneround()
+            if ttl and time() - t0 > ttl:
+                break
     except KeyboardInterrupt:
         pass
 
