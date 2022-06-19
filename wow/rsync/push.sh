@@ -1,5 +1,18 @@
 #! /bin/bash
 
-rsync -Rchrvz -e 'ssh -p 3122' WTF jki14@kaguya:~/archives/wow/bcc
-rsync -Rchrvz -e 'ssh -p 3122' Interface jki14@kaguya:~/archives/wow/bcc
-rsync -Rchrvz -e 'ssh -p 3122' CustomMedias jki14@kaguya:~/archives/wow/bcc
+dir=${PWD##*/}
+dir=${dir:-/}
+
+if [ "${dir}" = "_classic_era_" ]; then
+    dir='classic'
+elif [ "${dir}" = "_classic_" ]; then
+    dir='bcc'
+elif [ "${dir}" = "_retail_" ]; then
+    dir='retail'
+else
+    dir='unknown'
+fi
+
+rsync -Rchrvz -e 'ssh -p 3122' WTF jki14@kaguya:~/archives/wow/${dir}
+rsync -Rchrvz -e 'ssh -p 3122' Interface jki14@kaguya:~/archives/wow/${dir}
+rsync -Rchrvz -e 'ssh -p 3122' CustomMedias jki14@kaguya:~/archives/wow/${dir}
