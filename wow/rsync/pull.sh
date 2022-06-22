@@ -10,7 +10,8 @@ elif [ "${dir}" = "_classic_" ]; then
 elif [ "${dir}" = "_retail_" ]; then
     dir='retail'
 else
-    dir='unknown'
+    echo "unknow directory ${dir}."
+    exit 1
 fi
 
 rsync -chrvz -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/WTF .
