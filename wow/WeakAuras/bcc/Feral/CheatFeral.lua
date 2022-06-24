@@ -50,7 +50,7 @@ function()
     local mng_expire = wa_global and wa_global.feral and wa_global.feral.mangles and wa_global.feral.mangles[target] or 0
 
     if GetComboPoints('player', 'target') == 5 then
-        if castts > rip_expire and castts + 2.2 < mng_expire and UnitHealth('target') > 432000 and npcId ~= 22887 then
+        if castts > rip_expire and castts + 2.2 < mng_expire and UnitHealth('target') > 471000 and npcId ~= 22887 then
             -- Rip
             local cost = GetSpellPowerCost(27008)[1].cost
             if cost <= power then
