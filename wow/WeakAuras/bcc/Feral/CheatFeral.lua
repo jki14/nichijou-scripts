@@ -48,9 +48,9 @@ function()
 
     local rip_expire = wa_global and wa_global.feral and wa_global.feral.rips and wa_global.feral.rips[target] or 0
     local mng_expire = wa_global and wa_global.feral and wa_global.feral.mangles and wa_global.feral.mangles[target] or 0
-    local frf_expire = wa_global and wa_global.feral and wa_global.feral.fires and wa_global.feral.fires[target] or 0
+    local ff_expire = wa_global and wa_global.feral and wa_global.feral.ffs and wa_global.feral.ffs[target] or 0
 
-    if ffenable and castts >= frf_expire then
+    if ffenable and castts >= ff_expire then
         local ffs, ffd = GetSpellCooldown(27011)
         if ffs < 0.01 or ffs + ffd - 0.11 < castts then
             aura_env.region:Color(2 / 3, 2 / 3, 2 / 3, 1)
@@ -177,15 +177,15 @@ function(_, _, event, _, sourceGUID, _, _, _, destGUID, _, _, _, spellId, ...)
         if event == 'SPELL_AURA_APPLIED' or event == 'SPELL_AURA_REFRESH' then
             wa_global = wa_global or { }
             wa_global.feral = wa_global.feral or { }
-            local fires = wa_global.feral.fires or { }
-            fires[destGUID] = GetTime() + 40
-            wa_global.feral.fires = fires
+            local ffs = wa_global.feral.ffs or { }
+            ffs[destGUID] = GetTime() + 40
+            wa_global.feral.ffs = ffs
         elseif event == 'SPELL_AURA_REMOVED' then
             wa_global = wa_global or { }
             wa_global.feral = wa_global.feral or { }
-            local fires = wa_global.feral.fires or { }
-            fires[destGUID] = nil
-            wa_global.feral.fires = fires
+            local ffs = wa_global.feral.ffs or { }
+            ffs[destGUID] = nil
+            wa_global.feral.ffs = ffs
         end
     end
     return true
