@@ -47,13 +47,17 @@ def run():
     eps, idx = min([(distance2(point, cords[i]), i) for i in range(len(cords))])
 
     if eps > 0:
+        """
         sys.stdout.write('[%s] cheating paused index %d with %d epsilon.\n' % (
-                         datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                         idx, eps))
+                         datetime.now().strftime('%Y-%m-%d %H:%M:%S'), idx, eps))
         wait('num 0')
         sys.stdout.write('[%s] cheating continue.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         sleep(0.030)
+        """
+        sys.stdout.write('[%s] cheating paused index %d with %d epsilon.\n' % (
+                         datetime.now().strftime('%Y-%m-%d %H:%M:%S'), idx, eps))
+        sleep(1.000)
         return False
 
     if idx != 0:

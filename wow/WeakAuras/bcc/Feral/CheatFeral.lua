@@ -1,6 +1,6 @@
 -- Trigger 1: Custom / Status / Every Frame
 function()
-    local ffenable = false
+    local ffenable = true
     local latepot = nil
 
     if IsModifierKeyDown() then
@@ -48,6 +48,15 @@ function()
 
     local rip_expire = wa_global and wa_global.feral and wa_global.feral.rips and wa_global.feral.rips[target] or 0
     local mng_expire = wa_global and wa_global.feral and wa_global.feral.mangles and wa_global.feral.mangles[target] or 0
+    local frf_expire = wa_global and wa_global.feral and wa_global.feral.fires and wa_global.feral.fires[target] or 0
+
+    if ffenable and castts >= frf_expire then
+        local ffs, ffd = GetSpellCooldown(27011)
+        if ffs < 0.01 or ffs + ffd - 0.11 < castts then
+            aura_env.region:Color(2 / 3, 2 / 3, 2 / 3, 1)
+            return true
+        end
+    end
 
     if GetComboPoints('player', 'target') == 5 then
         if castts > rip_expire and castts + 2.2 < mng_expire and UnitHealth('target') > 471000 and npcId ~= 22887 then
@@ -163,6 +172,20 @@ function(_, _, event, _, sourceGUID, _, _, _, destGUID, _, _, _, spellId, ...)
             local mangles = wa_global.feral.mangles or { }
             mangles[destGUID] = nil
             wa_global.feral.mangles = mangles
+        end
+    elseif 27011 == spellId or 26993 == spellId then
+        if event == 'SPELL_AURA_APPLIED' or event == 'SPELL_AURA_REFRESH' then
+            wa_global = wa_global or { }
+            wa_global.feral = wa_global.feral or { }
+            local fires = wa_global.feral.fires or { }
+            fires[destGUID] = GetTime() + 40
+            wa_global.feral.fires = fires
+        elseif event == 'SPELL_AURA_REMOVED' then
+            wa_global = wa_global or { }
+            wa_global.feral = wa_global.feral or { }
+            local fires = wa_global.feral.fires or { }
+            fires[destGUID] = nil
+            wa_global.feral.fires = fires
         end
     end
     return true
