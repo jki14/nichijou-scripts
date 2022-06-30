@@ -1,6 +1,9 @@
 import os
 
-from pyautogui import FAILSAFE, easeInOutQuad, moveTo
+import pyautogui
+pyautogui.FAILSAFE = False
+
+from pyautogui import easeInOutQuad, moveTo
 from sys import argv
 from time import sleep, time
 
@@ -22,7 +25,6 @@ def oneround():
 
 
 def main():
-    FAILSAFE = False
     ttl = int(argv[1]) if len(argv) > 1 else None
     t0 = time()
     try:
