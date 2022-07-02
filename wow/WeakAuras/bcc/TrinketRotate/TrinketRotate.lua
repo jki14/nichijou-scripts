@@ -26,6 +26,9 @@ function()
     local function rotate(trinkets, slotId)
         local effectiveWindow = { }
         -- Feral Trinkets
+        effectiveWindow[34578] = 167 -- Battlemaster's Determination
+        effectiveWindow[34428] = 287 -- Steely Naaru Sliver
+        effectiveWindow[33831] = 102 -- Berserker's Call
         effectiveWindow[29383] = 102 -- Bloodlust Brooch
         effectiveWindow[23041] = 102 -- Slayer's Crest
         effectiveWindow[21180] = 102 -- Earthstrike
@@ -78,14 +81,17 @@ function()
 
         if wa_global.spec5 == 'feral' then
             local feral_offensive = {
+                33831, -- Berserker's Call
                 29383, -- Bloodlust Brooch
-                23041, -- Slayer's Crest
-                29383  -- Bloodlust Brooch
+                34578, -- Battlemaster's Determination
+                30627 -- Tsunami Talisman
             }
             rotate(feral_offensive, 13)
 
             local feral_defensive = {
-                28241  -- Insignia of the Horde
+                37865, -- Insignia of the Horde
+                34428, -- Steely Naaru Sliver
+                34473 -- Commendation of Kael'thas
             }
             rotate(feral_defensive, 14)
         elseif wa_global.spec5 == 'resto' then
