@@ -3,13 +3,24 @@ function()
     local ffenable = true
     local latepot = nil
 
-    if IsModifierKeyDown() then
-        aura_env.region:Color(0, 0, 0, 1)
-        return true
-    end
+    local powerColors = {
+        {0.00, 0.50, 1.00}, -- 1
+        {0.00, 0.82, 1.00}, -- 2
+        {0.10, 0.10, 0.98}, -- 3
+        {0.30, 0.52, 0.90}, -- 4
+        {0.40, 0.00, 0.80}, -- 5
+        {0.50, 0.32, 0.55}, -- 6
+        {0.52, 1.00, 0.52}, -- 7
+        {0.71, 1.00, 0.92}, -- 8
+        {0.788, 0.259, 0.992}, -- 9
+        {0.80, 0.60, 0.00}, -- 10
+        {0.95, 0.90, 0.60}, -- 11
+        {1.00, 1.00, 0.00},  -- 12
+        {0.00, 0.00, 0.00}, -- 0
+    }
 
-    if not IsMouseButtonDown('Button4') and not IsMouseButtonDown('Button5') then
-        aura_env.region:Color(0, 0, 0, 1)
+    if not IsMouseButtonDown('Button4') and not IsMouseButtonDown('Button5') or IsModifierKeyDown() then
+        aura_env.region:Color(unpack(powerColors[13]))
         return true
     end
 
@@ -19,13 +30,13 @@ function()
     local castts = start > 0 and start + duration - 0.1 or currts - 0.1
 
     if currts < castts then
-        aura_env.region:Color(0, 0, 0, 1)
+        aura_env.region:Color(unpack(powerColors[13]))
         return true
     end
 
     local target = UnitGUID('target')
     if not target then
-        aura_env.region:Color(0, 0, 0, 1)
+        aura_env.region:Color(unpack(powerColors[13]))
         return true
     end
 
@@ -33,11 +44,6 @@ function()
     local npcId = tonumber(npcId) or 0
     if latepot == nil then
         latepot = npcId == 17767 or npcId == 22947
-    end
-
-    if 3 ~= GetShapeshiftForm() then
-        aura_env.region:Color(1, 1, 1, 1)
-        return true
     end
 
     local powershift = false
@@ -53,7 +59,7 @@ function()
     if ffenable and castts >= ff_expire then
         local ffs, ffd = GetSpellCooldown(27011)
         if ffs < 0.01 or ffs + ffd - 0.11 < castts then
-            aura_env.region:Color(2 / 3, 2 / 3, 2 / 3, 1)
+            aura_env.region:Color(unpack(powerColors[6]))
             return true
         end
     end
@@ -63,7 +69,7 @@ function()
             -- Rip
             local cost = GetSpellPowerCost(27008)[1].cost
             if cost <= power then
-                aura_env.region:Color(1, 0, 0, 1)
+                aura_env.region:Color(unpack(powerColors[4]))
                 return true
             elseif cost > power + 20 or (pwrsts < tickts and not IsMouseButtonDown('Button5')) then
                 powershift = true
@@ -72,18 +78,18 @@ function()
             -- Bite
             local cost = GetSpellPowerCost(24248)[1].cost
             if cost <= power then
-                aura_env.region:Color(0, 1, 0, 1)
+                aura_env.region:Color(unpack(powerColors[5]))
                 return true
             elseif cost > power + 20 then
                 powershift = true
             end
         end
     else
-        if castts + 0.2 < mng_expire then
+        if castts + 0.2 < mng_expire and IsMouseButtonDown('Button5') then
             -- Shard
             local cost = GetSpellPowerCost(27002)[1].cost
             if cost <= power then
-                aura_env.region:Color(1, 1, 0, 1)
+                aura_env.region:Color(unpack(powerColors[1]))
                 return true
             elseif cost > power + 20 or (pwrsts < tickts and not IsMouseButtonDown('Button5')) then
                 powershift = true
@@ -92,7 +98,7 @@ function()
             -- Mangle
             local cost = GetSpellPowerCost(33983)[1].cost
             if cost <= power then
-                aura_env.region:Color(0, 0, 1, 1)
+                aura_env.region:Color(unpack(powerColors[3]))
                 return true
             elseif cost > power + 20 or (pwrsts < tickts and not IsMouseButtonDown('Button5')) then
                 powershift = true
@@ -104,20 +110,20 @@ function()
         local cost = GetSpellPowerCost(768)[1].cost
         local mana = UnitPower('player', 0)
         if cost <= mana then
-            aura_env.region:Color(1, 0, 1, 1)
+            aura_env.region:Color(unpack(powerColors[2]))
             return true
         elseif UnitLevel('target') == -1 then
             if not latepot and GetItemCooldown(33093) == 0 then
-                aura_env.region:Color(1, 1 / 3, 1, 1)
+                aura_env.region:Color(unpack(powerColors[7]))
                 return true
             elseif GetItemCooldown(20520) == 0 then
-                aura_env.region:Color(1, 2 / 3, 1, 1)
+                aura_env.region:Color(unpack(powerColors[8]))
                 return true
             elseif GetSpellCooldown(29166) == 0 then
-                aura_env.region:Color(0, 1, 1, 1)
+                aura_env.region:Color(unpack(powerColors[9]))
                 return true
             elseif latepot and GetItemCooldown(33093) == 0 then
-                aura_env.region:Color(1, 1 / 3, 1, 1)
+                aura_env.region:Color(unpack(powerColors[7]))
                 return true
             end
         end
@@ -126,12 +132,12 @@ function()
     if ffenable and castts + 1.2 < tickts then
         local ffs, ffd = GetSpellCooldown(27011)
         if ffs < 0.01 or ffs + ffd - 0.11 < castts then
-            aura_env.region:Color(2 / 3, 2 / 3, 2 / 3, 1)
+            aura_env.region:Color(unpack(powerColors[6]))
             return true
         end
     end
 
-    aura_env.region:Color(0, 0, 0, 1)
+    aura_env.region:Color(unpack(powerColors[13]))
     return true
 end
 
