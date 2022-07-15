@@ -1,8 +1,11 @@
-import sys
+import pyautogui
+pyautogui.FAILSAFE = False
+pyautogui.PAUSE = 0
 
 from datetime import datetime
 from keyboard import wait
 from pyautogui import pixel, press, hotkey
+from sys import stdout
 from time import sleep
 
 
@@ -48,21 +51,21 @@ def run():
 
     if eps > 0:
         """
-        sys.stdout.write('[%s] cheating paused index %d with %d epsilon.\n' % (
+        stdout.write('[%s] cheating paused index %d with %d epsilon.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S'), idx, eps))
         wait('num 0')
-        sys.stdout.write('[%s] cheating continue.\n' % (
+        stdout.write('[%s] cheating continue.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         sleep(0.030)
         """
-        sys.stdout.write('[%s] cheating paused index %d with %d epsilon.\n' % (
+        stdout.write('[%s] cheating paused index %d with %d epsilon.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S'), idx, eps))
         sleep(1.000)
         return False
 
     if idx != 0:
         hotkey(*keys[idx])
-        sys.stdout.write('[%s] Feral index %d with %d epsilon.\n' % (
+        stdout.write('[%s] Feral index %d with %d epsilon.\n' % (
                          datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                          idx, eps))
     sleep(0.030)
@@ -73,7 +76,7 @@ def guard():
         try:
             run()
         except OSError:
-            sys.stdout.write('[%s] OSError.\n' %
+            stdout.write('[%s] OSError.\n' %
                              datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
             sleep(0.030)
             pass
