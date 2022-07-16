@@ -85,7 +85,7 @@ function()
             end
         end
     else
-        if castts + 0.2 < mng_expire and IsMouseButtonDown('Button5') then
+        if castts + 0.2 < mng_expire and not IsMouseButtonDown('Button5') then
             -- Shard
             local cost = GetSpellPowerCost(27002)[1].cost
             if cost <= power then
