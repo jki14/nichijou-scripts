@@ -70,11 +70,24 @@ function()
         end
     end
 
+    local function rocketboots()
+        if IsEquippedItem(23824) then
+            local startTime, duration, _ = GetItemCooldown(23824)
+            local cooldown = startTime + duration - GetTime()
+            if cooldown > 40 then
+                local foo = {34999, 35135, 31048, 0, 35002, 34556, 35000, 34573, 34444, 34998, 34887, 33496, 33831, 37865, 34241, 34198, 0, 29390}
+                for i=1, 18 do
+                    EquipItemByName(foo[i], i)
+                end
+            end
+        end
+    end
+
     if not wa_global or not wa_global.spec5 then
         return false
     end
 
-    C_Timer.After(0.1, function()
+    C_Timer.After(0.2, function()
         if InCombatLockdown() then
             return false
         end
@@ -94,6 +107,8 @@ function()
                 34473 -- Commendation of Kael'thas
             }
             rotate(feral_defensive, 14)
+
+            rocketboots()
         elseif wa_global.spec5 == 'resto' then
             local resto_active = {
                 29376, -- Essence of the Martyr
