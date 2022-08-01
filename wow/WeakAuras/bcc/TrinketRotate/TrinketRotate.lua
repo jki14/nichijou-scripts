@@ -75,7 +75,7 @@ function()
             local startTime, duration, _ = GetItemCooldown(23824)
             local cooldown = startTime + duration - GetTime()
             if cooldown > 40 then
-                local foo = {34999, 35135, 31048, 0, 35002, 34556, 35000, 34573, 34444, 34998, 34887, 33496, 33831, 37865, 34241, 34198, 0, 29390}
+                local foo = {34999, 35135, 31048, 0, 35002, 34556, 35000, 34573, 34444, 34998, 34887, 33496, 0, 0, 34241, 34198, 0, 29390}
                 for i=1, 18 do
                     EquipItemByName(foo[i], i)
                 end
