@@ -72,6 +72,7 @@ def main():
             '555095699#1',
             '153384600#1',
             '158551774#1',
+            'DAYWALKER4',
             '177602705#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
@@ -85,6 +86,7 @@ def main():
               '比格沃斯 - 八六',
               '比格沃斯 - 八六的灾厄',
               '比格沃斯 - 打工仔丶',
+              '比格沃斯 - 刚到底',
               '碧空之歌 - 依然活着'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
