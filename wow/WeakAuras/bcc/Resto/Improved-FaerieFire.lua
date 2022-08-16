@@ -10,8 +10,8 @@ function(allstates, event, ...)
                     show = true,
                     name = 'ImprovedFaerieFire',
                     progressType = 'timed',
-                    duration = 47,
-                    expirationTime = GetTime() + 47,
+                    duration = 92,
+                    expirationTime = GetTime() + 92,
                     autoHide = true
                 }
                 return true
@@ -23,8 +23,8 @@ function(allstates, event, ...)
             show = true,
             name = 'ImprovedFaerieFire',
             progressType = 'timed',
-            duration = 14,
-            expirationTime = GetTime() + 14,
+            duration = 59,
+            expirationTime = GetTime() + 59,
             autoHide = true
         }
         return true
