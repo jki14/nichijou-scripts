@@ -6,7 +6,7 @@ dir=${dir:-/}
 if [ "${dir}" = "_classic_era_" ]; then
     dir='classic'
 elif [ "${dir}" = "_classic_" ]; then
-    dir='bcc'
+    dir='wotlkc'
 elif [ "${dir}" = "_retail_" ]; then
     dir='retail'
 else
