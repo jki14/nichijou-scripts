@@ -30,6 +30,7 @@ function()
         effectiveWindow[34578] = 167 -- Battlemaster's Determination
         effectiveWindow[34428] = 287 -- Steely Naaru Sliver
         effectiveWindow[33831] = 102 -- Berserker's Call
+        effectiveWindow[38287] = 102 -- Empty Mug of Direbrew
         effectiveWindow[29383] = 102 -- Bloodlust Brooch
         effectiveWindow[23041] = 102 -- Slayer's Crest
         effectiveWindow[21180] = 102 -- Earthstrike
@@ -97,7 +98,7 @@ function()
             local feral_offensive = {
                 33831, -- Berserker's Call
                 29383, -- Bloodlust Brooch
-                30627 -- Tsunami Talisman
+                38287 -- Empty Mug of Direbrew
             }
             rotate(feral_offensive, 13)
 
