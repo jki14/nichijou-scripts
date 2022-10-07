@@ -14,10 +14,14 @@ end
 
 wa_global = wa_global or { }
 wa_global.spec5 = nil
-if checkTalent(37116) then
+if checkTalent(33917) and not checkTalent(16931) then
     wa_global.spec5 = 'feral'
-elseif checkTalent(17116) then
+elseif checkTalent(18562) then
     wa_global.spec5 = 'resto'
+end
+
+if wa_global.spec5 then
+    DEFAULT_CHAT_FRAME:AddMessage('|cFFFF7C0A[TrinketRotate] spec ' .. wa_global.spec5 .. ' detected.')
 end
 
 
@@ -72,6 +76,7 @@ function()
         end
     end
 
+    --[[
     local function rocketboots()
         if IsEquippedItem(23824) then
             local startTime, duration, _ = GetItemCooldown(23824)
@@ -84,6 +89,7 @@ function()
             end
         end
     end
+    --]]
 
     if not wa_global or not wa_global.spec5 then
         return false
