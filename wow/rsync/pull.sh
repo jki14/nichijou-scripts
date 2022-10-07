@@ -14,6 +14,6 @@ else
     exit 1
 fi
 
-rsync -chrvz -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/WTF .
-rsync -chrvz -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/Interface .
-rsync -chrvz -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/CustomMedias  .
+rsync -chrvz --delete -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/WTF .
+rsync -chrvz --delete -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/Interface .
+rsync -chrvz --delete -e 'ssh -p 3122' jki14@kaguya:~/archives/wow/${dir}/CustomMedias  .
