@@ -128,7 +128,7 @@ function(allstates, event, ...)
         }
         -- Kidney Shot
         spells[8643] = {
-            cooldown = 120,
+            cooldown =20,
             icon = 132298,
             postrick = 3
         }
