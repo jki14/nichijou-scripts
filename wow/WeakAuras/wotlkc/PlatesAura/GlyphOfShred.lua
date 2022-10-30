@@ -23,7 +23,7 @@ function(allstates, event, ...)
                         icon = 136231,
                         stacks = 3,
                         autoHide = true,
-                        unit = wa_global and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil,
+                        unit = wa_global and wa_global.nameplates and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil
                     }
                 elseif subevent == 'SPELL_AURA_REMOVED' then
                     allstates[guid] = {
@@ -36,7 +36,7 @@ function(allstates, event, ...)
                         icon = 136231,
                         stacks = 0,
                         autoHide = true,
-                        unit = wa_global and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil,
+                        unit = wa_global and wa_global.nameplates and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil
                     }
                 end
             elseif 48572 == spellId then
@@ -52,7 +52,7 @@ function(allstates, event, ...)
                             icon = 136231,
                             stacks = allstates[guid].stacks - 1,
                             autoHide = true,
-                            unit = wa_global and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil,
+                            unit = wa_global and wa_global.nameplates and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil
                         }
                     else
                         allstates[guid] = {
@@ -65,7 +65,7 @@ function(allstates, event, ...)
                             icon = 136231,
                             stacks = 0,
                             autoHide = true,
-                            unit = wa_global and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil,
+                            unit = wa_global and wa_global.nameplates and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil
                         }
                     end
                 end

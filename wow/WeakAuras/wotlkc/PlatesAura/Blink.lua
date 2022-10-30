@@ -148,7 +148,7 @@ function(allstates, event, ...)
                     name = guid .. '_' .. tostring(spells[spellId].icon),
                     icon = spells[spellId].icon,
                     autoHide = true,
-                    unit = wa_global and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil
+                    unit = wa_global and wa_global.nameplates and wa_global.nameplates[guid] and UnitGUID(wa_global.nameplates[guid]) == guid and wa_global.nameplates[guid] or nil
                 }
             end
         end
