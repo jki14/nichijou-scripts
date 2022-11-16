@@ -28,12 +28,12 @@ function(event, ...)
     elseif 'PLAYER_REGEN_ENABLED' == event then
         if -1 == UnitLevel('target') then
             C_Timer.After(0.4, function()
-                rotate(39757, 4)
-            end) -- Idol of Worship
+                rotate(40713, 4)
+            end) -- Idol of the Ravenous Beast
         end
     else
         if not InCombatLockdown() and -1 == UnitLevel('target') then
-            rotate(39757, 0) -- Idol of Worship
+            rotate(40713, 0) -- Idol of the Ravenous Beast
         end
     end
 
