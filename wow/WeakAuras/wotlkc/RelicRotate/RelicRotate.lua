@@ -1,5 +1,9 @@
 -- Trigger 1 / Custom / Event: ENCOUNTER_END, PLAYER_REGEN_ENABLED, PLAYER_TARGET_CHANGED
 function(event, ...)
+    if IsEquippedItem(38365) then
+        return false
+    end
+
     local function rotate(relicId, retryNum)
         if not IsEquippedItem(relicId) then
             if (InCombatLockdown() or nil ~= EquipItemByName(relicId)) and retryNum > 0 then
