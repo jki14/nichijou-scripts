@@ -12,8 +12,8 @@ class win:
 
   def add(self, src, dst):
     parent = '\\'.join(dst.split('\\')[:-1])
-    self.batch.write('IF NOT EXIST %s MKDIR %s\n' % (parent, parent))
-    self.batch.write('MKLINK /J %s %s\n' % (dst, src))
+    self.batch.write('IF NOT EXIST "%s" MKDIR "%s"\n' % (parent, parent))
+    self.batch.write('MKLINK /J "%s" "%s"\n' % (dst, src))
 
   def __del__(self):
     self.batch.write('PAUSE')
@@ -67,13 +67,15 @@ def main():
   accounts(os.path.join('WTF', 'Account'),
            os.path.join('WTF', 'Account', '150998550#2'),
            ['150998550#1',
-            '602893969#1',
             '150713399#1',
-            '555095699#1',
             '153384600#1',
             '158551774#1',
+            '177602705#1',
+            '555095699#1',
+            '602893969#1',
             'DAYWALKER4',
-            '177602705#1'])
+            '14435195#1',
+            '83215426#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
@@ -82,12 +84,15 @@ def main():
                           '依然活着'),
              ['比格沃斯 - 仍然活着',
               '比格沃斯 - 仍然活著',
-              '比格沃斯 - 筱狐狸',
               '比格沃斯 - 八六',
-              '比格沃斯 - 八六的灾厄',
               '比格沃斯 - 打工仔丶',
+              '比格沃斯 - 筱狐狸',
+              '比格沃斯 - 八六的灾厄',
               '比格沃斯 - 刚到底',
-              '碧空之歌 - 依然活着'])
+              '伊弗斯 - 依然活著',
+              'Classic PTR Realm 1 - 依然活著',
+              'Classic PTR Realm 1 - 仍然活著',
+              'Classic PTR Realm 1 - Kugraza'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
