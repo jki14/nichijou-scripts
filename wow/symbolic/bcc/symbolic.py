@@ -89,7 +89,7 @@ def main():
               '比格沃斯 - 筱狐狸',
               '比格沃斯 - 八六的灾厄',
               '比格沃斯 - 刚到底',
-              '伊弗斯 - 依然活著',
+              '逐風者 - 依然活著',
               'Classic PTR Realm 1 - 依然活著',
               'Classic PTR Realm 1 - 仍然活著',
               'Classic PTR Realm 1 - 還活著'])
