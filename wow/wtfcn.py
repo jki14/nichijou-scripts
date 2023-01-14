@@ -1,14 +1,15 @@
 from os import path
-from sys import stderr, stdout
+from sys import stdout
 
 
 def main():
     curloc = path.split(path.realpath(__file__))[0]
-    stderr.write('wow in %s.\n' % curloc)
+    stdout.write('wow in %s.\n' % curloc)
     cfgloc = path.join(curloc, 'WTF', 'Config.wtf')
-    stderr.write('cfg at %s.\n' % cfgloc)
+    stdout.write('cfg at %s.\n' % cfgloc)
     if path.isfile(cfgloc):
-        stderr.write('  confirmed.')
+        stdout.write('  confirmed.')
+        body = ''
         config = {}
         with open(cfgloc, 'r') as cfg:
             for row in cfg.readlines():
@@ -17,7 +18,9 @@ def main():
             config['portal'] = '"CN"'
             config['overrideArchive'] = '"0"'
             for key in config:
-                stdout.write('SET %s %s\n' % (key, config[key]))
+                body = body + ('SET %s %s\n' % (key, config[key]))
+        with open(cfgloc, 'w') as cfg:
+            cfg.write(body)
 
 
 if __name__ == '__main__':
