@@ -16,7 +16,7 @@ else
     exit 1
 fi
 
-rsync -Rchrvz --delete -e 'ssh -p 3122' WTF jki14@kaguya:~/archives/wow/${dir}
+rsync -Rchrvz --exclude '*.bak' --delete -e 'ssh -p 3122' WTF jki14@kaguya:~/archives/wow/${dir}
 rsync -Rchrvz --delete -e 'ssh -p 3122' Interface jki14@kaguya:~/archives/wow/${dir}
 rsync -Rchrvz --delete -e 'ssh -p 3122' CustomMedias jki14@kaguya:~/archives/wow/${dir}
 rsync -Rchrvz --delete -e 'ssh -p 3122' Fonts jki14@kaguya:~/archives/wow/${dir}
