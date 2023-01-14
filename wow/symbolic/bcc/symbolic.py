@@ -93,20 +93,20 @@ def main():
               'Classic PTR Realm 1 - 依然活著',
               'Classic PTR Realm 1 - 仍然活著',
               'Classic PTR Realm 1 - 還活著'])
-  characters(os.path.join('WTF', 'Account', '150998550#2'),
-             os.path.join('WTF',
-                          'Account',
-                          '150998550#2',
-                          '比格沃斯',
-                          '兩儀未那'),
-             ['比格沃斯 - 寒冰贼'])
-  characters(os.path.join('WTF', 'Account', '150998550#2'),
-             os.path.join('WTF',
-                          'Account',
-                          '150998550#2',
-                          '比格沃斯',
-                          'Pekorinu'),
-             ['比格沃斯 - 意大力炮'])
+  # characters(os.path.join('WTF', 'Account', '150998550#2'),
+  #            os.path.join('WTF',
+  #                         'Account',
+  #                         '150998550#2',
+  #                         '比格沃斯',
+  #                         '兩儀未那'),
+  #            ['比格沃斯 - 寒冰贼'])
+  # characters(os.path.join('WTF', 'Account', '150998550#2'),
+  #            os.path.join('WTF',
+  #                         'Account',
+  #                         '150998550#2',
+  #                         '比格沃斯',
+  #                         'Pekorinu'),
+  #            ['比格沃斯 - 意大力炮'])
 
 
 if __name__ == '__main__':
