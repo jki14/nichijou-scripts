@@ -28,9 +28,9 @@ def oneround():
 
 
 def relogin():
-    xpos, ypos = 717, 532 
-    if size() == (3440, 1440):
-        xpos, ypos = 1720, 820
+    xpos, ypos = 1720, 840
+    # if size() == (3440, 1440):
+    #     xpos, ypos = 1720, 840
     sleep(urandom32(4, 14))
     press('esc')
     sleep(urandom32(4, 14))
