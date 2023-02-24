@@ -46,7 +46,7 @@ function(allstates, event, ...)
         if subevent == 'SPELL_AURA_REMOVED' or subevent == 'SPELL_AURA_APPLIED' then
             local _, _, _, src, _, _, _, dst, _, _, _, spellId = ...
             if pa_auras[spellId] and dst == UnitGUID('player') and allstates[src] then
-                DEFAULT_CHAT_FRAME:AddMessage('|cFFF48CBA[AURA_MASTERY] src = ' .. src .. ', dst = ' .. dst .. ', spellId = ' .. tostring(spellId))
+                -- DEFAULT_CHAT_FRAME:AddMessage('|cFFF48CBA[AURA_MASTERY] src = ' .. src .. ', dst = ' .. dst .. ', spellId = ' .. tostring(spellId))
                 if subevent == 'SPELL_AURA_REMOVED' then
                     if allstates[src].icon == pa_auras[spellId] then
                         allstates[src].changed = true
