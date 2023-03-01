@@ -75,7 +75,8 @@ def main():
             '602893969#1',
             'DAYWALKER4',
             '14435195#1',
-            '83215426#1'])
+            '83215426#1',
+            '1401199128#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
@@ -90,6 +91,8 @@ def main():
               '比格沃斯 - 刚到底',
               '逐風者 - 依然活著',
               '逐風者 - 仍然活著',
+              '逐風者 - 魔裝少年',
+              '逐風者 - 筱狐狸',
               'Classic PTR Realm 1 - 依然活著',
               'Classic PTR Realm 1 - 仍然活著',
               'Classic PTR Realm 1 - 還活著'])
