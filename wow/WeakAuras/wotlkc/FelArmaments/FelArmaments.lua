@@ -1,7 +1,7 @@
 --trigger: GOSSIP_SHOW,QUEST_PROGRESS
 function(e, ...)
     local guid = select(6, strsplit("-", UnitGUID('target')))
-    if guid ~= '18538' and guid ~= '18530' then
+    if guid ~= '18538' and guid ~= '18530' and guid ~= '32540' then
         return false
     end
     if e == 'QUEST_PROGRESS' then
