@@ -16,7 +16,7 @@ sudo update-alternatives --config javac
 sudo apt-get adobe-flashplugin
 
 ## MULTI-REPLACE
-sed -i "s/alpha/beta/g" `grep alpha -rl .`
+(export LHS='alpha' && export RHS='beta' && sed -i "s/${LHS}/${RHS}/g" `grep ${LHS} -rl .`)
 
 ## ABOUT SOGOU PINYIN
 apt-get install fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-all fcitx-module-cloudpinyin fcitx-module-dbus fcitx-module-kimpanel fcitx-module-x11 fcitx-modules fcitx-qimpanel-configtool 
