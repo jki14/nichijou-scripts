@@ -11,7 +11,7 @@ function(event, ...)
         if not IsEquippedItem(bootsId) then
             if (InCombatLockdown() or nil ~= EquipItemByName(bootsId)) and retryNum > 0 then
                 C_Timer.After(4.0, function()
-                    rotate(bootsId, retryNum - 1)
+                    switchOn(bootsId, retryNum - 1)
                 end)
             end
         end
@@ -20,18 +20,19 @@ function(event, ...)
     if 'ENCOUNTER_END' == event then
         local encounterId, encounterName, difficultyId, groupSize, success = ...
         local allows = {
+            [1942] = 'Hydromancer Thespia',
             [754] = 'Mimiron',
             [757] = 'Algalon the Observer',
         }
-        DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter ' .. tostring(encounterId) .. ' end.')
+        DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter ' .. tostring(encounterId) .. (success and ' success.' or ' failed.'))
         if allows[encounterId] and success then
-            if GetItemCount(bootsLeather) then
+            if GetItemCount(bootsLeather) > 0 then
                 C_Timer.After(0.4, function()
-                    rotate(bootsLeather, 8)
+                    switchOn(bootsLeather, 8)
                 end)
-            elseif GetItemCount(bootsCloth) then
+            elseif GetItemCount(bootsCloth) > 0 then
                 C_Timer.After(0.4, function()
-                    rotate(bootsCloth, 8)
+                    switchOn(bootsCloth, 8)
                 end)
             end
         end
