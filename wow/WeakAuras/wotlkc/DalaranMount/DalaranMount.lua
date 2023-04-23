@@ -4,6 +4,8 @@ function(_, unit, _, spellId)
         [49193] = 'Vengeful Nether Drake',
         [58615] = 'Brutal Nether Drake',
         [59569] = 'Bronze Drake',
+        [60021] = 'Plagued Proto-Drake',
+        [63963] = 'Rusted Proto-Drake',
     }
     if 'player' == unit and spellId and flying[spellId] then
         wa_global = wa_global or { }
