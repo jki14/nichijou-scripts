@@ -1,4 +1,4 @@
--- Trigger 1 / Custom / Event: ENCOUNTER_END, PLAYER_REGEN_ENABLED, PLAYER_TARGET_CHANGED
+-- Trigger 1 / Custom / Event: ENCOUNTER_START, ENCOUNTER_END, PLAYER_REGEN_ENABLED, PLAYER_TARGET_CHANGED
 function(event, ...)
     if IsEquippedItem(38365) then
         return false
@@ -22,22 +22,48 @@ function(event, ...)
             [1120] = 'Thaddius',
             [1119] = 'Sapphiron',
             [1114] = 'Kel\'Thuzad',
+            [745] = 'Ignis the Furnace Master',
+            [746] = 'Razorscale',
+            [748] = 'The Iron Council',
+            [753] = 'Freya',
+            [755] = 'General Vezax',
+            [756] = 'Yogg-Saron',
+            [757] = 'Algalon the Observer',
         }
         DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter ' .. tostring(encounterId) .. ' end.')
         if not blocks[encounterId] then
-            C_Timer.After(0.4, function()
-                rotate(38295, 4)
-            end) -- Idol of the Wastes
+            local start_time = wa_global and wa_global.relicrotate and wa_global.relicrotate.encounter_start or 2147483647
+            local duration = GetTime() - start_time
+            DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter duration = ' .. tostring(duration) .. ' secs.')
+            if duration >= 40 and duration <= 660 then
+                C_Timer.After(0.4, function()
+                    rotate(38295, 4)
+                end) -- Idol of the Wastes
+            end
         end
+    elseif 'ENCOUNTER_START' == event then
+        local encounterId, encounterName, difficultyId, groupSize = ...
+        wa_global = wa_global or { }
+        wa_global.relicrotate = wa_global.relicrotate or { }
+        wa_global.relicrotate.encounter_start = GetTime()
+    --[[
     elseif 'PLAYER_REGEN_ENABLED' == event then
         if -1 == UnitLevel('target') then
             C_Timer.After(0.4, function()
                 rotate(39757, 4)
             end) -- Idol of Worship
         end
+    --]]
     else
         if not InCombatLockdown() and -1 == UnitLevel('target') then
-            rotate(39757, 0) -- Idol of Worship
+            local npcId = UnitGUID('target')
+            npcId = tonumber(npcId and select(6, strsplit('-', npcId)) or '0')
+            local blocks = {
+                [32930] = 'Kologarn',
+            }
+            if not blocks[npcId] then
+                rotate(40713, 0) -- Idol of the Ravenous Beast
+            end
         end
     end
 
