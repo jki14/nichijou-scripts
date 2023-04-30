@@ -10,6 +10,8 @@ function(event, ...)
                 C_Timer.After(0.4, function()
                     rotate(relicId, retryNum - 1)
                 end)
+            else
+                WeakAuras.ScanEvents('RELICROTATE_SWITCHED')
             end
         end
     end
@@ -36,9 +38,15 @@ function(event, ...)
             local duration = GetTime() - start_time
             DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter duration = ' .. tostring(duration) .. ' secs.')
             if duration >= 40 and duration <= 660 then
-                C_Timer.After(0.4, function()
-                    rotate(38295, 4)
-                end) -- Idol of the Wastes
+                if GetItemCount(45509) > 0 then
+                    C_Timer.After(0.4, function()
+                        rotate(45509, 4)
+                    end) -- Idol of the Corruptor
+                else
+                    C_Timer.After(0.4, function()
+                        rotate(38295, 4)
+                    end) -- Idol of the Wastes
+                end
             end
         end
     elseif 'ENCOUNTER_START' == event then
@@ -67,5 +75,12 @@ function(event, ...)
         end
     end
 
+    return false
+end
+
+-- Trigger 2 / Custom / Event: RELICROTATE_SWITCHED
+function()
+    setglobal('tg_wheel', IsEquippedItem(40713) and 1 or -1)
+    WeakAuras.ScanEvents('TG_WHEEL')
     return false
 end
