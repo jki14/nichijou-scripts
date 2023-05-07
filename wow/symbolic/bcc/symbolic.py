@@ -78,7 +78,8 @@ def main():
             '83215426#1',
             '1401199128#1',
             '858779833#1',
-            '798149128#1'])
+            '798149128#1',
+            '17317768#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
@@ -99,7 +100,8 @@ def main():
               '逐風者 - 執著的牛',
               'Classic PTR Realm 1 - 依然活著',
               'Classic PTR Realm 1 - 仍然活著',
-              'Classic PTR Realm 1 - 還活著'])
+              'Classic PTR Realm 1 - 還活著',
+              'Classic PTR Realm 1 - Oceantwo'])
   # characters(os.path.join('WTF', 'Account', '150998550#2'),
   #            os.path.join('WTF',
   #                         'Account',
