@@ -1,4 +1,4 @@
--- Trigger 1: Custom / Event: COMBAT_LOG_EVENT_UNFILTERED
+-- Trigger 1: Custom / Event: CLEU:SWING_DAMAGE, CLEU:RANGE_DAMAGE, CLEU:SPELL_DAMAGE, CLEU:SPELL_PERIODIC_DAMAGE, CLEU:SPELL_BUILDING_DAMAGE, CLEU:ENVIRONMENTAL_DAMAGE
 function(_, timestamp, event, ...)
     local damageEvents = {
         ['SWING_DAMAGE'] = true,

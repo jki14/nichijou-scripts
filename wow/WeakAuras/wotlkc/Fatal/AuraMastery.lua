@@ -1,4 +1,4 @@
---trigger state updater: event(s): UNIT_SPELLCAST_SUCCEEDED, COMBAT_LOG_EVENT_UNFILTERED
+--trigger state updater: event(s): UNIT_SPELLCAST_SUCCEEDED, CLEU:SPELL_AURA_REMOVED, CLEU:SPELL_AURA_APPLIED
 function(allstates, event, ...)
     local pa_auras = {
         -- [48441] = 136081, -- Dummy

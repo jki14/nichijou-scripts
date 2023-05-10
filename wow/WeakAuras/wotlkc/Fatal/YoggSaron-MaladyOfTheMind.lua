@@ -1,4 +1,4 @@
--- Trigger 1 / Custom / Event(s): COMBAT_LOG_EVENT_UNFILTERED, FATAL_MINDMALADY
+-- Trigger 1 / Custom / Event(s): FATAL_MINDMALADY, CLEU:SPELL_AURA_APPLIED
 function(event, ...)
     local unit, remain = nil, 0
     if event == 'COMBAT_LOG_EVENT_UNFILTERED' then

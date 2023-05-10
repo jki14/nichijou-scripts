@@ -1,4 +1,4 @@
--- Trigger 2 / Custom / Event(s): COMBAT_LOG_EVENT_UNFILTERED, PLAYER_TARGET_CHANGED
+-- Trigger 2 / Custom / Event(s): CLEU:SPELL_AURA_APPLIED, CLEU:SPELL_AURA_REFRESH, CLEU:SPELL_AURA_REMOVED, CLEU:SPELL_DAMAGE, PLAYER_TARGET_CHANGED
 function(event, ...)
     local changed = false
     if 'COMBAT_LOG_EVENT_UNFILTERED' == event then
