@@ -7,14 +7,19 @@ function(allstates, ...)
     local flag = wa_global.penetratingColds.flag
 
     local indexes, reverse = { }, { }
+    local now = GetTime()
     for k, _ in pairs(wa_global.penetratingColds.inflight) do
-        table.insert(indexes, k)
+        if wa_global.penetratingColds.inflight[k].expirationTime < now then
+            wa_global.penetratingColds.inflight[k] = nil
+        else
+            table.insert(indexes, k)
+        end
     end
     table.sort(indexes)
     for i, k in ipairs(indexes) do
         local stoken = string.format('slot_%d', i)
         local unit = wa_global.penetratingColds.inflight[k].unit
-        local show = aura_env.config[stoken] or false
+        local show = wa_global.penetratingColds.inflight[k].show and aura_env.config[stoken] or false
         -- DEFAULT_CHAT_FRAME:AddMessage('|cFFFF00FF[AnLiu-PenetratingCold]         The ' .. tostring(unit) .. ' at ' .. tostring(stoken) .. ' is configured as ' .. tostring(show) .. '.')
         allstates[unit] = {
             changed = true,
@@ -27,7 +32,7 @@ function(allstates, ...)
             flag = flag
         }
         reverse[unit] = {
-            show = not show,
+            show = wa_global.penetratingColds.inflight[k].show and not show,
             duration = allstates[unit].duration,
             expirationTime = allstates[unit].expirationTime,
         }
@@ -88,6 +93,7 @@ local function pcshow()
             wa_global.penetratingColds = wa_global.penetratingColds or { }
             wa_global.penetratingColds.inflight = wa_global.penetratingColds.inflight or { }
             wa_global.penetratingColds.inflight[pos] = {
+                show = true,
                 unit = aura_env.state.unit,
                 duration = aura_env.state.duration,
                 expirationTime = aura_env.state.expirationTime,
@@ -113,7 +119,9 @@ local function pchide()
             wa_global = wa_global or { }
             wa_global.penetratingColds = wa_global.penetratingColds or { }
             wa_global.penetratingColds.inflight = wa_global.penetratingColds.inflight or { }
-            wa_global.penetratingColds.inflight[pos] = nil
+            if wa_global.penetratingColds.inflight[pos] then
+                wa_global.penetratingColds.inflight[pos].show = false
+            end
             WeakAuras.ScanEvents('PENETRATING_COLD')
             return true
         end
