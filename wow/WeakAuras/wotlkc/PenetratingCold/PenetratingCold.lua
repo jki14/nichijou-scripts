@@ -1,4 +1,4 @@
--- trigger state updater: event(s): PENETRATING_COLD
+-- trigger state updater: event(s): PENETRATING_COLD_RED
 function(allstates, ...)
     wa_global = wa_global or { }
     wa_global.penetratingColds = wa_global.penetratingColds or { }
@@ -46,11 +46,11 @@ function(allstates, ...)
     end
 
     wa_global.penetratingColds.reverse = reverse
-    WeakAuras.ScanEvents('PENETRATING_COLD2')
+    WeakAuras.ScanEvents('PENETRATING_COLD_BLUE')
     return true
 end
 
--- trigger state updater: event(s): PENETRATING_COLD2
+-- trigger state updater: event(s): PENETRATING_COLD_BLUE
 function(allstates, ...)
     wa_global = wa_global or { }
     wa_global.penetratingColds = wa_global.penetratingColds or { }
@@ -98,7 +98,7 @@ local function pcshow()
                 duration = aura_env.state.duration,
                 expirationTime = aura_env.state.expirationTime,
             }
-            WeakAuras.ScanEvents('PENETRATING_COLD')
+            WeakAuras.ScanEvents('PENETRATING_COLD_RED')
             return true
         end
     end
@@ -122,7 +122,7 @@ local function pchide()
             if wa_global.penetratingColds.inflight[pos] then
                 wa_global.penetratingColds.inflight[pos].show = false
             end
-            WeakAuras.ScanEvents('PENETRATING_COLD')
+            WeakAuras.ScanEvents('PENETRATING_COLD_RED')
             return true
         end
     end
