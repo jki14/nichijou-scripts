@@ -39,6 +39,9 @@ void process(double const a, double const x, double const b) {
 
 int main(int argc, char *argv[]) {
     double a, x = 1.0, b = -1.0;
+    if (argc < 2 || argc > 4) {
+      fprintf(stderr, "? ./reverse-lever lhs-rates [lhs-bets] [rhs-rates]\n");
+    }
     assert(2 <= argc && argc <= 4);
     sscanf(argv[1], "%lf", &a);
     if (argc >= 3) {
