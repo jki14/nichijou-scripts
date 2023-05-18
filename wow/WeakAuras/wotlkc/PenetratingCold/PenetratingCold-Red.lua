@@ -49,3 +49,22 @@ function(allstates, ...)
     WeakAuras.ScanEvents('PENETRATING_COLD_BLUE')
     return true
 end
+
+-- Custom / Event(s): CHAT_MSG_RAID, CHAT_MSG_RAID_LEADER
+function(event, text, ...)
+    if text == 'show me the slots' then
+        local msg = ''
+        for i = 1, 5 do
+            local stoken = string.format('slot_%d', i)
+            if aura_env.config[stoken] then
+                if string.len(msg) > 0 then
+                    msg = msg .. ', '
+                end
+                msg = msg .. tostring(i)
+            end
+        end
+        msg = 'My Penetrating Cold Slots: [' .. msg .. ']'
+        SendChatMessage(msg, 'RAID')
+    end
+    return false
+end
