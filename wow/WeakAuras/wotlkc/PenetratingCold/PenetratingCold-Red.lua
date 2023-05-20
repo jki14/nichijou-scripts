@@ -9,7 +9,7 @@ function(allstates, ...)
     local indexes, reverse = { }, { }
     local now = GetTime()
     for k, _ in pairs(wa_global.penetratingColds.inflight) do
-        if wa_global.penetratingColds.inflight[k].expirationTime < now then
+        if wa_global.penetratingColds.inflight[k].expirationTime < now + 0.4 then
             wa_global.penetratingColds.inflight[k] = nil
         else
             table.insert(indexes, k)
