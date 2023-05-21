@@ -17,19 +17,22 @@ function(event, ...)
         end
     end
 
+
+    local allows = {
+        [1942] = 'Hydromancer Thespia',
+        [754] = 'Mimiron',
+        [757] = 'Algalon the Observer',
+        [641] = 'Val\'kyr Twins',
+    }
+
     if 'ENCOUNTER_END' == event then
         local encounterId, encounterName, difficultyId, groupSize, success = ...
-        local allows = {
-            [1942] = 'Hydromancer Thespia',
-            [754] = 'Mimiron',
-            [757] = 'Algalon the Observer',
-        }
         DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter ' .. tostring(encounterId) .. (success and ' success.' or ' failed.'))
         if allows[encounterId] and success then
             local start_time = wa_global and wa_global.anliutoolkit and wa_global.anliutoolkit.encounter_start or 2147483647
             local duration = GetTime() - start_time
             DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter duration = ' .. tostring(duration) .. ' secs.')
-            if duration >= 120 and duration <= 660 then
+            if duration >= 60 and duration <= 660 then
                 if GetItemCount(bootsLeather) > 0 then
                     C_Timer.After(0.4, function()
                         switchOn(bootsLeather, 8)
@@ -42,11 +45,6 @@ function(event, ...)
             end
         end
     elseif 'ENCOUNTER_START' == event then
-        local allows = {
-            [1942] = 'Hydromancer Thespia',
-            [754] = 'Mimiron',
-            [757] = 'Algalon the Observer',
-        }
         local encounterId, encounterName, difficultyId, groupSize = ...
         if allows[encounterId] then
             wa_global = wa_global or { }
