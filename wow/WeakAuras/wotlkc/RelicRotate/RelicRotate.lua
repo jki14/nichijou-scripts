@@ -31,6 +31,11 @@ function(event, ...)
             [755] = 'General Vezax',
             [756] = 'Yogg-Saron',
             [757] = 'Algalon the Observer',
+            [629] = 'Northrend Beasts',
+            [633] = 'Lord Jaraxxus',
+            [637] = 'Faction Champions',
+            [641] = 'Val\'kyr Twins',
+            [645] = 'Anub\'arak',
         }
         DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter ' .. tostring(encounterId) .. ' end.')
         if not blocks[encounterId] then
