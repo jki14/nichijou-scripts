@@ -12,8 +12,8 @@ class win:
 
   def add(self, src, dst):
     parent = '\\'.join(dst.split('\\')[:-1])
-    self.batch.write('IF NOT EXIST %s MKDIR %s\n' % (parent, parent))
-    self.batch.write('MKLINK /J %s %s\n' % (dst, src))
+    self.batch.write('IF NOT EXIST "%s" MKDIR "%s"\n' % (parent, parent))
+    self.batch.write('MKLINK /J "%s" "%s"\n' % (dst, src))
 
   def __del__(self):
     self.batch.write('PAUSE')
@@ -67,28 +67,56 @@ def main():
   accounts(os.path.join('WTF', 'Account'),
            os.path.join('WTF', 'Account', '150998550#2'),
            ['150998550#1',
-            '602893969#1',
             '150713399#1',
-            '555095699#1',
             '153384600#1',
             '158551774#1',
-            '177602705#1'])
+            '177602705#1',
+            '555095699#1',
+            '602893969#1',
+            'DAYWALKER4',
+            '14435195#1',
+            '83215426#1',
+            '1401199128#1',
+            '858779833#1',
+            '798149128#1',
+            '17317768#1'])
   characters(os.path.join('WTF', 'Account', '150998550#2'),
              os.path.join('WTF',
                           'Account',
                           '150998550#2',
                           '比格沃斯',
                           '依然活着'),
-             ['哈霍兰 - 依然活着',
+             ['比格沃斯 - 仍然活着',
+              '比格沃斯 - 八六',
+              '比格沃斯 - 打工仔丶',
               '比格沃斯 - 筱狐狸',
-              '比格沃斯 - 八六'])
-  characters(os.path.join('WTF', 'Account', '150998550#2'),
-             os.path.join('WTF',
-                          'Account',
-                          '150998550#2',
-                          '比格沃斯',
-                          '兩儀未那'),
-             ['哈霍兰 - 兩儀丶未那'])
+              '比格沃斯 - 八六的灾厄',
+              '比格沃斯 - 刚到底',
+              '逐風者 - 依然活著',
+              '逐風者 - 仍然活著',
+              '逐風者 - 魔裝少年',
+              '逐風者 - 筱狐狸',
+              '逐風者 - 鷄肉韋嘎嘣脆',
+              '逐風者 - 執著的牛',
+              'Classic PTR Realm 1 - 依然活著',
+              'Classic PTR Realm 1 - 仍然活著',
+              'Classic PTR Realm 1 - 依舊活著',
+              'Classic PTR Realm 1 - 仍舊活著',
+              'Classic PTR Realm 1 - 還活著'])
+  # characters(os.path.join('WTF', 'Account', '150998550#2'),
+  #            os.path.join('WTF',
+  #                         'Account',
+  #                         '150998550#2',
+  #                         '比格沃斯',
+  #                         '兩儀未那'),
+  #            ['比格沃斯 - 寒冰贼'])
+  # characters(os.path.join('WTF', 'Account', '150998550#2'),
+  #            os.path.join('WTF',
+  #                         'Account',
+  #                         '150998550#2',
+  #                         '比格沃斯',
+  #                         'Pekorinu'),
+  #            ['比格沃斯 - 意大力炮'])
 
 
 if __name__ == '__main__':
