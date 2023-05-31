@@ -32,14 +32,15 @@ function(allstates, event, ...)
                     allstates[unit] = {
                         changed = true,
                         show = show,
-                        name = unit,
+                        unit = unit,
+                        name = 'cyclone-' .. unit,
                         progressType = "timed",
                         duration = duration,
                         expirationTime = expirationTime,
                         icon = 136022,
                         tooltip = 'pending',
                         autoHide = true,
-                        anchor = string.format('GladdyButton%d', i)
+                        -- anchor = string.format('GladdyButton%d', i),
                     }
                     flag = true
                 end
@@ -49,7 +50,9 @@ function(allstates, event, ...)
     return flag
 end
 
+--[[
 --custom anchor
 function()
     return aura_env.state and aura_env.state.anchor
 end
+--]]
