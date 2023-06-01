@@ -1,4 +1,4 @@
---trigger state updater: event(s): COMBAT_LOG_EVENT_UNFILTERED
+--trigger state updater: event(s): CLEU:SPELL_AURA_APPLIED, CLEU:SPELL_AURA_REMOVED, CLEU:SPELL_AURA_REFRESH
 function(allstates, event, ...)
     local _, subevent, _, _, _, _, _, destGUID = ...
     if not subevent or string.sub(subevent, 1, 6) ~= 'SPELL_' then
