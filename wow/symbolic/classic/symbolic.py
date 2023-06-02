@@ -86,8 +86,7 @@ def main():
                           '150998550#2',
                           '比格沃斯',
                           '依然活着'),
-             ['比格沃斯 - 仍然活着',
-              '比格沃斯 - 八六',
+             ['比格沃斯 - 八六',
               '比格沃斯 - 打工仔丶',
               '比格沃斯 - 筱狐狸',
               '比格沃斯 - 八六的灾厄',
@@ -102,7 +101,8 @@ def main():
               'Classic PTR Realm 1 - 仍然活著',
               'Classic PTR Realm 1 - 依舊活著',
               'Classic PTR Realm 1 - 仍舊活著',
-              'Classic PTR Realm 1 - 還活著'])
+              'Classic PTR Realm 1 - 還活著',
+              '比格沃斯 - 仍然活着'])
   # characters(os.path.join('WTF', 'Account', '150998550#2'),
   #            os.path.join('WTF',
   #                         'Account',
