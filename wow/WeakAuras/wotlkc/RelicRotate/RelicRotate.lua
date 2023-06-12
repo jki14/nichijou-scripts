@@ -38,7 +38,7 @@ function(event, ...)
             [645] = 'Anub\'arak',
         }
         DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter ' .. tostring(encounterId) .. ' end.')
-        if not blocks[encounterId] then
+        if not blocks[encounterId] or GetItemCount(45509) > 0 then
             local start_time = wa_global and wa_global.relicrotate and wa_global.relicrotate.encounter_start or 2147483647
             local duration = GetTime() - start_time
             DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter duration = ' .. tostring(duration) .. ' secs.')
@@ -59,15 +59,15 @@ function(event, ...)
         wa_global = wa_global or { }
         wa_global.relicrotate = wa_global.relicrotate or { }
         wa_global.relicrotate.encounter_start = GetTime()
-    --[[
     elseif 'PLAYER_REGEN_ENABLED' == event then
-        if -1 == UnitLevel('target') then
+        if not IsEquippedItem(45509) then
             C_Timer.After(0.4, function()
-                rotate(39757, 4)
-            end) -- Idol of Worship
+                rotate(45509, 4)
+            end) -- Idol of the Corruptor
         end
-    --]]
     else
+        -- PLAYER_TARGET_CHANGED
+        --[[
         if not InCombatLockdown() and -1 == UnitLevel('target') then
             local npcId = UnitGUID('target')
             npcId = tonumber(npcId and select(6, strsplit('-', npcId)) or '0')
@@ -78,6 +78,7 @@ function(event, ...)
                 rotate(40713, 0) -- Idol of the Ravenous Beast
             end
         end
+        --]]
     end
 
     return false
@@ -85,7 +86,7 @@ end
 
 -- Trigger 2 / Custom / Event: RELICROTATE_SWITCHED
 function()
-    setglobal('tg_wheel', IsEquippedItem(40713) and 1 or -1)
-    WeakAuras.ScanEvents('TG_WHEEL')
+    -- setglobal('tg_wheel', IsEquippedItem(40713) and 1 or -1)
+    -- WeakAuras.ScanEvents('TG_WHEEL')
     return false
 end
