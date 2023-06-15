@@ -67,18 +67,11 @@ function(event, ...)
         end
     else
         -- PLAYER_TARGET_CHANGED
-        --[[
-        if not InCombatLockdown() and -1 == UnitLevel('target') then
-            local npcId = UnitGUID('target')
-            npcId = tonumber(npcId and select(6, strsplit('-', npcId)) or '0')
-            local blocks = {
-                [32930] = 'Kologarn',
-            }
-            if not blocks[npcId] then
-                rotate(40713, 0) -- Idol of the Ravenous Beast
-            end
+        if not IsEquippedItem(45509) then
+            C_Timer.After(0.4, function()
+                rotate(45509, 4)
+            end) -- Idol of the Corruptor
         end
-        --]]
     end
 
     return false
