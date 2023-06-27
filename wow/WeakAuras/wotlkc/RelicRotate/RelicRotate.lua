@@ -1,6 +1,6 @@
 -- Trigger 1 / Custom / Event: ENCOUNTER_START, ENCOUNTER_END, PLAYER_REGEN_ENABLED, PLAYER_TARGET_CHANGED
 function(event, ...)
-    if IsEquippedItem(38365) then
+    if IsEquippedItem(38365) or IsEquippedItem(47668) then
         return false
     end
 
