@@ -15,7 +15,7 @@ function(_, unit, _, spellId)
             if not offset then
                 local num = GetNumCompanions('MOUNT')
                 for i = 1, num + 1 do
-                    if i == num + 1 or 'Great White Kodo' == select(2, GetCompanionInfo('MOUNT', i)) then
+                    if i == num + 1 or 'Crusader\'s Black Warhorse' == select(2, GetCompanionInfo('MOUNT', i)) or 'Great White Kodo' == select(2, GetCompanionInfo('MOUNT', i)) then
                         offset = i ~= num + 1 and i or 1
                         wa_global = wa_global or { }
                         wa_global.ground_mount = offset
