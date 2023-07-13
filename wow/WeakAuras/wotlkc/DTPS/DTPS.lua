@@ -1,4 +1,4 @@
--- Trigger 1: Custom / Event: CLEU:SWING_DAMAGE, CLEU:RANGE_DAMAGE, CLEU:SPELL_DAMAGE, CLEU:SPELL_PERIODIC_DAMAGE, CLEU:SPELL_BUILDING_DAMAGE, CLEU:ENVIRONMENTAL_DAMAGE
+-- Trigger 1: Custom / Event: CLEU:SWING_DAMAGE, CLEU:RANGE_DAMAGE, CLEU:SPELL_DAMAGE, CLEU:SPELL_PERIODIC_DAMAGE, CLEU:SPELL_BUILDING_DAMAGE, CLEU:ENVIRONMENTAL_DAMAGE, CLEU:SPELL_HEAL, CLEU:SPELL_PERIODIC_HEAL
 function(_, timestamp, event, ...)
     local damageEvents = {
         ['SWING_DAMAGE'] = true,
@@ -7,6 +7,10 @@ function(_, timestamp, event, ...)
         ['SPELL_PERIODIC_DAMAGE'] = true,
         ['SPELL_BUILDING_DAMAGE'] = true,
         ['ENVIRONMENTAL_DAMAGE'] = true,
+    }
+    local healEvents = {
+        ['SPELL_HEAL'] = true,
+        ['SPELL_PERIODIC_HEAL'] = true,
     }
     if event and damageEvents[event] then
         if not wa_global or not wa_global.DTPS then
@@ -26,6 +30,22 @@ function(_, timestamp, event, ...)
             end
             local prev = wa_global.DTPS[guid][bucket] or 0
             wa_global.DTPS[guid][bucket] = prev + amount / 5.0
+        end
+    elseif event and healEvents[event] then
+        if not wa_global or not wa_global.DTPS then
+            wa_global = wa_global or { }
+            wa_global.DTPS = wa_global.DTPS or { }
+        end
+        local offset = 13
+        local amount = select(offset, ...)
+        local guid = select(6, ...)
+        if amount and amount > 0 and guid then
+            local bucket = math.floor(timestamp / 5.0)
+            if not wa_global.DTPS[guid] then
+                wa_global.DTPS[guid] = { }
+            end
+            local prev = wa_global.DTPS[guid][bucket] or 0
+            wa_global.DTPS[guid][bucket] = prev - amount / 5.0
         end
     end
     return false
@@ -63,7 +83,7 @@ function()
                 local foo = tostring(math.floor(dt / 100.0) / 10.0) .. 'k'
                 local remain = UnitHealth('target')
                 if remain then
-                    local ttl = math.floor(remain / dt + 0.5)
+                    local ttl = math.floor(remain / math.max(dt, 1.0) + 0.5)
                     foo = foo .. ' / ' .. tostring(ttl) .. 's'
                 end
                 return foo
