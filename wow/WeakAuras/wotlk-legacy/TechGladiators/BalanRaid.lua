@@ -287,7 +287,7 @@ end
 
 -- Trigger 3: Custom / Event: UNIT_SPELLCAST_SUCCEEDED
 function(_, unit, spellId)
-    if unit == 'player' and spellId == 'Moonfire' and LibBonus.Check('G54845') >= 1 then
+    if unit == 'player' and (spellId == 'Moonfire' or spellId == 'æœˆç«æœ¯') and LibBonus.Check('G54845') >= 1 then
         wa_global = wa_global or { }
         wa_global.balanRaid = wa_global.balanRaid or { }
         wa_global.balanRaid.gstars = 3
