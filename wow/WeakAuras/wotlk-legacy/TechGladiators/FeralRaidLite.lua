@@ -69,6 +69,9 @@ function()
     local bleed_expire = wa_global and wa_global.feralRaid and wa_global.feralRaid.bleeds and wa_global.feralRaid.bleeds[target] or 0
     bleed_expire = math.max(rip_expire, rake_expire, lacerate_expire, bleed_expire)
 
+    local gshreds = wa_global and wa_global.feralRaid and wa_global.feralRaid.gshreds or 0
+    local rip_expire_ext = rip_expire + gshreds * 2.0
+
     local ending = 2147483647
     if 'arena' ~= select(2, IsInInstance()) and wa_global and wa_global.DTPS and wa_global.DTPS[target] then
         local prev = math.floor(time() / 5.0) - 1
@@ -90,7 +93,7 @@ function()
     swipe_mode = swipe_mode and swipe_mode == 1 or false
     mangle_mode = mangle_mode and not swipe_mode
 
-    if 1 == GetShapeshiftForm() and IsEquippedItem(38365) then
+    if 1 == GetShapeshiftForm() and (IsEquippedItem(45509) or IsEquippedItem(38365)) then
         -- Guard
         if lacerate_stacks >= 1 and lacerate_expire < castts + 4.6 then
             -- Lacerate (Refresh)
@@ -161,7 +164,7 @@ function()
     local mangle_now = not swipe_mode and not rip_now and mangle_expire < castts
     -- TODO: Need more check like the wowsim?
 
-    local bite_now = not swipe_mode and combo >= 5 and castts > clarity_expire and power < 67 and ((castts + 10 > ending or rip_expire + 10 > ending) or (castts + 4 < rip_expire and castts + 4 < roar_expire)) and (castts > berserk_expire or power <= 25)
+    local bite_now = not swipe_mode and combo >= 5 and castts > clarity_expire and power < 67 and ((castts + 10 > ending or rip_expire + 10 > ending) or (castts + 5 < rip_expire and castts + 5 < roar_expire)) and (castts > berserk_expire or power <= 25)
 
     local rake_now = not swipe_mode and castts > rake_expire and castts + 9 <= ending and ((castts <= bleed_expire and castts > clarity_expire) or (castts > bleed_expire and castts < mangle_expire))
     if rake_now and castts <= bleed_expire then
@@ -177,8 +180,7 @@ function()
         shred_exp = shred_exp * (1.0 - armor_effective / (armor_effective + 15232.5))
         shred_exp = shred_exp * 2.25
 
-        -- TODO: potential ticks count
-        local rake_exp = ((176 + 0.01 * stat_power) * (1.0 + stat_crit * 1.1) + (358 + 0.06 * stat_power) * 3) * 1.3
+        local rake_exp = ((176 + 0.01 * stat_power) * (1.0 + stat_crit * 1.1) + (358 + 0.06 * stat_power) * (LibBonus.Check('T9F') >= 2 and 4 or 3)) * 1.3 * (LibBonus.Check('TXF') >= 4 and (1.0 + stat_crit * 1.1) or 1.0)
         rake_exp = rake_exp * 1.2
 
         if (rake_exp / 35) < (shred_exp / 42) then
@@ -188,15 +190,24 @@ function()
             -- DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[TG-FeralRaid] The rake keeps for DPE win (expected: rake = ' .. rake_exp .. ', shred = ' .. shred_exp .. ').')
         end
     end
-    -- TODO: check Glyph of Shred
+    -- Rip extending check for Glyph of Shred
+    if rake_now and castts <= rip_expire and gshreds > 0 then
+        local pp = power + (rip_expire_ext - castts) * 10 - select(4, GetSpellInfo(48574)) - 30
+        if math.max(spell_ready(50213), berserk_expire) < rip_expire_ext then
+            pp = pp + 60
+        end
+        local post_shreds_cnt = math.floor(math.min(pp / 42, rip_expire_ext - castts - 1.0))
+        if post_shreds_cnt < gshreds then
+            rake_now = false
+        end
+    end
 
     local berserk_now = spell_ready(50334) < castts + 0.1 and castts > clarity_expire and spell_ready(50213) > math.min(castts + 15, ending - 16)
 
-    local roar_now = combo >= 1 and (castts > roar_expire or (not swipe_mode and castts <= rip_expire and rip_expire + 10 <= ending and roar_expire <= rip_expire + 3 and roar_expire <= ending and castts + 9 + combo * 5 + 8 >= rip_expire + 12))
+    local roar_now = combo >= 1 and (castts > roar_expire or (not swipe_mode and castts <= rip_expire and rip_expire + 10 <= ending and roar_expire <= rip_expire_ext + 4 and roar_expire <= ending and castts + 9 + combo * 5 + (LibBonus.Check('T8F') >= 4 and 8 or 0) >= rip_expire_ext + (LibBonus.Check('T8F') >= 4 and 31 or 25)))
 
     local faerie_pt = castts < berserk_expire and 15 or 87
 
-    --[[
     local faerie_now = castts > clarity_expire and power < faerie_pt and spell_ready(16857) < castts + 0.1
     if faerie_now and rip_now then
         faerie_now = power < select(4, GetSpellInfo(49800))
@@ -207,11 +218,9 @@ function()
         local lhs = math.min(sn + 1, math.floor(ending - castts))
         faerie_now = lhs > rhs
     end
-    --]]
-    local faerie_now = false
 
     local faerie_block = spell_ready(16857)
-    faerie_block = faerie_block > castts and faerie_block < castts + 0.7 and power + (faerie_block - castts) * 10 < faerie_pt and castts > clarity_expire and (castts > rip_expire or castts + 1 < rip_expire)
+    faerie_block = faerie_block > castts and faerie_block < castts + 0.1 and power + (faerie_block - castts) * 10 < faerie_pt and castts > clarity_expire and (castts > rip_expire or castts + 1 < rip_expire)
 
     if faerie_expire < castts + 3.0 and -1 == UnitLevel('target') and spell_ready(16857) < castts + 0.1 then
         -- Faerie Fire (Feral)
@@ -262,7 +271,7 @@ function()
         end
     elseif swipe_mode then
         if castts > roar_expire then
-            if IsEquippedItem(45509) then
+            if IsEquippedItem(45509) or IsEquippedItem(47668) then
                 -- MangleC
                 local cost = select(4, GetSpellInfo(48566))
                 if cost <= power then
@@ -336,7 +345,7 @@ function()
     return false
 end
 
--- Trigger 2: Custom / Event: CLEU:SPELL_AURA_APPLIED, CLEU:SPELL_AURA_REFRESH, CLEU:SPELL_AURA_REMOVED
+-- Trigger 2: Custom / Event: COMBAT_LOG_EVENT_UNFILTERED
 function(_, _, event, sourceGUID, _, _, destGUID, _, _, spellId, ...)
     if UnitGUID('player') == sourceGUID then
         if 50334 == spellId then
@@ -373,8 +382,9 @@ function(_, _, event, sourceGUID, _, _, destGUID, _, _, spellId, ...)
             if event == 'SPELL_AURA_APPLIED' or event == 'SPELL_AURA_REFRESH' then
                 wa_global = wa_global or { }
                 wa_global.feralRaid = wa_global.feralRaid or { }
+                local _, _, _, _, _, _, expirationTime = WA_GetUnitDebuff('target', 49800, 'PLAYER')
                 local rips = wa_global.feralRaid.rips or { }
-                rips[destGUID] = GetTime() + 12 + 4 + 6
+                rips[destGUID] = expirationTime
                 wa_global.feralRaid.rips = rips
             elseif event == 'SPELL_AURA_REMOVED' then
                 wa_global = wa_global or { }
@@ -424,6 +434,16 @@ function(_, _, event, sourceGUID, _, _, destGUID, _, _, spellId, ...)
                 wa_global = wa_global or { }
                 wa_global.feralRaid = wa_global.feralRaid or { }
                 wa_global.feralRaid.clearcasting = nil
+            end
+        elseif 48572 == spellId then
+            if event == 'SPELL_DAMAGE' then
+                if wa_global and wa_global.feralRaid and wa_global.feralRaid.rips and wa_global.feralRaid.rips[destGUID] and wa_global.feralRaid.rips[destGUID] > GetTime() then
+                    if wa_global.feralRaid.gshreds and wa_global.feralRaid.gshreds > 0 then
+                        -- wa_global.feralRaid.rips[destGUID] = wa_global.feralRaid.rips[destGUID] + 2
+                        wa_global.feralRaid.gshreds = wa_global.feralRaid.gshreds - 1
+                        WeakAuras.ScanEvents('FERAL_GSHREDS_UPDATED')
+                    end
+                end
             end
         end
     end
@@ -496,7 +516,7 @@ end
 -- Trigger 3: Custom / Event: UNIT_SPELLCAST_SUCCEEDED
 function(_, unit, spellId)
     if 'player' == unit then
-        if 'Cat Form' == spellId and not IsStealthed() then
+        if ('Cat Form' == spellId or 'çŒŽè±¹å½¢æ€' == spellId) and not IsStealthed() then
             CallCompanion('CRITTER', 1)
             --[[
             if InCombatLockdown() and -1 == UnitLevel('target') then
@@ -512,9 +532,17 @@ ps[target] or 0
                 end
             end
             --]]
-        elseif 'Prowl' == spellId or 3 ~= GetShapeshiftForm() then
+        elseif ('Prowl' == spellId or 'æ½œè¡Œ' == spellId) or 3 ~= GetShapeshiftForm() then
             DismissCompanion('CRITTER')
         end
     end
+
+    if unit == 'player' and (spellId == 'Rip' or spellId == 'å‰²è£‚') and LibBonus.Check('G54815') >= 1 then
+        wa_global = wa_global or { }
+        wa_global.feralRaid = wa_global.feralRaid or { }
+        wa_global.feralRaid.gshreds = 3
+        WeakAuras.ScanEvents('FERAL_GSHREDS_UPDATED')
+    end
+
     return false
 end
