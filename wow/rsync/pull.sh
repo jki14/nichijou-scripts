@@ -15,6 +15,8 @@ elif [ "${dir}" = "WotlkUS" ]; then
     dir='wotlkus'
 elif [ "${dir}" = "WotlkCN" ]; then
     dir='wotlkcn'
+elif [ "${dir}" = "WotLKPP" ]; then
+    dir='wotlkcn'
 else
     echo "unknow directory ${dir}."
     exit 1
