@@ -243,7 +243,12 @@ function(_, _, event, sourceGUID, _, _, destGUID, _, _, spellId, ...)
                 wa_global = wa_global or { }
                 wa_global.balanRaid = wa_global.balanRaid or { }
                 wa_global.balanRaid.moonfires = wa_global.balanRaid.moonfires or { }
-                wa_global.balanRaid.moonfires[destGUID] = GetTime() + 15
+                if destGUID == UnitGUID('target') then
+                    local _, _, _, _, _, _, expirationTime = WA_GetUnitDebuff('target', 48463, 'PLAYER')
+                    wa_global.balanRaid.moonfires[destGUID] = expirationTime
+                else
+                    wa_global.balanRaid.moonfires[destGUID] = GetTime() + 15
+                end
                 wa_global.balanRaid.mftick1 = wa_global.balanRaid.mftick1 or { }
                 wa_global.balanRaid.mftick1[destGUID] = wa_global.balanRaid.moonfires[destGUID] - 12
             elseif event == 'SPELL_AURA_REMOVED' then
@@ -258,7 +263,7 @@ function(_, _, event, sourceGUID, _, _, destGUID, _, _, spellId, ...)
             if event == 'SPELL_DAMAGE' then
                 if wa_global and wa_global.balanRaid and wa_global.balanRaid.moonfires and wa_global.balanRaid.moonfires[destGUID] and wa_global.balanRaid.moonfires[destGUID] > GetTime() then
                     if wa_global.balanRaid.gstars and wa_global.balanRaid.gstars > 0 then
-                        wa_global.balanRaid.moonfires[destGUID] = wa_global.balanRaid.moonfires[destGUID] + 3
+                        -- wa_global.balanRaid.moonfires[destGUID] = wa_global.balanRaid.moonfires[destGUID] + 3
                         wa_global.balanRaid.gstars = wa_global.balanRaid.gstars - 1
                         WeakAuras.ScanEvents('BALAN_GSTARS_UPDATED')
                     end
