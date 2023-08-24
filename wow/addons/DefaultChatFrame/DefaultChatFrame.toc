@@ -1,0 +1,7 @@
+## Interface: 30402
+## Title: DefaultChatFrame
+## Notes: Cache the DEFAULT_CHAT_FRAME.
+## Author: 依然活着@CN5比格沃斯(H) (jki14wz@gmail.com)
+## Version: 0.01
+
+DefaultChatFrame.lua
