@@ -1,6 +1,8 @@
 -- Actions / On Init
 LibBonus = { }
 LibBonus.Check = function(name)
+    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     wa_global = wa_global or { }
     wa_global.libbonus = wa_global.libbonus or { }
     if wa_global.libbonus[name] then

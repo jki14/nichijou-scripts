@@ -1,5 +1,7 @@
 --trigger state updater: event(s): UNIT_SPELLCAST_SUCCEEDED, CLEU:SPELL_AURA_REMOVED, CLEU:SPELL_AURA_APPLIED
 function(allstates, event, ...)
+    -- local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     local pa_auras = {
         -- [48441] = 136081, -- Dummy
         -- [48451] = 134206, -- Dummy

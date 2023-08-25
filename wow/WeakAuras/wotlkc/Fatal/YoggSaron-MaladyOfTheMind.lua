@@ -1,5 +1,7 @@
 -- Trigger 1 / Custom / Event(s): FATAL_MINDMALADY, CLEU:SPELL_AURA_APPLIED
 function(event, ...)
+    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     local unit, remain = nil, 0
     if event == 'COMBAT_LOG_EVENT_UNFILTERED' then
         local _, subevent, _, _, _, _, _, _, destName, _, _, spellId = ...

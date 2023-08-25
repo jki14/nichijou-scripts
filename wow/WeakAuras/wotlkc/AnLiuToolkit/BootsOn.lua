@@ -1,5 +1,7 @@
 -- Trigger 1 / Custom / Event: ENCOUNTER_START, ENCOUNTER_END
 function(event, ...)
+    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     local bootsLeather = 23824
     local bootsCloth = 35581
 

@@ -1,5 +1,7 @@
 -- Trigger 1 / Custom / Event(s): UNIT_SPELLCAST_START, FATAL_FERVOR
 function(event, ...)
+    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     local remain = 0
     if event == 'UNIT_SPELLCAST_START' then
         local _, _, spellId = ...

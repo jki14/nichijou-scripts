@@ -1,4 +1,6 @@
 function()
+    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     wa_global = wa_global or { }
     wa_global.debug = wa_global.debug or { }
     wa_global.debug.bear = wa_global.debug.bear or 0

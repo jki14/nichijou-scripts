@@ -1,5 +1,7 @@
 -- Trigger-1 / Custom / Event: START_LOOT_ROLL
 function(e, id, ...)
+    -- local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     if e == 'START_LOOT_ROLL' then
         local _, name, _, quality = GetLootRollItemInfo(id)
         -- DEFAULT_CHAT_FRAME:AddMessage('|cFFFF8000[ValanyrsFragment] texture = ' .. texture .. ', name = ' .. name .. '.')

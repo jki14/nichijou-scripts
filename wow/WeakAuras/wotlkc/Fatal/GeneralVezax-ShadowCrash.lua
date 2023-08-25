@@ -1,5 +1,7 @@
 -- Trigger 1 / Custom / Event(s): UNIT_SPELLCAST_SUCCEEDED, FATAL_SHADOWCRASH
 function(event, ...)
+    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     local remain = 0
     if event == 'UNIT_SPELLCAST_SUCCEEDED' then
         local _, _, spellId = ...

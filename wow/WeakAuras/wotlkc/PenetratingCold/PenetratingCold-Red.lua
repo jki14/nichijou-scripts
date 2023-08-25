@@ -1,5 +1,7 @@
 -- trigger state updater: event(s): PENETRATING_COLD_RED
 function(allstates, ...)
+    -- local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+
     wa_global = wa_global or { }
     wa_global.penetratingColds = wa_global.penetratingColds or { }
     wa_global.penetratingColds.inflight = wa_global.penetratingColds.inflight or { }
