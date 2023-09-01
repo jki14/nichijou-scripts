@@ -1,11 +1,11 @@
--- trigger state updater: event(s): FROST_BEACON_LEFT
+-- trigger state updater: event(s): FROST_BEACON_MID
 function(allstates, ...)
     wa_global = wa_global or { }
     wa_global.frostBeacons = wa_global.frostBeacons or { }
     wa_global.frostBeacons.inflight = wa_global.frostBeacons.inflight or { }
 
     local flag = false
-    for i = 1, 2 do
+    for i = 3, 4 do
         if wa_global.frostBeacons.inflight[i] and UnitIsUnit(wa_global.frostBeacons.inflight[i].unit, 'player') then
             if not allstates[''] or
                     not allstates[''].show or
@@ -30,6 +30,6 @@ function(allstates, ...)
         allstates[''].show = false
     end
 
-    WeakAuras.ScanEvents('FROST_BEACON_MID')
+    WeakAuras.ScanEvents('FROST_BEACON_RIGHT')
     return true
 end
