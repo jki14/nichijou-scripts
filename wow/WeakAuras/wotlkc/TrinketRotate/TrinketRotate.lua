@@ -21,9 +21,9 @@ elseif checkTalent(18562) then
 end
 
 if wa_global.spec5 then
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
-    DEFAULT_CHAT_FRAME:AddMessage('|cFFFF7C0A[TrinketRotate] spec ' .. wa_global.spec5 .. ' detected.')
+    DefaultChatFrame:AddMessage('|cFFFF7C0A[TrinketRotate] spec ' .. wa_global.spec5 .. ' detected.')
 end
 
 
