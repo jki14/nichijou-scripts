@@ -1,6 +1,6 @@
 -- Trigger 1 / Custom / Event: ENCOUNTER_START, ENCOUNTER_END, PLAYER_REGEN_ENABLED, PLAYER_TARGET_CHANGED
 function(event, ...)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     if IsEquippedItem(38365) or IsEquippedItem(47668) then
         return false
@@ -39,11 +39,11 @@ function(event, ...)
             [641] = 'Val\'kyr Twins',
             [645] = 'Anub\'arak',
         }
-        DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter ' .. tostring(encounterId) .. ' end.')
+        DefaultChatFrame:AddMessage('|cFFFFF468[RelicRotate] Encounter ' .. tostring(encounterId) .. ' end.')
         if not blocks[encounterId] or GetItemCount(45509) > 0 then
             local start_time = wa_global and wa_global.relicrotate and wa_global.relicrotate.encounter_start or 2147483647
             local duration = GetTime() - start_time
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[RelicRotate] Encounter duration = ' .. tostring(duration) .. ' secs.')
+            DefaultChatFrame:AddMessage('|cFFFFF468[RelicRotate] Encounter duration = ' .. tostring(duration) .. ' secs.')
             if duration >= 40 and duration <= 660 then
                 if GetItemCount(45509) > 0 then
                     C_Timer.After(0.4, function()
