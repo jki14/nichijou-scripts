@@ -1,6 +1,6 @@
 -- trigger state updater: event(s): PENETRATING_COLD_RED
 function(allstates, ...)
-    -- local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    -- local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     wa_global = wa_global or { }
     wa_global.penetratingColds = wa_global.penetratingColds or { }
@@ -22,7 +22,7 @@ function(allstates, ...)
         local stoken = string.format('slot_%d', i)
         local unit = wa_global.penetratingColds.inflight[k].unit
         local show = wa_global.penetratingColds.inflight[k].show and aura_env.config[stoken] or false
-        -- DEFAULT_CHAT_FRAME:AddMessage('|cFFFF00FF[AnLiu-PenetratingCold]         The ' .. tostring(unit) .. ' at ' .. tostring(stoken) .. ' is configured as ' .. tostring(show) .. '.')
+        -- DefaultChatFrame:AddMessage('|cFFFF00FF[AnLiu-PenetratingCold]         The ' .. tostring(unit) .. ' at ' .. tostring(stoken) .. ' is configured as ' .. tostring(show) .. '.')
         allstates[unit] = {
             changed = true,
             show = show,
