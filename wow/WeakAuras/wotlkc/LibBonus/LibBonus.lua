@@ -1,7 +1,7 @@
 -- Actions / On Init
 LibBonus = { }
 LibBonus.Check = function(name)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     wa_global = wa_global or { }
     wa_global.libbonus = wa_global.libbonus or { }
@@ -17,7 +17,7 @@ LibBonus.Check = function(name)
                     break
                 end
             end
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFFFFFFF[LibBonus] The count for ' .. name .. ' is ' .. cnt .. '.')
+            DefaultChatFrame:AddMessage('|cFFFFFFFF[LibBonus] The count for ' .. name .. ' is ' .. cnt .. '.')
         else
             local db = {
                 ['T7F'] = {39553, 39556, 39554, 39557, 39555, 40473, 40494, 40471, 40472, 40493},
@@ -34,9 +34,9 @@ LibBonus.Check = function(name)
                     end
                 end
                 wa_global.libbonus[name] = cnt
-                DEFAULT_CHAT_FRAME:AddMessage('|cFFFFFFFF[LibBonus] The total matches for ' .. name .. ' is ' .. cnt .. '.')
+                DefaultChatFrame:AddMessage('|cFFFFFFFF[LibBonus] The total matches for ' .. name .. ' is ' .. cnt .. '.')
             else
-                DEFAULT_CHAT_FRAME:AddMessage('|cFFFFFFFF[LibBonus] No entry is found in the db for ' .. name .. '.')
+                DefaultChatFrame:AddMessage('|cFFFFFFFF[LibBonus] No entry is found in the db for ' .. name .. '.')
             end
         end
 
