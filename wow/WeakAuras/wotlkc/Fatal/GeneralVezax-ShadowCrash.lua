@@ -1,6 +1,6 @@
 -- Trigger 1 / Custom / Event(s): UNIT_SPELLCAST_SUCCEEDED, FATAL_SHADOWCRASH
 function(event, ...)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     local remain = 0
     if event == 'UNIT_SPELLCAST_SUCCEEDED' then
@@ -16,7 +16,7 @@ function(event, ...)
         local ft = UnitHealthMax('focustarget') or 0
         if ft < 30000 then
             local min_range, _ = WeakAuras.GetRange('focustarget')
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFAD7FA8[FATAL_SHADOWCRASH] ' .. tostring(min_range))
+            DefaultChatFrame:AddMessage('|cFFAD7FA8[FATAL_SHADOWCRASH] ' .. tostring(min_range))
             return not min_range or min_range <= 10
         end
         if remain > 0 then

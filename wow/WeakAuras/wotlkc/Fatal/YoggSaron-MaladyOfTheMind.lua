@@ -1,6 +1,6 @@
 -- Trigger 1 / Custom / Event(s): FATAL_MINDMALADY, CLEU:SPELL_AURA_APPLIED
 function(event, ...)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     local unit, remain = nil, 0
     if event == 'COMBAT_LOG_EVENT_UNFILTERED' then
@@ -23,7 +23,7 @@ function(event, ...)
         end)
         local min_range, _ = WeakAuras.GetRange(unit)
         if remain % 10 == 0 then
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFAD7FA8[FATAL_MINDMALADY] ' .. unit .. ' (' .. tostring(min_range) .. ', ' .. tostring(remain) .. ')')
+            DefaultChatFrame:AddMessage('|cFFAD7FA8[FATAL_MINDMALADY] ' .. unit .. ' (' .. tostring(min_range) .. ', ' .. tostring(remain) .. ')')
         end
         return not min_range or min_range <= 10
     end

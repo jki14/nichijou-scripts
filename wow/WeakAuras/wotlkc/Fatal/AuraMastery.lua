@@ -1,6 +1,6 @@
 --trigger state updater: event(s): UNIT_SPELLCAST_SUCCEEDED, CLEU:SPELL_AURA_REMOVED, CLEU:SPELL_AURA_APPLIED
 function(allstates, event, ...)
-    -- local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    -- local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     local pa_auras = {
         -- [48441] = 136081, -- Dummy
@@ -48,7 +48,7 @@ function(allstates, event, ...)
         if subevent == 'SPELL_AURA_REMOVED' or subevent == 'SPELL_AURA_APPLIED' then
             local _, _, _, src, _, _, _, dst, _, _, _, spellId = ...
             if pa_auras[spellId] and dst == UnitGUID('player') and allstates[src] then
-                -- DEFAULT_CHAT_FRAME:AddMessage('|cFFF48CBA[AURA_MASTERY] src = ' .. src .. ', dst = ' .. dst .. ', spellId = ' .. tostring(spellId))
+                -- DefaultChatFrame:AddMessage('|cFFF48CBA[AURA_MASTERY] src = ' .. src .. ', dst = ' .. dst .. ', spellId = ' .. tostring(spellId))
                 if subevent == 'SPELL_AURA_REMOVED' then
                     if allstates[src].icon == pa_auras[spellId] then
                         allstates[src].changed = true
