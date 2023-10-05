@@ -27,7 +27,7 @@ end
 
 -- Trigger 2 / Customer / Event(s): UNIT_SPELLCAST_START, CLEU:SPELL_CAST_START
 function(event, ...)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     local unit,  spellId = '', 0
     if event == 'UNIT_SPELLCAST_START' then
@@ -47,7 +47,7 @@ function(event, ...)
         end
     end
     if spellId ~= 0 then
-        -- DEFAULT_CHAT_FRAME:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] "' .. unit .. '" spellcast ' .. spellId .. ' start.')
+        -- DefaultChatFrame:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] "' .. unit .. '" spellcast ' .. spellId .. ' start.')
         wa_global = wa_global or { }
         wa_global.defile = wa_global.defile or { }
         -- wa_global.defile.spellname = wa_global.defile.spellname or GetSpellInfo(5401)
@@ -81,7 +81,7 @@ function(event, ...)
                         if expiration < 1e-4 then
                             self:SetScript("OnUpdate", nil)
                             fallback = false
-                            -- DEFAULT_CHAT_FRAME:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] OnUpdate checking end.')
+                            -- DefaultChatFrame:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] OnUpdate checking end.')
                         elseif fallback and wa_global and wa_global.defile and wa_global.defile.spellname then
                             for i = 1, 40 do
                                 local unit = string.format('raid%dtarget', i)
@@ -99,11 +99,11 @@ function(event, ...)
                                 expiration = expiration
                             }
                         end
-                        -- DEFAULT_CHAT_FRAME:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] Decision Updated: show = ' .. tostring(show) .. ' expiration = ' .. tostring(expiration) .. '.')
+                        -- DefaultChatFrame:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] Decision Updated: show = ' .. tostring(show) .. ' expiration = ' .. tostring(expiration) .. '.')
                         WeakAuras.ScanEvents('FATAL_DEFILE')
                     end
                 end)
-                -- DEFAULT_CHAT_FRAME:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] OnUpdate checking begin.')
+                -- DefaultChatFrame:AddMessage('|cFFAD7FA8[FATAL_DEFLITE] OnUpdate checking begin.')
             end
         end
     end
