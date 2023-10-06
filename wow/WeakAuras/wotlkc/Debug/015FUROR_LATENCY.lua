@@ -1,5 +1,5 @@
 function()
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     wa_global = wa_global or { }
     wa_global.debug = wa_global.debug or { }
@@ -9,7 +9,7 @@ function()
     if 1 == GetShapeshiftForm() then
         local ts = GetTime()
         if ts > wa_global.debug.bear + 1.0 then
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFFF7C0A[Debug] Shapeshift at ' .. tostring(ts))
+            DefaultChatFrame:AddMessage('|cFFFF7C0A[Debug] Shapeshift at ' .. tostring(ts))
         end
         wa_global.debug.bear = ts
     end
@@ -17,7 +17,7 @@ function()
     if 5 <= UnitPower('player', 1) then
         local ts = GetTime()
         if ts > wa_global.debug.rage + 1.0 then
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFFF7C0A[Debug] Furor at ' .. tostring(ts))
+            DefaultChatFrame:AddMessage('|cFFFF7C0A[Debug] Furor at ' .. tostring(ts))
         end
         wa_global.debug.rage = ts
     end
