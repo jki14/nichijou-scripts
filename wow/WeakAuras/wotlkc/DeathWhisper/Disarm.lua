@@ -1,6 +1,6 @@
 -- Trigger 1 / Customer / Event(s): CLEU:SPELL_AURA_APPLIED, CLEU:SPELL_AURA_REFRESH
 function(event, ...)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     local _, subevent, _, _, _, _, _, destGUID, _, _, _, spellId = ...
     -- if spellId ~= 5401 and destGUID == UnitGUID('player') then
