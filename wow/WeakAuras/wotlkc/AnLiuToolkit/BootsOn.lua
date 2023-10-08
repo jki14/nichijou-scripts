@@ -1,6 +1,6 @@
 -- Trigger 1 / Custom / Event: ENCOUNTER_START, ENCOUNTER_END
 function(event, ...)
-    local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME or DefaultChatFrame or { AddMessage = function(...) end }
+    local DefaultChatFrame = DefaultChatFrame or { AddMessage = function(...) end }
 
     local bootsLeather = 23824
     local bootsCloth = 35581
@@ -29,11 +29,11 @@ function(event, ...)
 
     if 'ENCOUNTER_END' == event then
         local encounterId, encounterName, difficultyId, groupSize, success = ...
-        DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter ' .. tostring(encounterId) .. (success and ' success.' or ' failed.'))
+        DefaultChatFrame:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter ' .. tostring(encounterId) .. (success and ' success.' or ' failed.'))
         if allows[encounterId] and success then
             local start_time = wa_global and wa_global.anliutoolkit and wa_global.anliutoolkit.encounter_start or 2147483647
             local duration = GetTime() - start_time
-            DEFAULT_CHAT_FRAME:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter duration = ' .. tostring(duration) .. ' secs.')
+            DefaultChatFrame:AddMessage('|cFFFFF468[AnLiuToolkits-BootsOn] Encounter duration = ' .. tostring(duration) .. ' secs.')
             if duration >= 60 and duration <= 660 then
                 if GetItemCount(bootsLeather) > 0 then
                     C_Timer.After(0.4, function()
