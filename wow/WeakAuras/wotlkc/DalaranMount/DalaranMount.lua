@@ -8,6 +8,7 @@ function(_, unit, _, spellId)
         [63963] = 'Rusted Proto-Drake',
     }
     if 'player' == unit and spellId and flying[spellId] then
+        --[[
         wa_global = wa_global or { }
         local lastts = wa_global.delaran_mount or 0
         if lastts < GetTime() - 2.0 then
@@ -26,6 +27,8 @@ function(_, unit, _, spellId)
             wa_global.delaran_mount = GetTime()
             CallCompanion('MOUNT', offset)
         end
+        ]]--
+        C_MountJournal.SummonByID(0)
     end
     return false
 end
