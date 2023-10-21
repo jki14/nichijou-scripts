@@ -99,6 +99,8 @@ def main():
               '逐風者 - 鷄肉韋嘎嘣脆',
               '逐風者 - 執著的牛',
               '逐風者 - 黑莲尖叫姬',
+              '札里克 - 仍然活著',
+              '烏蘇雷 - 仍然活著',
               'Classic PTR Realm 1 - 依然活著',
               'Classic PTR Realm 1 - 仍然活著',
               'Classic PTR Realm 1 - 依舊活著',
