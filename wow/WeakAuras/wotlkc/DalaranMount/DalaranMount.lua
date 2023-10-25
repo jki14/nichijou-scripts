@@ -28,7 +28,8 @@ function(_, unit, _, spellId)
             CallCompanion('MOUNT', offset)
         end
         ]]--
-        C_MountJournal.SummonByID(0)
+        C_MountJournal.SummonByID(345)
+        C_MountJournal.SummonByID(79)
     end
     return false
 end
