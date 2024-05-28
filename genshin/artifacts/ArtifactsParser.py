@@ -22,6 +22,7 @@ pytesseract.tesseract_cmd = r"D:\\Applications\\Tesseract-OCR\\tesseract.exe"
 
 class ArtifactsParser:
     rep_numeric = re.compile(r"[0-9]+[.,]{0,1}[0-9]*")
+    rep_plust = re.compile(r"t[0-9]+[.,]{0,1}[0-9]*")
 
     def get_double(self, text):
         res = ArtifactsParser.rep_numeric.findall(text)
@@ -98,9 +99,6 @@ class ArtifactsParser:
 
     def summarize(self, stats, level):
         statmap = dict(stats)
-
-        if not self.debug:
-            os.system("cls")
 
         main_key = None
         for key in statmap:
@@ -236,8 +234,7 @@ class ArtifactsParser:
             try:
                 sub_key, sub_value = sub_kv.split("+")
             except ValueError:
-                plust_pat = re.compile(r"t[0-9]+[.,]{0,1}[0-9]*")
-                plust_sub = plust_pat.findall(sub_kv)[-1]
+                plust_sub = ArtifactsParser.rep_plust.findall(sub_kv)[-1]
                 before, after = sub_kv.split(plust_sub)
                 fixed = before + plust_sub.replace("t", "+") + after
                 sub_key, sub_value = fixed.split("+")
@@ -245,6 +242,8 @@ class ArtifactsParser:
         # Summarize Current
         processing = hash(frozenset(statmap.items()))
         if processing != self.presenting:
+            if not self.debug:
+                os.system("cls")
             self.summarize(statmap, level)
             self.presenting = processing
 
