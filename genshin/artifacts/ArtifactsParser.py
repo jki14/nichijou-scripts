@@ -9,138 +9,15 @@ from cv2 import COLOR_RGB2BGR, cvtColor, destroyAllWindows, imshow, waitKey
 from numpy import array, double
 from PIL import ImageGrab
 from pytesseract import image_to_string, pytesseract
-from termcolor import cprint
+
+from utils.bases import BASES
+from utils.hits import HITS
+from utils.names import NAMES
+from utils.regions import regions
+from utils.styles import STYLES
+from utils.weights import ATK_WEIGHTS, DEF_WEIGHTS, HP_WEIGHTS
 
 pytesseract.tesseract_cmd = r"D:\\Applications\\Tesseract-OCR\\tesseract.exe"
-
-
-class NAMES:
-    CRIT_RATE = "CRIT Rate"
-    CRIT_DMG = "CRIT DMG"
-    ENERGY_RECHARGE = "Energy Recharge"
-    ELEMENTAL_MASTERY = "Elemental Mastery"
-    ATK_PCT = "ATK%"
-    HP_PCT = "HP%"
-    DEF_PCT = "DEF%"
-    ATK = "ATK"
-    HP = "HP"
-    DEF = "DEF"
-    TAILS = [
-        "Sojourner",
-        "Miracle",
-        "serker",
-        "structor",
-        "Exile",
-        "Will",
-        "holar",
-        "Finale",
-        "Troupe",
-        "Oblige",
-        "Beloved",
-        "Venerer",
-        "Petra",
-        "Millelith",
-        "Reminiscence",
-        "Fate",
-        "Memories",
-        "Dreams",
-        "Lost",
-        "Glow",
-        "Hunter",
-        "Troupe",
-        "Past",
-        "Whispers",
-        "Whimsy",
-        "Reverie",
-    ]
-    PCT = "%"
-    DMG_BONUS = "DMG Bonus"
-    HEALING_BONUS = "Healing Bonus"
-
-
-class text_format:
-    def __init__(self, color, highlight, attrs):
-        self.color = color
-        self.highlight = highlight
-        self.attrs = attrs
-
-    def print(self, text):
-        cprint(text, self.color, self.highlight, attrs=self.attrs)
-
-
-class STYLES:
-    CRIT_RATE = text_format("yellow", "on_black", ["bold"])
-    CRIT_DMG = text_format("yellow", "on_black", ["bold"])
-    ENERGY_RECHARGE = text_format("light_magenta", "on_black", ["bold"])
-    ELEMENTAL_MASTERY = text_format("light_magenta", "on_black", ["bold"])
-    ATK_PCT = text_format("light_blue", "on_black", ["bold"])
-    HP_PCT = text_format("light_blue", "on_black", ["bold"])
-    DEF_PCT = text_format("dark_grey", "on_black", [])
-    ATK = text_format("green", "on_black", [])
-    HP = text_format("green", "on_black", [])
-    DEF = text_format("dark_grey", "on_black", [])
-    DEBUG = text_format("yellow", "on_dark_grey", ["bold"])
-    INFO = text_format("blue", "on_dark_grey", ["bold"])
-    MESSAGE = text_format("white", "on_black", [])
-    MAIN = text_format("red", "on_black", ["bold"])
-    LEVEL = text_format("white", "on_black", ["bold"])
-
-
-class BASES:
-    ATK = double("945.24")  # Raiden Shogun + Engulfing Lightning
-    # HP = double('14695.09')  # Neuvillette
-    HP = double("15307.39")  # Furina
-    DEF = double("798.55")  # Noelle
-
-
-class HITS:
-    CRIT_RATE = double("3.89")
-    CRIT_DMG = double("7.77")
-    ENERGY_RECHARGE = double("6.48")
-    ELEMENTAL_MASTERY = double("23.31")
-    ATK_PCT = double("5.83")
-    HP_PCT = double("5.83")
-    DEF_PCT = double("7.29")
-
-
-class ATK_WEIGHTS:
-    CRIT_RATE = double("1.00")
-    CRIT_DMG = double("1.00")
-    ENERGY_RECHARGE = double("1.00")
-    ELEMENTAL_MASTERY = double("1.00")
-    ATK_PCT = double("1.00")
-    HP_PCT = double("0.00")
-    DEF_PCT = double("0.00")
-
-
-class HP_WEIGHTS:
-    CRIT_RATE = double("1.00")
-    CRIT_DMG = double("1.00")
-    ENERGY_RECHARGE = double("1.00")
-    ELEMENTAL_MASTERY = double("0.00")
-    ATK_PCT = double("0.00")
-    HP_PCT = double("1.00")
-    DEF_PCT = double("0.00")
-
-
-class DEF_WEIGHTS:
-    CRIT_RATE = double("1.00")
-    CRIT_DMG = double("1.00")
-    ENERGY_RECHARGE = double("1.00")
-    ELEMENTAL_MASTERY = double("0.00")
-    ATK_PCT = double("0.00")
-    HP_PCT = double("0.00")
-    DEF_PCT = double("1.00")
-
-
-class regions:
-    # shot = (2700, 280, 3300, 660) # Char Artifacts Page, Keyboard
-    shot = (2540, 360, 3160, 840)
-    main_key = (2540, 360, 2880, 400)
-    main_val = (2540, 400, 2760, 460)
-    stars = (2540, 460, 2800, 520)
-    level = (2570, 574, 2638, 606)
-    subs = [(2586, 640, 3160, 690), (2586, 690, 3160, 740), (2586, 740, 3160, 790), (2586, 790, 3160, 840)]
 
 
 class ArtifactsParser:
