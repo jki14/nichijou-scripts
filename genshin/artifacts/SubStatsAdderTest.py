@@ -20,19 +20,19 @@ class SubStatsAdderTest:
 
     def simulate(presented, target):
         p = zeros(len(SubStatsAdder.dims), dtype=double)
-        r = target
+        r = max(target - len(presented), 0)
         notv = ones(len(SubStatsAdder.dims), dtype=double)
         for i in range(len(SubStatsAdder.dims)):
             if SubStatsAdder.dims[i] in presented:
                 p[i] = double("1.0")
                 notv[i] = double("0.0")
-                r -= 1
 
         SubStatsAdderTest.dfs(p, r, notv)
 
         res = {}
         for i in range(len(SubStatsAdder.dims)):
-            res[SubStatsAdder.dims[i]] = p[i]
+            if p[i] > 1e-9 and p[i] < double("1.0") - 1e-9:
+                res[SubStatsAdder.dims[i]] = p[i]
         return res
 
     def checkMapStringDoubleEqual(lhs, rhs):

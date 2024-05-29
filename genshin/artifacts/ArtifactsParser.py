@@ -10,6 +10,7 @@ from numpy import array, double
 from PIL import ImageGrab
 from pytesseract import image_to_string, pytesseract
 
+from SubStatsAdder import SubStatsAdder
 from utils.bases import BASES
 from utils.hits import HITS
 from utils.names import NAMES
@@ -97,8 +98,76 @@ class ArtifactsParser:
         self.debugtext("%s : %.2f" % (standardized_key, standardized_value))
         statmap[standardized_key] = standardized_value
 
-    def summarize(self, stats, level):
+    def summarize(self, stats, level, expanded=None):
         statmap = dict(stats)
+        expanded_num = 0
+
+        if expanded is not None:
+            expanded_num = 5 - level - min(5 - len(statmap), 5 - level)
+            enhance_factor = double("0.25") * expanded_num
+            level = 5
+
+            if statmap.get(NAMES.CRIT_RATE, double("0.0")) > 1e-9:
+                statmap[NAMES.CRIT_RATE] += HITS.CRIT_RATE * double("0.85") * enhance_factor
+            if statmap.get(NAMES.CRIT_DMG, double("0.0")) > 1e-9:
+                statmap[NAMES.CRIT_DMG] += HITS.CRIT_DMG * double("0.85") * enhance_factor
+            if statmap.get(NAMES.ENERGY_RECHARGE, double("0.0")) > 1e-9:
+                statmap[NAMES.ENERGY_RECHARGE] += HITS.ENERGY_RECHARGE * double("0.85") * enhance_factor
+            if statmap.get(NAMES.ELEMENTAL_MASTERY, double("0.0")) > 1e-9:
+                statmap[NAMES.ELEMENTAL_MASTERY] += HITS.ELEMENTAL_MASTERY * double("0.85") * enhance_factor
+            if statmap.get(NAMES.ATK_PCT, double("0.0")) > 1e-9:
+                statmap[NAMES.ATK_PCT] += HITS.ATK_PCT * double("0.85") * enhance_factor
+            if statmap.get(NAMES.HP_PCT, double("0.0")) > 1e-9:
+                statmap[NAMES.HP_PCT] += HITS.HP_PCT * double("0.85") * enhance_factor
+            if statmap.get(NAMES.DEF_PCT, double("0.0")) > 1e-9:
+                statmap[NAMES.DEF_PCT] += HITS.DEF_PCT * double("0.85") * enhance_factor
+            if statmap.get(NAMES.ATK, double("0.0")) > 1e-9:
+                statmap[NAMES.ATK] += HITS.ATK * double("0.85") * enhance_factor
+            if statmap.get(NAMES.HP, double("0.0")) > 1e-9:
+                statmap[NAMES.HP] += HITS.HP * double("0.85") * enhance_factor
+            if statmap.get(NAMES.DEF, double("0.0")) > 1e-9:
+                statmap[NAMES.DEF] += HITS.DEF * double("0.85") * enhance_factor
+
+            if expanded.get(NAMES.CRIT_RATE, double("0.0")) > 1e-9:
+                statmap[NAMES.CRIT_RATE] = (
+                    expanded[NAMES.CRIT_RATE] * (double("1.0") + enhance_factor) * HITS.CRIT_RATE * double("0.85")
+                )
+            if expanded.get(NAMES.CRIT_DMG, double("0.0")) > 1e-9:
+                statmap[NAMES.CRIT_DMG] = (
+                    expanded[NAMES.CRIT_DMG] * (double("1.0") + enhance_factor) * HITS.CRIT_DMG * double("0.85")
+                )
+            if expanded.get(NAMES.ENERGY_RECHARGE, double("0.0")) > 1e-9:
+                statmap[NAMES.ENERGY_RECHARGE] = (
+                    expanded[NAMES.ENERGY_RECHARGE]
+                    * (double("1.0") + enhance_factor)
+                    * HITS.ENERGY_RECHARGE
+                    * double("0.85")
+                )
+            if expanded.get(NAMES.ELEMENTAL_MASTERY, double("0.0")) > 1e-9:
+                statmap[NAMES.ELEMENTAL_MASTERY] = (
+                    expanded[NAMES.ELEMENTAL_MASTERY]
+                    * (double("1.0") + enhance_factor)
+                    * HITS.ELEMENTAL_MASTERY
+                    * double("0.85")
+                )
+            if expanded.get(NAMES.ATK_PCT, double("0.0")) > 1e-9:
+                statmap[NAMES.ATK_PCT] = (
+                    expanded[NAMES.ATK_PCT] * (double("1.0") + enhance_factor) * HITS.ATK_PCT * double("0.85")
+                )
+            if expanded.get(NAMES.HP_PCT, double("0.0")) > 1e-9:
+                statmap[NAMES.HP_PCT] = (
+                    expanded[NAMES.HP_PCT] * (double("1.0") + enhance_factor) * HITS.HP_PCT * double("0.85")
+                )
+            if expanded.get(NAMES.DEF_PCT, double("0.0")) > 1e-9:
+                statmap[NAMES.DEF_PCT] = (
+                    expanded[NAMES.DEF_PCT] * (double("1.0") + enhance_factor) * HITS.DEF_PCT * double("0.85")
+                )
+            if expanded.get(NAMES.ATK, double("0.0")) > 1e-9:
+                statmap[NAMES.ATK] = expanded[NAMES.ATK] * (double("1.0") + enhance_factor) * HITS.ATK * double("0.85")
+            if expanded.get(NAMES.HP, double("0.0")) > 1e-9:
+                statmap[NAMES.HP] = expanded[NAMES.HP] * (double("1.0") + enhance_factor) * HITS.HP * double("0.85")
+            if expanded.get(NAMES.DEF, double("0.0")) > 1e-9:
+                statmap[NAMES.DEF] = expanded[NAMES.DEF] * (double("1.0") + enhance_factor) * HITS.DEF * double("0.85")
 
         main_key = None
         for key in statmap:
@@ -140,7 +209,7 @@ class ArtifactsParser:
         if NAMES.DEF_PCT in statmap:
             STYLES.DEF_PCT.print("%s: %.2f" % (NAMES.DEF_PCT, statmap[NAMES.DEF_PCT]))
 
-        for i in range(len(stats), 5):
+        for i in range(len(stats) + expanded_num, 5):
             STYLES.INFO.print(" " * 16)
 
         STYLES.MESSAGE.print("=" * 32)
@@ -149,7 +218,7 @@ class ArtifactsParser:
         crit_score *= double("2.0")
         crit_score += statmap[NAMES.CRIT_DMG] if NAMES.CRIT_DMG in statmap else double("0.0")
         STYLES.CRIT_RATE.print(
-            "CRIT SCORE: %.2f (%.2f hits)" % (crit_score, crit_score / (HITS.CRIT_DMG * double("0.85")))
+            "CRIT HITs: %.2f (score = %.2f)" % (crit_score / (HITS.CRIT_DMG * double("0.85")), crit_score)
         )
 
         atk_hits = (
@@ -225,6 +294,7 @@ class ArtifactsParser:
         # Level
         level_str = self.subregion(img, regions.shot, regions.level)
         level = self.get_int(level_str)
+        level = level // 4
         # Sub Stats
         for sub in regions.subs:
             sub_kv = self.subregion(img, regions.shot, sub)
@@ -246,6 +316,12 @@ class ArtifactsParser:
                 os.system("cls")
             self.summarize(statmap, level)
             self.presenting = processing
+            # Expecttions
+            if level < 5:
+                presented = list(statmap.keys())
+                subStatsAdder = SubStatsAdder(presented, debug=False)
+                expanded = subStatsAdder.start(target=5)
+                self.summarize(statmap, level, expanded)
 
     def start(self):
         while True:

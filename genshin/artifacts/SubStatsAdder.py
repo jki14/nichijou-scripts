@@ -38,19 +38,18 @@ class SubStatsAdder:
 
     def __init__(self, presented, debug):
         presented = list(dict.fromkeys(presented))
+        self.presented_num = len(presented)
 
         self.debug = debug
 
         self.f = zeros(1 << 10, dtype=double)
         self.p = zeros(10, dtype=double)
 
-        self.presented_num = 0
         self.presented_msk = 0
         for i in range(10):
             if SubStatsAdder.dims[i] in presented:
                 self.p[i] = double("1.0")
                 self.presented_msk |= 1 << i
-                self.presented_num += 1
         self.f[self.presented_msk] = double("1.0")
 
     def pshow(self):
@@ -115,7 +114,8 @@ class SubStatsAdder:
             self.pshow()
         res = {}
         for i in range(len(SubStatsAdder.dims)):
-            res[SubStatsAdder.dims[i]] = self.p[i]
+            if self.p[i] > 1e-9 and self.p[i] < double("1.0") - 1e-9:
+                res[SubStatsAdder.dims[i]] = self.p[i]
         return res
 
 
