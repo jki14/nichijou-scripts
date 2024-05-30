@@ -10,11 +10,11 @@ from numpy import array, double
 from PIL import ImageGrab
 from pytesseract import image_to_string, pytesseract
 
+from Profiles.Regions import RegionProfile, Regions
 from SubStatsAdder import SubStatsAdder
 from utils.bases import BASES
 from utils.hits import HITS
 from utils.names import NAMES
-from utils.regions import regions
 from utils.styles import STYLES
 from utils.weights import ATK_WEIGHTS, DEF_WEIGHTS, HP_WEIGHTS
 
@@ -37,14 +37,15 @@ class ArtifactsParser:
             return None
         return int(res[0])
 
-    def screenshot(self):
-        shot = ImageGrab.grab(bbox=regions.shot)  # get RGB screenshot
-        shot_np = array(shot)
-        return shot_np
-
-    def __init__(self, debug=False):
+    def __init__(self, regionKey, debug=False):
         self.debug = debug
         self.presenting = None
+        self.regionProfile: RegionProfile = Regions[regionKey]
+
+    def screenshot(self):
+        shot = ImageGrab.grab(bbox=self.regionProfile.full)  # get RGB screenshot
+        shot_np = array(shot)
+        return shot_np
 
     def debugimg(self, img):
         if self.debug:
@@ -56,8 +57,11 @@ class ArtifactsParser:
         if self.debug:
             STYLES.DEBUG.print(text)
 
-    def subregion(self, img, base, target):
-        subimg = img[target[1] - base[1] : target[3] - base[1], target[0] - base[0] : target[2] - base[0]]
+    def ocr(self, img, target):
+        subimg = img[
+            target[1] - self.regionProfile.full[1] : target[3] - self.regionProfile.full[1],
+            target[0] - self.regionProfile.full[0] : target[2] - self.regionProfile.full[0],
+        ]
         self.debugimg(subimg)
         text = image_to_string(subimg, config="--oem 3 --psm 7").strip()
         self.debugtext(text)
@@ -286,18 +290,18 @@ class ArtifactsParser:
         self.debugimg(img)
         statmap = {}
         # Main Stats
-        main_key = self.subregion(img, regions.shot, regions.main_key)
-        main_val = self.subregion(img, regions.shot, regions.main_val).replace(",", "")
+        main_key = self.ocr(img, self.regionProfile.main_key)
+        main_val = self.ocr(img, self.regionProfile.main_val).replace(",", "")
         self.put_stat(main_key, main_val, statmap, value_override=double("0.0"))
         # TODO: Detect the number of stars
-        self.subregion(img, regions.shot, regions.stars)
+        self.ocr(img, self.regionProfile.stars)
         # Level
-        level_str = self.subregion(img, regions.shot, regions.level)
+        level_str = self.ocr(img, self.regionProfile.level)
         level = self.get_int(level_str)
         level = level // 4
         # Sub Stats
-        for sub in regions.subs:
-            sub_kv = self.subregion(img, regions.shot, sub)
+        for substat in self.regionProfile.substats:
+            sub_kv = self.ocr(img, substat)
             if self.tailing(sub_kv):
                 break
             sub_key, sub_value = None, None
@@ -337,9 +341,10 @@ def main():
 
     argument_parser = ArgumentParser(description="Genshin Impact artifacts stat parser.")
     argument_parser.add_argument("--debug", action="store_true")
+    argument_parser.add_argument("--region", default="K3440X1440")
     args = argument_parser.parse_args()
 
-    artifacts_parser = ArtifactsParser(debug=args.debug)
+    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), debug=args.debug)
     artifacts_parser.start()
 
 
