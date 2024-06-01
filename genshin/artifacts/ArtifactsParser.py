@@ -4,19 +4,19 @@ from argparse import ArgumentParser
 from inspect import signature
 from time import sleep
 
+import numpy as np
 from colorama import just_fix_windows_console
 from cv2 import COLOR_RGB2BGR, cvtColor, destroyAllWindows, imshow, waitKey
 from numpy import array, double
 from PIL import ImageGrab
 from pytesseract import image_to_string, pytesseract
 
-from Profiles.Regions import RegionProfile, Regions
+from Profiles.RegionsPrfl import RegionsPrfl, RegionsPrfls
+from Profiles.WeightsPrfl import WeightsPrfls
 from SubStatsAdder import SubStatsAdder
-from utils.bases import BASES
-from utils.hits import HITS
-from utils.names import NAMES
-from utils.styles import STYLES
-from utils.weights import ATK_WEIGHTS, DEF_WEIGHTS, HP_WEIGHTS
+from Utils.Constants import PCT, TailKWs, eps, inf, one, oneIncCoeExp, zero
+from Utils.Stats import StatHitsVec, Stats, StatsN
+from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle
 
 pytesseract.tesseract_cmd = r"D:\\Applications\\Tesseract-OCR\\tesseract.exe"
 
@@ -28,22 +28,22 @@ class ArtifactsParser:
     def get_double(self, text):
         res = ArtifactsParser.rep_numeric.findall(text)
         if len(res) != 1:
-            return None
+            raise ValueError(f"Failed to get double: {text}")
         return double(res[0])
 
     def get_int(self, text):
         res = ArtifactsParser.rep_numeric.findall(text)
         if len(res) != 1:
-            return None
+            raise ValueError(f"Failed to get int: {text}")
         return int(res[0])
 
     def __init__(self, regionKey, debug=False):
         self.debug = debug
         self.presenting = None
-        self.regionProfile: RegionProfile = Regions[regionKey]
+        self.regionPrfl: RegionsPrfl = RegionsPrfls[regionKey]
 
     def screenshot(self):
-        shot = ImageGrab.grab(bbox=self.regionProfile.full)  # get RGB screenshot
+        shot = ImageGrab.grab(bbox=self.regionPrfl.full)  # get RGB screenshot
         shot_np = array(shot)
         return shot_np
 
@@ -55,252 +55,81 @@ class ArtifactsParser:
 
     def debugtext(self, text):
         if self.debug:
-            STYLES.DEBUG.print(text)
+            DebugStyle.println(text)
 
     def ocr(self, img, target):
         subimg = img[
-            target[1] - self.regionProfile.full[1] : target[3] - self.regionProfile.full[1],
-            target[0] - self.regionProfile.full[0] : target[2] - self.regionProfile.full[0],
+            target[1] - self.regionPrfl.full[1] : target[3] - self.regionPrfl.full[1],
+            target[0] - self.regionPrfl.full[0] : target[2] - self.regionPrfl.full[0],
         ]
         self.debugimg(subimg)
         text = image_to_string(subimg, config="--oem 3 --psm 7").strip()
         self.debugtext(text)
         return text
 
-    def put_stat(self, key, value, statmap, value_override=None):
-        if NAMES.PCT not in value:
+    def put_stat(self, key: str, value: str, stats_vec: np.array, isMainStat: bool = False):
+        if PCT not in value:
             value = value.replace(".", "")
 
-        standardized_key, standardized_value = None, None
-        if NAMES.DMG_BONUS in key:
-            standardized_key = NAMES.DMG_BONUS
-        elif NAMES.HEALING_BONUS in key:
-            standardized_key = NAMES.HEALING_BONUS
-        elif NAMES.CRIT_RATE in key:
-            standardized_key = NAMES.CRIT_RATE
-        elif NAMES.CRIT_DMG in key:
-            standardized_key = NAMES.CRIT_DMG
-        elif NAMES.ENERGY_RECHARGE in key:
-            standardized_key = NAMES.ENERGY_RECHARGE
-        elif NAMES.ELEMENTAL_MASTERY in key:
-            standardized_key = NAMES.ELEMENTAL_MASTERY
-        elif NAMES.ATK in key:
-            standardized_key = NAMES.ATK_PCT if NAMES.PCT in value else NAMES.ATK
-        elif NAMES.HP in key:
-            standardized_key = NAMES.HP_PCT if NAMES.PCT in value else NAMES.HP
-        elif NAMES.DEF in key:
-            standardized_key = NAMES.DEF_PCT if NAMES.PCT in value else NAMES.DEF
-        standardized_value = value_override if value_override is not None else self.get_double(value)
+        validated = np.array([one if stat.validate(key, value) else zero for stat in Stats], dtype=np.double)
+        if np.sum(validated) == 0:
+            raise ValueError(f"No stat match found for: ({key}: {value})")
+        elif np.sum(validated) > 1:
+            raise ValueError(f"Multiple stats matches found for: ({key}: {value})")
+        elif np.fabs(stats_vec @ validated) > eps:
+            raise ValueError(f"Redundant stat match found for: ({key}: {value})")
 
-        if standardized_key is None:
-            raise ValueError("null standardized_key found for: %s" % key)
-        if standardized_key in statmap:
-            raise ValueError("duplicate key %s found for: %s" % (standardized_key, key))
-        if standardized_value is None:
-            raise ValueError("null standardized_value found for: %s" % value)
+        standardized_value = -inf if isMainStat else self.get_double(value)
 
-        self.debugtext("%s : %.2f" % (standardized_key, standardized_value))
-        statmap[standardized_key] = standardized_value
+        self.debugtext("%s : %.2f" % (Stats[np.where(validated > one - eps)[0].flat[0]].key, standardized_value))
 
-    def summarize(self, stats, level, expanded=None):
-        statmap = dict(stats)
-        expanded_num = 0
+        stats_vec += validated * standardized_value * StatHitsVec
 
-        if expanded is not None:
-            expanded_num = 5 - level - min(5 - len(statmap), 5 - level)
-            enhance_factor = double("0.25") * expanded_num
-            level = 5
+    def summarize(self, organic_vec: np.array, levCur: int, expVec: np.array = np.zeros(StatsN, dtype=np.double)):
+        stats_vec = np.copy(organic_vec)
 
-            if statmap.get(NAMES.CRIT_RATE, double("0.0")) > 1e-9:
-                statmap[NAMES.CRIT_RATE] += HITS.CRIT_RATE * double("0.85") * enhance_factor
-            if statmap.get(NAMES.CRIT_DMG, double("0.0")) > 1e-9:
-                statmap[NAMES.CRIT_DMG] += HITS.CRIT_DMG * double("0.85") * enhance_factor
-            if statmap.get(NAMES.ENERGY_RECHARGE, double("0.0")) > 1e-9:
-                statmap[NAMES.ENERGY_RECHARGE] += HITS.ENERGY_RECHARGE * double("0.85") * enhance_factor
-            if statmap.get(NAMES.ELEMENTAL_MASTERY, double("0.0")) > 1e-9:
-                statmap[NAMES.ELEMENTAL_MASTERY] += HITS.ELEMENTAL_MASTERY * double("0.85") * enhance_factor
-            if statmap.get(NAMES.ATK_PCT, double("0.0")) > 1e-9:
-                statmap[NAMES.ATK_PCT] += HITS.ATK_PCT * double("0.85") * enhance_factor
-            if statmap.get(NAMES.HP_PCT, double("0.0")) > 1e-9:
-                statmap[NAMES.HP_PCT] += HITS.HP_PCT * double("0.85") * enhance_factor
-            if statmap.get(NAMES.DEF_PCT, double("0.0")) > 1e-9:
-                statmap[NAMES.DEF_PCT] += HITS.DEF_PCT * double("0.85") * enhance_factor
-            if statmap.get(NAMES.ATK, double("0.0")) > 1e-9:
-                statmap[NAMES.ATK] += HITS.ATK * double("0.85") * enhance_factor
-            if statmap.get(NAMES.HP, double("0.0")) > 1e-9:
-                statmap[NAMES.HP] += HITS.HP * double("0.85") * enhance_factor
-            if statmap.get(NAMES.DEF, double("0.0")) > 1e-9:
-                statmap[NAMES.DEF] += HITS.DEF * double("0.85") * enhance_factor
+        if np.sum(expVec) > eps:
+            stats_vec = organic_vec - SubStatsAdder.toExsists(organic_vec) * oneIncCoeExp + expVec * oneIncCoeExp
 
-            if expanded.get(NAMES.CRIT_RATE, double("0.0")) > 1e-9:
-                statmap[NAMES.CRIT_RATE] = (
-                    expanded[NAMES.CRIT_RATE] * (double("1.0") + enhance_factor) * HITS.CRIT_RATE * double("0.85")
-                )
-            if expanded.get(NAMES.CRIT_DMG, double("0.0")) > 1e-9:
-                statmap[NAMES.CRIT_DMG] = (
-                    expanded[NAMES.CRIT_DMG] * (double("1.0") + enhance_factor) * HITS.CRIT_DMG * double("0.85")
-                )
-            if expanded.get(NAMES.ENERGY_RECHARGE, double("0.0")) > 1e-9:
-                statmap[NAMES.ENERGY_RECHARGE] = (
-                    expanded[NAMES.ENERGY_RECHARGE]
-                    * (double("1.0") + enhance_factor)
-                    * HITS.ENERGY_RECHARGE
-                    * double("0.85")
-                )
-            if expanded.get(NAMES.ELEMENTAL_MASTERY, double("0.0")) > 1e-9:
-                statmap[NAMES.ELEMENTAL_MASTERY] = (
-                    expanded[NAMES.ELEMENTAL_MASTERY]
-                    * (double("1.0") + enhance_factor)
-                    * HITS.ELEMENTAL_MASTERY
-                    * double("0.85")
-                )
-            if expanded.get(NAMES.ATK_PCT, double("0.0")) > 1e-9:
-                statmap[NAMES.ATK_PCT] = (
-                    expanded[NAMES.ATK_PCT] * (double("1.0") + enhance_factor) * HITS.ATK_PCT * double("0.85")
-                )
-            if expanded.get(NAMES.HP_PCT, double("0.0")) > 1e-9:
-                statmap[NAMES.HP_PCT] = (
-                    expanded[NAMES.HP_PCT] * (double("1.0") + enhance_factor) * HITS.HP_PCT * double("0.85")
-                )
-            if expanded.get(NAMES.DEF_PCT, double("0.0")) > 1e-9:
-                statmap[NAMES.DEF_PCT] = (
-                    expanded[NAMES.DEF_PCT] * (double("1.0") + enhance_factor) * HITS.DEF_PCT * double("0.85")
-                )
-            if expanded.get(NAMES.ATK, double("0.0")) > 1e-9:
-                statmap[NAMES.ATK] = expanded[NAMES.ATK] * (double("1.0") + enhance_factor) * HITS.ATK * double("0.85")
-            if expanded.get(NAMES.HP, double("0.0")) > 1e-9:
-                statmap[NAMES.HP] = expanded[NAMES.HP] * (double("1.0") + enhance_factor) * HITS.HP * double("0.85")
-            if expanded.get(NAMES.DEF, double("0.0")) > 1e-9:
-                statmap[NAMES.DEF] = expanded[NAMES.DEF] * (double("1.0") + enhance_factor) * HITS.DEF * double("0.85")
+        main_key = Stats[np.where(stats_vec < -one)[0].flat[0]].key
+        MainStatStyle.println(main_key)
 
-        main_key = None
-        for key in statmap:
-            if statmap[key] < 1e-9:
-                main_key = key
-                break
-        STYLES.MAIN.print(main_key)
-        statmap.pop(main_key)
+        LevelStyle.println("+%d" % levCur)
 
-        STYLES.LEVEL.print("+%d" % level)
+        for i in range(StatsN):
+            if stats_vec[i] < np.double(0.65):
+                continue
+            Stats[i].println(stats_vec[i])
 
-        if NAMES.ATK in statmap:
-            if NAMES.ATK_PCT not in statmap:
-                statmap[NAMES.ATK_PCT] = double("0.0")
-            statmap[NAMES.ATK_PCT] += statmap[NAMES.ATK] / BASES.ATK * double("100.0")
-            statmap.pop(NAMES.ATK)
-        if NAMES.HP in statmap:
-            if NAMES.HP_PCT not in statmap:
-                statmap[NAMES.HP_PCT] = double("0.0")
-            statmap[NAMES.HP_PCT] += statmap[NAMES.HP] / BASES.HP * double("100.0")
-        if NAMES.DEF in statmap:
-            if NAMES.DEF_PCT not in statmap:
-                statmap[NAMES.DEF_PCT] = double("0.0")
-            statmap[NAMES.DEF_PCT] += statmap[NAMES.DEF] / BASES.DEF * double("100.0")
-            statmap.pop(NAMES.DEF)
+        InfoStyle.println("v" * 32)
 
-        if NAMES.CRIT_RATE in statmap:
-            STYLES.CRIT_RATE.print("%s: %.2f" % (NAMES.CRIT_RATE, statmap[NAMES.CRIT_RATE]))
-        if NAMES.CRIT_DMG in statmap:
-            STYLES.CRIT_DMG.print("%s: %.2f" % (NAMES.CRIT_DMG, statmap[NAMES.CRIT_DMG]))
-        if NAMES.ENERGY_RECHARGE in statmap:
-            STYLES.ENERGY_RECHARGE.print("%s: %.2f" % (NAMES.ENERGY_RECHARGE, statmap[NAMES.ENERGY_RECHARGE]))
-        if NAMES.ELEMENTAL_MASTERY in statmap:
-            STYLES.ELEMENTAL_MASTERY.print("%s: %.2f" % (NAMES.ELEMENTAL_MASTERY, statmap[NAMES.ELEMENTAL_MASTERY]))
-        if NAMES.ATK_PCT in statmap:
-            STYLES.ATK_PCT.print("%s: %.2f" % (NAMES.ATK_PCT, statmap[NAMES.ATK_PCT]))
-        if NAMES.HP_PCT in statmap:
-            STYLES.HP_PCT.print("%s: %.2f" % (NAMES.HP_PCT, statmap[NAMES.HP_PCT]))
-        if NAMES.DEF_PCT in statmap:
-            STYLES.DEF_PCT.print("%s: %.2f" % (NAMES.DEF_PCT, statmap[NAMES.DEF_PCT]))
+        for wPrfl in WeightsPrfls.values():
+            wPrfl.println(stats_vec)
 
-        for i in range(len(stats) + expanded_num, 5):
-            STYLES.INFO.print(" " * 16)
-
-        STYLES.MESSAGE.print("=" * 32)
-
-        crit_score = statmap[NAMES.CRIT_RATE] if NAMES.CRIT_RATE in statmap else double("0.0")
-        crit_score *= double("2.0")
-        crit_score += statmap[NAMES.CRIT_DMG] if NAMES.CRIT_DMG in statmap else double("0.0")
-        STYLES.CRIT_RATE.print(
-            "CRIT HITs: %.2f (score = %.2f)" % (crit_score / (HITS.CRIT_DMG * double("0.85")), crit_score)
-        )
-
-        atk_hits = (
-            statmap.get(NAMES.CRIT_RATE, double("0.0")) / (HITS.CRIT_RATE * double("0.85")) * ATK_WEIGHTS.CRIT_RATE
-        )
-        atk_hits += statmap.get(NAMES.CRIT_DMG, double("0.0")) / (HITS.CRIT_DMG * double("0.85")) * ATK_WEIGHTS.CRIT_DMG
-        atk_hits += (
-            statmap.get(NAMES.ENERGY_RECHARGE, double("0.0"))
-            / (HITS.ENERGY_RECHARGE * double("0.85"))
-            * ATK_WEIGHTS.ENERGY_RECHARGE
-        )
-        atk_hits += (
-            statmap.get(NAMES.ELEMENTAL_MASTERY, double("0.0"))
-            / (HITS.ELEMENTAL_MASTERY * double("0.85"))
-            * ATK_WEIGHTS.ELEMENTAL_MASTERY
-        )
-        atk_hits += statmap.get(NAMES.ATK_PCT, double("0.0")) / (HITS.ATK_PCT * double("0.85")) * ATK_WEIGHTS.ATK_PCT
-        atk_hits += statmap.get(NAMES.HP_PCT, double("0.0")) / (HITS.HP_PCT * double("0.85")) * ATK_WEIGHTS.HP_PCT
-        atk_hits += statmap.get(NAMES.DEF_PCT, double("0.0")) / (HITS.DEF_PCT * double("0.85")) * ATK_WEIGHTS.DEF_PCT
-        STYLES.ATK_PCT.print("ATK HITs: %.2f" % atk_hits)
-
-        hp_hits = statmap.get(NAMES.CRIT_RATE, double("0.0")) / (HITS.CRIT_RATE * double("0.85")) * HP_WEIGHTS.CRIT_RATE
-        hp_hits += statmap.get(NAMES.CRIT_DMG, double("0.0")) / (HITS.CRIT_DMG * double("0.85")) * HP_WEIGHTS.CRIT_DMG
-        hp_hits += (
-            statmap.get(NAMES.ENERGY_RECHARGE, double("0.0"))
-            / (HITS.ENERGY_RECHARGE * double("0.85"))
-            * HP_WEIGHTS.ENERGY_RECHARGE
-        )
-        hp_hits += (
-            statmap.get(NAMES.ELEMENTAL_MASTERY, double("0.0"))
-            / (HITS.ELEMENTAL_MASTERY * double("0.85"))
-            * HP_WEIGHTS.ELEMENTAL_MASTERY
-        )
-        hp_hits += statmap.get(NAMES.ATK_PCT, double("0.0")) / (HITS.ATK_PCT * double("0.85")) * HP_WEIGHTS.ATK_PCT
-        hp_hits += statmap.get(NAMES.HP_PCT, double("0.0")) / (HITS.HP_PCT * double("0.85")) * HP_WEIGHTS.HP_PCT
-        hp_hits += statmap.get(NAMES.DEF_PCT, double("0.0")) / (HITS.DEF_PCT * double("0.85")) * HP_WEIGHTS.DEF_PCT
-        STYLES.HP_PCT.print("HP HITs: %.2f" % hp_hits)
-
-        def_hits = (
-            statmap.get(NAMES.CRIT_RATE, double("0.0")) / (HITS.CRIT_RATE * double("0.85")) * DEF_WEIGHTS.CRIT_RATE
-        )
-        def_hits += statmap.get(NAMES.CRIT_DMG, double("0.0")) / (HITS.CRIT_DMG * double("0.85")) * DEF_WEIGHTS.CRIT_DMG
-        def_hits += (
-            statmap.get(NAMES.ENERGY_RECHARGE, double("0.0"))
-            / (HITS.ENERGY_RECHARGE * double("0.85"))
-            * DEF_WEIGHTS.ENERGY_RECHARGE
-        )
-        def_hits += (
-            statmap.get(NAMES.ELEMENTAL_MASTERY, double("0.0"))
-            / (HITS.ELEMENTAL_MASTERY * double("0.85"))
-            * DEF_WEIGHTS.ELEMENTAL_MASTERY
-        )
-        def_hits += statmap.get(NAMES.ATK_PCT, double("0.0")) / (HITS.ATK_PCT * double("0.85")) * DEF_WEIGHTS.ATK_PCT
-        def_hits += statmap.get(NAMES.HP_PCT, double("0.0")) / (HITS.HP_PCT * double("0.85")) * DEF_WEIGHTS.HP_PCT
-        def_hits += statmap.get(NAMES.DEF_PCT, double("0.0")) / (HITS.DEF_PCT * double("0.85")) * DEF_WEIGHTS.DEF_PCT
-        STYLES.DEF_PCT.print("DEF HITs: %.2f" % def_hits)
+        InfoStyle.println(">" * 64)
 
     def tailing(self, text):
-        for tail in NAMES.TAILS:
+        for tail in TailKWs:
             if tail in text:
                 return True
         return False
 
     def understanding(self, img):
         self.debugimg(img)
-        statmap = {}
+        stats_vec = np.zeros(StatsN, dtype=np.double)
         # Main Stats
-        main_key = self.ocr(img, self.regionProfile.main_key)
-        main_val = self.ocr(img, self.regionProfile.main_val).replace(",", "")
-        self.put_stat(main_key, main_val, statmap, value_override=double("0.0"))
+        main_key = self.ocr(img, self.regionPrfl.main_key)
+        main_val = self.ocr(img, self.regionPrfl.main_val).replace(",", "")
+        self.put_stat(main_key, main_val, stats_vec, True)
         # TODO: Detect the number of stars
-        self.ocr(img, self.regionProfile.stars)
+        self.ocr(img, self.regionPrfl.stars)
+        levMax = 5
         # Level
-        level_str = self.ocr(img, self.regionProfile.level)
-        level = self.get_int(level_str)
-        level = level // 4
+        levCur4Str = self.ocr(img, self.regionPrfl.level)
+        levCur4 = self.get_int(levCur4Str)
+        levCur = levCur4 // 4
         # Sub Stats
-        for substat in self.regionProfile.substats:
+        for substat in self.regionPrfl.substats:
             sub_kv = self.ocr(img, substat)
             if self.tailing(sub_kv):
                 break
@@ -312,20 +141,19 @@ class ArtifactsParser:
                 before, after = sub_kv.split(plust_sub)
                 fixed = before + plust_sub.replace("t", "+") + after
                 sub_key, sub_value = fixed.split("+")
-            self.put_stat(sub_key, sub_value, statmap)
+            self.put_stat(sub_key, sub_value, stats_vec)
         # Summarize Current
-        processing = hash(frozenset(statmap.items()))
+        processing = hash(stats_vec.data.tobytes())
         if processing != self.presenting:
             if not self.debug:
                 os.system("cls")
-            self.summarize(statmap, level)
+            self.summarize(stats_vec, levCur)
             self.presenting = processing
             # Expecttions
-            if level < 5:
-                presented = list(statmap.keys())
-                subStatsAdder = SubStatsAdder(presented, debug=False)
-                expanded = subStatsAdder.start(target=5)
-                self.summarize(statmap, level, expanded)
+            if levCur < levMax:
+                subStatsAdder = SubStatsAdder(stats_vec, debug=False)
+                expVec = subStatsAdder.calc(iterNum=levMax - levCur)
+                self.summarize(stats_vec, levMax, expVec)
 
     def start(self):
         while True:
