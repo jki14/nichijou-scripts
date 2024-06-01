@@ -10,5 +10,5 @@ class HITS:
     HP_PCT = double("5.83")
     DEF_PCT = double("7.29")
     ATK = double("19.45")
-    HP = double("5.83")
-    DEF = double("7.29")
+    HP = double("298.75")
+    DEF = double("23.15")
