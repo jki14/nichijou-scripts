@@ -70,8 +70,8 @@ class WeightsPrfl:
 CritScorePrfl: WeightsPrfl = WeightsPrfl(
     key="Crit Score",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double("15307.39"),  # Furina
-    baseDEF=np.double("798.55"),  # Noelle
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
@@ -99,8 +99,8 @@ CritScorePrfl: WeightsPrfl = WeightsPrfl(
 CritCountPrfl: WeightsPrfl = WeightsPrfl(
     key="Crit Count",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double("15307.39"),  # Furina
-    baseDEF=np.double("798.55"),  # Noelle
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
@@ -128,8 +128,8 @@ CritCountPrfl: WeightsPrfl = WeightsPrfl(
 ATKCountPrfl: WeightsPrfl = WeightsPrfl(
     key="ATK Count",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double("15307.39"),  # Furina
-    baseDEF=np.double("798.55"),  # Noelle
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
@@ -155,8 +155,8 @@ ATKCountPrfl: WeightsPrfl = WeightsPrfl(
 HPCountPrfl: WeightsPrfl = WeightsPrfl(
     key="HP Count",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double("15307.39"),  # Furina
-    baseDEF=np.double("798.55"),  # Noelle
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
@@ -181,8 +181,8 @@ HPCountPrfl: WeightsPrfl = WeightsPrfl(
 DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     key="DEF Count",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double("15307.39"),  # Furina
-    baseDEF=np.double("798.55"),  # Noelle
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
@@ -204,10 +204,80 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
+ShinobuPrfl: WeightsPrfl = WeightsPrfl(
+    key="Shinobu Count",
+    baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
+    baseHP=np.double(12288.65),  # Shinobu
+    baseDEF=np.double(750.77),  # Shinobu
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+    threshold=np.double(5),
+)
+
+NahidaPrfl: WeightsPrfl = WeightsPrfl(
+    key="Nahida Count",
+    baseATK=np.double(298.97) + np.double(542),  # Nahida + A Thousand Floating Dreams
+    baseHP=np.double(10360.04),  # Nahida
+    baseDEF=np.double(630.21),  # Nahida
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(5),
+)
+
+KiraraPrfl: WeightsPrfl = WeightsPrfl(
+    key="Kirara Count",
+    baseATK=np.double(223.02) + np.double(454),  # Kirara + Favonius Sword
+    baseHP=np.double(12179.90),  # Kirara
+    baseDEF=np.double(546.02),  # Kirara
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4),
+)
+
+
 WeightsPrfls = {
     CritScorePrfl.key: CritScorePrfl,
     CritCountPrfl.key: CritCountPrfl,
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
+    ShinobuPrfl.key: ShinobuPrfl,
+    NahidaPrfl.key: NahidaPrfl,
+    KiraraPrfl.key: KiraraPrfl,
 }

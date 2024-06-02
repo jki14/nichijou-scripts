@@ -67,7 +67,7 @@ class ArtifactsParser:
         self.debugimg(subimg)
         text = image_to_string(subimg, config="--oem 3 --psm 7").strip()
         self.debugtext(text)
-        return text
+        return text.replace(",", "")
 
     def put_stat(self, key: str, value: str, stats_vec: np.array, isMainStat: bool = False):
         if PCT not in value:
@@ -159,8 +159,14 @@ class ArtifactsParser:
 
     def start(self):
         while True:
-            img = self.screenshot()
-            self.understanding(img)
+            try:
+                img = self.screenshot()
+                self.understanding(img)
+            except Exception as e:
+                if not self.debug:
+                    os.system("cls")
+                DebugStyle.println(e)
+                sleep(2.0)
             if self.debug:
                 break
             sleep(0.100)
