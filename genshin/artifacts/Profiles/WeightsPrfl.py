@@ -5,22 +5,8 @@ from typing import List
 import numpy as np
 
 from Utils.Constants import eps, one, oneIncCoeExp, onePCT, zero
-from Utils.Stats import (
-    ATK,
-    ATK_PCT,
-    CRIT_DMG,
-    CRIT_RATE,
-    DEF,
-    DEF_PCT,
-    DMG_BONUS,
-    ELEMENTAL_MASTERY,
-    ENERGY_RECHARGE,
-    HEALING_BONUS,
-    HP,
-    HP_PCT,
-    StatInfo,
-    Stats,
-)
+from Utils.Stats import (ATK, ATK_PCT, CRIT_DMG, CRIT_RATE, DEF, DEF_PCT, DMG_BONUS, ELEMENTAL_MASTERY, ENERGY_RECHARGE,
+                         HEALING_BONUS, HP, HP_PCT, StatInfo, Stats)
 from Utils.TextStyle import TextStyle
 
 
@@ -211,7 +197,7 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),

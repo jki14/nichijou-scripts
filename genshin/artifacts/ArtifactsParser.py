@@ -1,13 +1,12 @@
 import os
 import re
 from argparse import ArgumentParser
-from inspect import signature
 from time import sleep
+from typing import List
 
 import numpy as np
 from colorama import just_fix_windows_console
 from cv2 import COLOR_RGB2BGR, cvtColor, destroyAllWindows, imshow, waitKey
-from numpy import array, double
 from PIL import ImageGrab
 from pytesseract import image_to_string, pytesseract
 
@@ -29,7 +28,7 @@ class ArtifactsParser:
         res = ArtifactsParser.rep_numeric.findall(text)
         if len(res) != 1:
             raise ValueError(f"Failed to get double: {text}")
-        return double(res[0])
+        return np.double(res[0])
 
     def get_int(self, text):
         res = ArtifactsParser.rep_numeric.findall(text)
@@ -37,14 +36,17 @@ class ArtifactsParser:
             raise ValueError(f"Failed to get int: {text}")
         return int(res[0])
 
-    def __init__(self, regionKey, debug=False):
+    def __init__(self, regionKey, weightsKeys, debug=False):
         self.debug = debug
         self.presenting = None
         self.regionPrfl: RegionsPrfl = RegionsPrfls[regionKey]
+        self.weightsPrfls: List[RegionsPrfl] = [
+            wp for wp in WeightsPrfls.values() if any([key.upper() in wp.key.upper() for key in weightsKeys])
+        ]
 
     def screenshot(self):
         shot = ImageGrab.grab(bbox=self.regionPrfl.full)  # get RGB screenshot
-        shot_np = array(shot)
+        shot_np = np.array(shot)
         return shot_np
 
     def debugimg(self, img):
@@ -103,7 +105,7 @@ class ArtifactsParser:
 
         InfoStyle.println("v" * 32)
 
-        for wPrfl in WeightsPrfls.values():
+        for wPrfl in self.weightsPrfls:
             wPrfl.println(stats_vec)
 
         InfoStyle.println(">" * 64)
@@ -170,9 +172,10 @@ def main():
     argument_parser = ArgumentParser(description="Genshin Impact artifacts stat parser.")
     argument_parser.add_argument("--debug", action="store_true")
     argument_parser.add_argument("--region", default="K3440X1440")
+    argument_parser.add_argument("--weights", action="extend", nargs="+")
     args = argument_parser.parse_args()
 
-    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), debug=args.debug)
+    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), weightsKeys=args.weights, debug=args.debug)
     artifacts_parser.start()
 
 
