@@ -270,6 +270,28 @@ KiraraPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
+BennettPrfl: WeightsPrfl = WeightsPrfl(
+    key="Bennett Count",
+    baseATK=np.double(191.16) + np.double(454),  # Bennett + Favonius Sword
+    baseHP=np.double(12397.40),  # Bennett
+    baseDEF=np.double(771.25),  # Bennett
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4),
+)
 
 WeightsPrfls = {
     CritScorePrfl.key: CritScorePrfl,
@@ -280,4 +302,5 @@ WeightsPrfls = {
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     KiraraPrfl.key: KiraraPrfl,
+    BennettPrfl.key: BennettPrfl,
 }

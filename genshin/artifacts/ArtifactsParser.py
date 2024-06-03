@@ -13,7 +13,7 @@ from pytesseract import image_to_string, pytesseract
 from Profiles.RegionsPrfl import RegionsPrfl, RegionsPrfls
 from Profiles.WeightsPrfl import WeightsPrfls
 from SubStatsAdder import SubStatsAdder
-from Utils.Constants import PCT, TailKWs, eps, inf, one, oneIncCoeExp, zero
+from Utils.Constants import PCT, TailKWs, eps, fourCoe, inf, one, oneIncCoeExp, zero
 from Utils.Stats import StatHitsVec, Stats, StatsN
 from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle
 
@@ -25,24 +25,25 @@ class ArtifactsParser:
     rep_plust = re.compile(r"t[0-9]+[.,]{0,1}[0-9]*")
 
     def get_double(self, text):
-        res = ArtifactsParser.rep_numeric.findall(text)
+        res = ArtifactsParser.rep_numeric.findall(text.replace("..", "."))
         if len(res) != 1:
             raise ValueError(f"Failed to get double: {text}")
         return np.double(res[0])
 
     def get_int(self, text):
-        res = ArtifactsParser.rep_numeric.findall(text)
+        res = ArtifactsParser.rep_numeric.findall(text.replace("..", "."))
         if len(res) != 1:
             raise ValueError(f"Failed to get int: {text}")
         return int(res[0])
 
-    def __init__(self, regionKey, weightsKeys, debug=False):
+    def __init__(self, regionKey, weightsKeys, fourstars=False, debug=False):
         self.debug = debug
         self.presenting = None
         self.regionPrfl: RegionsPrfl = RegionsPrfls[regionKey]
         self.weightsPrfls: List[RegionsPrfl] = [
             wp for wp in WeightsPrfls.values() if any([key.upper() in wp.key.upper() for key in weightsKeys])
         ]
+        self.fourstars = fourstars
 
     def screenshot(self):
         shot = ImageGrab.grab(bbox=self.regionPrfl.full)  # get RGB screenshot
@@ -85,7 +86,10 @@ class ArtifactsParser:
 
         self.debugtext("%s : %.2f" % (Stats[np.where(validated > one - eps)[0].flat[0]].key, standardized_value))
 
-        stats_vec += validated * standardized_value * StatHitsVec
+        if self.fourstars:
+            stats_vec += validated * standardized_value * StatHitsVec / fourCoe
+        else:
+            stats_vec += validated * standardized_value * StatHitsVec
 
     def summarize(self, organic_vec: np.array, levCur: int, expVec: np.array = np.zeros(StatsN, dtype=np.double)):
         stats_vec = np.copy(organic_vec)
@@ -101,7 +105,10 @@ class ArtifactsParser:
         for i in range(StatsN):
             if stats_vec[i] < np.double(0.65):
                 continue
-            Stats[i].println(stats_vec[i])
+            if self.fourstars:
+                Stats[i].println(stats_vec[i] * fourCoe)
+            else:
+                Stats[i].println(stats_vec[i])
 
         InfoStyle.println("v" * 32)
 
@@ -125,7 +132,7 @@ class ArtifactsParser:
         self.put_stat(main_key, main_val, stats_vec, True)
         # TODO: Detect the number of stars
         self.ocr(img, self.regionPrfl.stars)
-        levMax = 5
+        levMax = 4 if self.fourstars else 5
         # Level
         levCur4Str = self.ocr(img, self.regionPrfl.level)
         levCur4 = self.get_int(levCur4Str)
@@ -178,10 +185,13 @@ def main():
     argument_parser = ArgumentParser(description="Genshin Impact artifacts stat parser.")
     argument_parser.add_argument("--debug", action="store_true")
     argument_parser.add_argument("--region", default="K3440X1440")
+    argument_parser.add_argument("--fourstars", action="store_true")
     argument_parser.add_argument("--weights", action="extend", nargs="+")
     args = argument_parser.parse_args()
 
-    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), weightsKeys=args.weights, debug=args.debug)
+    artifacts_parser = ArtifactsParser(
+        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, debug=args.debug
+    )
     artifacts_parser.start()
 
 

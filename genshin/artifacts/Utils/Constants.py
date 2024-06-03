@@ -4,6 +4,7 @@ import numpy as np
 
 inf: np.double = np.double(2147483647)
 eps: np.double = np.double(1e-9)
+fourCoe: np.double = np.double(0.8)
 one: np.double = np.double(1)
 oneIncCoeExp: np.double = np.double(0.85)
 onePCT: np.double = np.double(0.01)
