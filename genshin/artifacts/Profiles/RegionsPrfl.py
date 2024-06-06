@@ -24,6 +24,18 @@ class RegionsPrfl:
             max(main_key[3], main_val[3], stars[3], level[3], *(s[3] for s in substats)),
         )
 
+    def translated(self, dx, dy):
+        return RegionsPrfl(
+            main_key=tuple(self.main_key[i] + dx if (i & 1) == 0 else self.main_key[i] + dy for i in range(4)),
+            main_val=tuple(self.main_val[i] + dx if (i & 1) == 0 else self.main_val[i] + dy for i in range(4)),
+            stars=tuple(self.stars[i] + dx if (i & 1) == 0 else self.stars[i] + dy for i in range(4)),
+            level=tuple(self.level[i] + dx if (i & 1) == 0 else self.level[i] + dy for i in range(4)),
+            substats=[
+                tuple(self.substats[i][j] + dx if (j & 1) == 0 else self.substats[i][j] + dy for j in range(4))
+                for i in range(4)
+            ],
+        )
+
 
 K3440X1440 = RegionsPrfl(
     main_key=(2540, 360, 2880, 400),
@@ -41,7 +53,10 @@ C3440X1440 = RegionsPrfl(
     substats=[(2730, 560, 3130, 618), (2730, 620, 3130, 660), (2730, 660, 3130, 700), (2730, 700, 3130, 744)],
 )
 
+C3440X1440MO = C3440X1440.translated(-934, 70)
+
 RegionsPrfls = {
     "K3440X1440": K3440X1440,
     "C3440X1440": C3440X1440,
+    "C3440X1440MO": C3440X1440MO,
 }
