@@ -135,7 +135,11 @@ class ArtifactsParser:
         levMax = 4 if self.fourstars else 5
         # Level
         levCur4Str = self.ocr(img, self.regionPrfl.level)
-        levCur4 = self.get_int(levCur4Str)
+        levCur4 = 0
+        try:
+            levCur4 = self.get_int(levCur4Str)
+        except ValueError:
+            levCur4 = self.get_int(levCur4Str.replace('+O', '+0'))
         levCur = levCur4 // 4
         # Sub Stats
         for substat in self.regionPrfl.substats:
