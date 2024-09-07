@@ -139,7 +139,7 @@ class ArtifactsParser:
         try:
             levCur4 = self.get_int(levCur4Str)
         except ValueError:
-            levCur4 = self.get_int(levCur4Str.replace('+O', '+0'))
+            levCur4 = self.get_int(levCur4Str.replace('+O', '+0').strip('.'))
         levCur = levCur4 // 4
         # Sub Stats
         for substat in self.regionPrfl.substats:
