@@ -9,7 +9,7 @@ setlocal modeline tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 set backspace=indent,eol,start
 
-set colorcolumn=121
+set colorcolumn=141
 highlight colorcolumn ctermbg=darkgray
 
 autocmd Filetype c setlocal nomodeline tabstop=4 expandtab shiftwidth=2 softtabstop=2
