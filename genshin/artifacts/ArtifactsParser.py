@@ -17,7 +17,8 @@ from Utils.Constants import PCT, TailKWs, eps, fourCoe, inf, one, oneIncCoeExp, 
 from Utils.Stats import StatHitsVec, Stats, StatsN
 from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle
 
-pytesseract.tesseract_cmd = r"D:\\Applications\\Tesseract-OCR\\tesseract.exe"
+# pytesseract.tesseract_cmd = r"D:\\Applications\\Tesseract-OCR\\tesseract.exe"
+pytesseract.tesseract_cmd = "/opt/homebrew/bin/tesseract"
 
 
 class ArtifactsParser:
@@ -159,7 +160,8 @@ class ArtifactsParser:
         processing = hash(stats_vec.data.tobytes())
         if processing != self.presenting:
             if not self.debug:
-                os.system("cls")
+                # os.system("cls")
+                os.system("clear")
             self.summarize(stats_vec, levCur)
             self.presenting = processing
             # Expecttions
@@ -175,7 +177,8 @@ class ArtifactsParser:
                 self.understanding(img)
             except Exception as e:
                 if not self.debug:
-                    os.system("cls")
+                    # os.system("cls")
+                    os.system("clear")
                 DebugStyle.println(e)
                 sleep(2.0)
             if self.debug:
