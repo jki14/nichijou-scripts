@@ -1,0 +1,10 @@
+{
+  "server": "yuzuru",
+  "server_port": 4862,
+  "local_port": 3125,
+  "password": "kokyo",
+  "timeout": 300,
+  "method": "xchacha20-ietf-poly1305",
+  "fast_open": true,
+  "mode": "tcp_and_udp"
+}
