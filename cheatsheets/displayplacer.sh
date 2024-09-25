@@ -16,3 +16,12 @@ displayplacer "id:03691118-6385-4E9B-6094-12A89CA7CE92 res:3440x1440 hz:60 color
 
 # MacBook Pro 16-inch 2019 (CTBU)
 displayplacer "id:9449BC59-B8F6-9D46-F60A-79D17EC0BFC0 res:1792x1120 hz:59 color_depth:4 scaling:on origin:(0,0) degree:0" "id:BC61F0D3-E0F1-5E27-CA2C-5580455192FE res:1920x1080 hz:60 color_depth:8 scaling:off origin:(-1984,-1080) degree:0" "id:38799907-6835-3B7B-CAC9-E3C1FE7B1EFE res:1920x1080 hz:60 color_depth:8 scaling:off origin:(-64,-1080) degree:0"
+
+# JKI-MBP23 (34 + internal)
+displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(964,1440) degree:0"
+
+# JKI-MBP23 (34 + 29 + internal)
+displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(964,1440) degree:0" "id:5A00D475-F03C-4036-AFA1-E51475986B59 res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270"
+
+# JKI-MBP23 (34 + 29)
+displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:5A00D475-F03C-4036-AFA1-E51475986B59 res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270"
