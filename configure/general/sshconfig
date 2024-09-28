@@ -6,10 +6,10 @@ Host github.com
 Host kaguya
     Port 3122
     User jki14
-    IdentityFile /home/jki14/.ssh/jki14_rsa
+    IdentityFile ~/.ssh/jki14_rsa
     RemoteForward 3085 127.0.0.1:3084
 
 Host kaguya tohka yuzuru
     User jki14
-    IdentityFile /home/jki14/.ssh/jki14_rsa
+    IdentityFile ~/.ssh/jki14_rsa
     RemoteForward 3085 127.0.0.1:3084
