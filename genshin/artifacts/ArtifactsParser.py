@@ -129,6 +129,7 @@ class ArtifactsParser:
         stats_vec = np.zeros(StatsN, dtype=np.double)
         # Main Stats
         main_key = self.ocr(img, self.regionPrfl.main_key)
+        main_key = main_key.replace("Bonu:", "Bonus")
         main_val = self.ocr(img, self.regionPrfl.main_val).replace(",", "")
         self.put_stat(main_key, main_val, stats_vec, True)
         # TODO: Detect the number of stars
@@ -148,10 +149,18 @@ class ArtifactsParser:
             if self.tailing(sub_kv):
                 break
             sub_key, sub_value = None, None
+            sub_kv = sub_kv.replace("DEFHI9", "DEF+19")
             try:
                 sub_key, sub_value = sub_kv.split("+")
             except ValueError:
-                plust_sub = ArtifactsParser.rep_plust.findall(sub_kv)[-1]
+                plust_sub = None
+                try:
+                    plust_sub = ArtifactsParser.rep_plust.findall(sub_kv)[-1]
+                except IndexError:
+                    os.system("clear")
+                    DebugStyle.println('Bad SubStat: %s' % sub_kv)
+                    sleep(4.0)
+                    return
                 before, after = sub_kv.split(plust_sub)
                 fixed = before + plust_sub.replace("t", "+") + after
                 sub_key, sub_value = fixed.split("+")
