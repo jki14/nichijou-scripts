@@ -25,3 +25,9 @@ displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 colo
 
 # JKI-MBP23 (34 + 29)
 displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:5A00D475-F03C-4036-AFA1-E51475986B59 res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270"
+
+# JKI-MBP23 (34 + 29 + HP-DOCK18 + internal)
+displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(964,1440) degree:0" "id:5A00D475-F03C-4036-AFA1-E51475986B59 res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270" "id:1A072B43-945E-4B2D-A8B8-4FAD84721A54 res:1024x1280 hz:60 color_depth:4 enabled:true scaling:off origin:(-1024,80) degree:0"
+
+# JKI-MBP23 (34 + 29 + HP-DOCK18)
+displayplacer "id:CC48629C-28F9-4D0D-A843-F7C81F026BF6 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:5A00D475-F03C-4036-AFA1-E51475986B59 res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270" "id:1A072B43-945E-4B2D-A8B8-4FAD84721A54 res:1024x1280 hz:60 color_depth:4 enabled:true scaling:off origin:(-1024,80) degree:0
