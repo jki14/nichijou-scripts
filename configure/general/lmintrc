@@ -54,6 +54,14 @@ tmux-alt () {
     fi
 }
 
+py3init() {
+    local venv_path="$HOME/.py3venv/bin/activate"
+
+    if [[ -f "$venv_path" ]]; then
+        source "$venv_path"
+    fi
+}
+
 alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
 
 alias roll='od -N1 -An -i /dev/random'
