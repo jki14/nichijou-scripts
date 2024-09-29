@@ -1,6 +1,6 @@
 {
   "server": "yuzuru",
-  "server_port": 4862,
+  "server_port": 4861,
   "local_port": 3125,
   "password": "kokyo",
   "timeout": 300,
