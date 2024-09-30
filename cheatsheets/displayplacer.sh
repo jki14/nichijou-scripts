@@ -40,3 +40,9 @@ displayplacer "id:57AA4DF7-470A-4611-90A0-F4816BAD7921 res:3440x1440 hz:100 colo
 
 # 7cf34dea6f6d (34 + 29)
 displayplacer "id:57AA4DF7-470A-4611-90A0-F4816BAD7921 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:AAF24370-EB8E-48FB-82DE-7E29995E7B7B res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270"
+
+# 7cf34dea6f6d (34 + HP Dock 2018 + internal)
+displayplacer "id:57AA4DF7-470A-4611-90A0-F4816BAD7921 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(964,1440) degree:0" "id:AAF24370-EB8E-48FB-82DE-7E29995E7B7B res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270" "id:F2CC5E2E-FCA6-4C6D-A193-742881162C1F res:1024x1280 hz:60 color_depth:4 enabled:true scaling:off origin:(-1024,80) degree:0"
+
+# 7cf34dea6f6d (34 + 29 + HP Dock 2018)
+displayplacer "id:57AA4DF7-470A-4611-90A0-F4816BAD7921 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:AAF24370-EB8E-48FB-82DE-7E29995E7B7B res:1080x2560 hz:60 color_depth:8 enabled:true scaling:off origin:(3440,-560) degree:270" "id:F2CC5E2E-FCA6-4C6D-A193-742881162C1F res:1024x1280 hz:60 color_depth:4 enabled:true scaling:off origin:(-1024,80) degree:0"
