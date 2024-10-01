@@ -1,6 +1,8 @@
 Add-Type -AssemblyName System.Web
 
-$logLocation = "%userprofile%\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt";
+# $logLocation = "%userprofile%\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt";
+# $logLocationChina = "%userprofile%\AppData\LocalLow\miHoYo\$([char]0x539f)$([char]0x795e)\output_log.txt";
+$logLocation = "$Env:HOME/Library/Application Support/Yaagl OS/wineprefix/drive_c/users/crossover/AppData/LocalLow/miHoYo/Genshin Impact/output_log.txt";
 $logLocationChina = "%userprofile%\AppData\LocalLow\miHoYo\$([char]0x539f)$([char]0x795e)\output_log.txt";
 
 $reg = $args[0]
@@ -11,7 +13,8 @@ if ($reg -eq "china") {
   $apiHost = "public-operation-hk4e.mihoyo.com"
 }
 
-$tmps = $env:TEMP + '\pm.ps1';
+# $tmps = $env:TEMP + '\pm.ps1';
+$tmps = '/tmp/pm.ps1';
 if ([System.IO.File]::Exists($tmps)) {
   ri $tmps
 }
@@ -45,12 +48,14 @@ if ($matches.Length -eq 0) {
     return
 }
 
-$gamedir = $matches[1]
+# $gamedir = $matches[1]
+$gamedir = "$Env:HOME/apps/genshin/GenshinImpact_Data"
 # Thanks to @jogerj for getting the latest webchache dir
 $webcachePath = Resolve-Path "$gamedir/webCaches"
 $cacheVerPath = Get-Item (Get-ChildItem -Path $webcachePath | Sort-Object LastWriteTime -Descending | Select-Object -First 1).FullName
 $cachefile = Resolve-Path "$cacheVerPath/Cache/Cache_Data/data_2"
-$tmpfile = "$env:TEMP/ch_data_2"
+# $tmpfile = "$env:TEMP/ch_data_2"
+$tmpfile = "/tmp/ch_data_2"
 
 Copy-Item $cachefile -Destination $tmpfile
 
