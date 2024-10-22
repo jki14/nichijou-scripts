@@ -30,12 +30,12 @@ class StatInfo:
     def validate(self, key: str, value: str):
         return self.key.replace(PCT, "") in key and (PCT in self.key) == (PCT in value)
 
-    def println(self, value: np.double):
-        value = value * self.onceIncrementMax
+    def println(self, hits: np.double):
+        value = hits * self.onceIncrementMax
         if PCT in self.key:
-            self.textStyle.println(f"{self.key.replace(PCT, '')}: {value:.2f} %")
+            self.textStyle.println(f"{self.key.replace(PCT, '')}: {value:.2f} % (x {hits: .2f})")
         else:
-            self.textStyle.println(f"{self.key}: {value:.2f}")
+            self.textStyle.println(f"{self.key}: {value:.2f} (x {hits: .2f})")
 
 
 CRIT_RATE = StatInfo(
