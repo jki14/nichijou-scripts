@@ -141,7 +141,7 @@ class ArtifactsParser:
         try:
             levCur4 = self.get_int(levCur4Str)
         except ValueError:
-            levCur4 = self.get_int(levCur4Str.replace('+O', '+0').strip('.'))
+            levCur4 = self.get_int(levCur4Str.replace("+O", "+0").strip("."))
         levCur = levCur4 // 4
         # Sub Stats
         for substat in self.regionPrfl.substats:
@@ -158,7 +158,7 @@ class ArtifactsParser:
                     plust_sub = ArtifactsParser.rep_plust.findall(sub_kv)[-1]
                 except IndexError:
                     os.system("clear")
-                    DebugStyle.println('Bad SubStat: %s' % sub_kv)
+                    DebugStyle.println("Bad SubStat: %s" % sub_kv)
                     sleep(4.0)
                     return
                 before, after = sub_kv.split(plust_sub)

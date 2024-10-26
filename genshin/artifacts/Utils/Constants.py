@@ -40,5 +40,5 @@ TailKWs: List[str] = [
     "holar",
     "serker",
     "structor",
-    'Petra',
+    "Petra",
 ]

@@ -18,7 +18,7 @@ class TextStyle:
         print(colored(text, self.textColor, self.textHighlights, attrs=self.attributes), end=" ")
 
     def println(self, text, dynamic=False):
-        cprint(text, self.textColor, self.textHighlights, attrs=self.attributes, end = "\r" if dynamic else "\n")
+        cprint(text, self.textColor, self.textHighlights, attrs=self.attributes, end="\r" if dynamic else "\n")
 
 
 DebugStyle = TextStyle("red", "on_white", ["bold"])

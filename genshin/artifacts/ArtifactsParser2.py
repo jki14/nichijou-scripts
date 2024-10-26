@@ -63,7 +63,7 @@ class ArtifactsParser:
         if self.debug:
             DebugStyle.println(text)
 
-    def ocr(self, img, target = None):
+    def ocr(self, img, target=None):
         subimg = img
         if target is not None:
             region = tuple(target[i] - self.regionPrfl.full[i & 1] for i in range(4))
@@ -79,7 +79,8 @@ class ArtifactsParser:
 
         handler = Vision.VNImageRequestHandler.alloc().initWithCGImage_options_(cg_image, {})
         if handler.performRequests_error_([self.request], None):
-            res = '\n'.join([res.topCandidates_(1)[0].string() for res in self.request.results()])
+            res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
+            res = res.replace("Bonu:", "Bonus")
             return res
         else:
             raise RuntimeError("Error performing OCR")
@@ -163,7 +164,7 @@ class ArtifactsParser:
                 self.put_stat(sub_key, sub_value, stats_vec)
         else:
             sub_num = 0
-            contents = self.ocr(img).split('\n')[::-1]
+            contents = self.ocr(img).split("\n")[::-1]
             it = iter(contents)
             row = next(it)
             while "Piece Set" in row:

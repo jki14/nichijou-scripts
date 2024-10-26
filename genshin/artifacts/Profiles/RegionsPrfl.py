@@ -11,7 +11,7 @@ class RegionsPrfl:
         stars: ScreenRegion = None,
         level: ScreenRegion = None,
         substats: List[ScreenRegion] = None,
-        full: ScreenRegion = None
+        full: ScreenRegion = None,
     ):
         if full is None:
             self.main_key: ScreenRegion = main_key
@@ -44,7 +44,7 @@ class RegionsPrfl:
             )
         else:
             return RegionsPrfl(
-                full = tuple(self.full[i] + dx if (i & 1) == 0 else self.full[i] + dy for i in range(4)),
+                full=tuple(self.full[i] + dx if (i & 1) == 0 else self.full[i] + dy for i in range(4)),
             )
 
 
@@ -66,9 +66,7 @@ C3440X1440 = RegionsPrfl(
 
 C3440X1440MO = C3440X1440.translated(-934, 70)
 
-C3440X1440CA = RegionsPrfl(
-    full=(2840, 180, 3294, 624)
-)
+C3440X1440CA = RegionsPrfl(full=(2840, 180, 3294, 624))
 
 RegionsPrfls = {
     "K3440X1440": K3440X1440,
