@@ -1,2 +1,2 @@
-python3 -m black --line-length 120
-isort --line-length 120
+python3 -m black --line-length 140
+isort --line-length 140
