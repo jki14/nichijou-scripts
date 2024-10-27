@@ -1,6 +1,12 @@
+from os import system
 from typing import List
 
 from termcolor import colored, cprint
+
+
+def clear():
+    system("clear")
+    print("\033[s", end="")
 
 
 class TextStyle:
@@ -18,7 +24,8 @@ class TextStyle:
         print(colored(text, self.textColor, self.textHighlights, attrs=self.attributes), end=" ")
 
     def println(self, text, dynamic=False):
-        cprint(text, self.textColor, self.textHighlights, attrs=self.attributes, end="\r" if dynamic else "\n")
+        prefix = "\033[u\033[J" if dynamic else ""
+        print(prefix + colored(text, self.textColor, self.textHighlights, attrs=self.attributes), end="\n" if dynamic else "\n\033[s")
 
 
 DebugStyle = TextStyle("red", "on_white", ["bold"])

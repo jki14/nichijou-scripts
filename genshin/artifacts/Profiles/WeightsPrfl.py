@@ -5,8 +5,8 @@ from typing import List
 import numpy as np
 
 from Utils.Constants import eps, one, oneIncCoeExp, onePCT, zero
-from Utils.Stats import (ATK, ATK_PCT, CRIT_DMG, CRIT_RATE, DEF, DEF_PCT, DMG_BONUS, ELEMENTAL_MASTERY, ENERGY_RECHARGE,
-                         HEALING_BONUS, HP, HP_PCT, StatInfo, Stats)
+from Utils.Stats import (ATK, ATK_PCT, CRIT_DMG, CRIT_RATE, DEF, DEF_PCT, DMG_BONUS, ELEMENTAL_MASTERY, ENERGY_RECHARGE, HEALING_BONUS, HP,
+                         HP_PCT, StatInfo, Stats)
 from Utils.TextStyle import TextStyle
 
 
@@ -204,6 +204,84 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
+RaidenScorePrfl: WeightsPrfl = WeightsPrfl(
+    key="Raiden Score",
+    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT,
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        HEALING_BONUS.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(5.8),
+)
+
+XianglingScorePrfl: WeightsPrfl = WeightsPrfl(
+    key="Xiangling Score",
+    baseATK=np.double(735.14),  # Xiangling + "The Catch"
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT,
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        HEALING_BONUS.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(5.8),
+)
+
+YelanScorePrfl: WeightsPrfl = WeightsPrfl(
+    key="Yelan Score",
+    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(14450.17),  # Yelan
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT,
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        HEALING_BONUS.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(5.8),
+)
+
 ShinobuPrfl: WeightsPrfl = WeightsPrfl(
     key="Shinobu Count",
     baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
@@ -281,6 +359,7 @@ BennettPrfl: WeightsPrfl = WeightsPrfl(
         ENERGY_RECHARGE.setWeight(np.double(1)),
         HP_PCT.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
+        HEALING_BONUS,
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
@@ -304,6 +383,7 @@ XilonenPrfl: WeightsPrfl = WeightsPrfl(
         ENERGY_RECHARGE.setWeight(np.double(1)),
         DEF_PCT.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
+        HEALING_BONUS,
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
@@ -322,6 +402,9 @@ WeightsPrfls = {
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
+    RaidenScorePrfl.key: RaidenScorePrfl,
+    XianglingScorePrfl.key: XianglingScorePrfl,
+    YelanScorePrfl.key: YelanScorePrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     KiraraPrfl.key: KiraraPrfl,

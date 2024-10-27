@@ -38,8 +38,7 @@ class RegionsPrfl:
                 stars=tuple(self.stars[i] + dx if (i & 1) == 0 else self.stars[i] + dy for i in range(4)),
                 level=tuple(self.level[i] + dx if (i & 1) == 0 else self.level[i] + dy for i in range(4)),
                 substats=[
-                    tuple(self.substats[i][j] + dx if (j & 1) == 0 else self.substats[i][j] + dy for j in range(4))
-                    for i in range(4)
+                    tuple(self.substats[i][j] + dx if (j & 1) == 0 else self.substats[i][j] + dy for j in range(4)) for i in range(4)
                 ],
             )
         else:

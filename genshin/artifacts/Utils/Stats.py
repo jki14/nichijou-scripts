@@ -32,10 +32,11 @@ class StatInfo:
 
     def println(self, hits: np.double):
         value = hits * self.onceIncrementMax
+        count = hits / 0.85
         if PCT in self.key:
-            self.textStyle.println(f"{self.key.replace(PCT, '')}: {value:.2f} % (x {hits: .2f})")
+            self.textStyle.println(f"{self.key.replace(PCT, '')}: {value:.2f} % (x {count: .2f})")
         else:
-            self.textStyle.println(f"{self.key}: {value:.2f} (x {hits: .2f})")
+            self.textStyle.println(f"{self.key}: {value:.2f} (x {count: .2f})")
 
 
 CRIT_RATE = StatInfo(

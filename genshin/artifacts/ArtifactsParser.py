@@ -205,9 +205,7 @@ def main():
     argument_parser.add_argument("--weights", action="extend", nargs="+")
     args = argument_parser.parse_args()
 
-    artifacts_parser = ArtifactsParser(
-        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, debug=args.debug
-    )
+    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, debug=args.debug)
     artifacts_parser.start()
 
 

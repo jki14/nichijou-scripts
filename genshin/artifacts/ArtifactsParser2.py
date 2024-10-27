@@ -18,7 +18,7 @@ from Profiles.WeightsPrfl import WeightsPrfls
 from SubStatsAdder import SubStatsAdder
 from Utils.Constants import PCT, TailKWs, eps, fourCoe, inf, one, oneIncCoeExp, zero
 from Utils.Stats import StatHitsVec, Stats, StatsN
-from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle
+from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle, clear
 
 
 class ArtifactsParser:
@@ -38,6 +38,7 @@ class ArtifactsParser:
 
     def __init__(self, regionKey, weightsKeys, fourstars=False, debug=False):
         self.debug = debug
+        self.lastocr = ""
         self.presenting = None
         self.regionPrfl: RegionsPrfl = RegionsPrfls[regionKey]
         self.weightsPrfls: List[RegionsPrfl] = [
@@ -80,7 +81,10 @@ class ArtifactsParser:
         handler = Vision.VNImageRequestHandler.alloc().initWithCGImage_options_(cg_image, {})
         if handler.performRequests_error_([self.request], None):
             res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
+            res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
+            res = res.replace("Plume of Death", "ATK")
+            self.lastocr = res
             return res
         else:
             raise RuntimeError("Error performing OCR")
@@ -199,12 +203,13 @@ class ArtifactsParser:
                 self.summarize(stats_vec, levMax, expVec)
 
     def start(self):
+        clear()
         while True:
             try:
                 img = self.screenshot()
                 self.understanding(img)
             except Exception as e:
-                DebugStyle.println(e, dynamic=True)
+                DebugStyle.println("\n".join([str(e), "********HEAD********", self.lastocr, "********TAIL********"]), dynamic=True)
                 sleep(4.0)
             if self.debug:
                 break
@@ -221,9 +226,7 @@ def main():
     argument_parser.add_argument("--weights", action="extend", nargs="+")
     args = argument_parser.parse_args()
 
-    artifacts_parser = ArtifactsParser(
-        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, debug=args.debug
-    )
+    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, debug=args.debug)
     artifacts_parser.start()
 
 
