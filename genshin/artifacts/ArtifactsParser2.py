@@ -84,6 +84,7 @@ class ArtifactsParser:
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
             res = res.replace("Plume of Death", "ATK")
+            res = res.replace(",", "")
             self.lastocr = res
             return res
         else:
@@ -120,6 +121,7 @@ class ArtifactsParser:
         MainStatStyle.println(main_key)
 
         LevelStyle.println("+%d" % levCur)
+        iterNum = (4 if self.fourstars else 5) - levCur
 
         for i in range(StatsN):
             if stats_vec[i] < np.double(0.65):
@@ -132,7 +134,7 @@ class ArtifactsParser:
         InfoStyle.println("v" * 32)
 
         for wPrfl in self.weightsPrfls:
-            wPrfl.println(stats_vec)
+            wPrfl.println(stats_vec, iterNum)
 
         InfoStyle.println(">" * 64)
 

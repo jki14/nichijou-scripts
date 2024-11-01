@@ -3,7 +3,7 @@ from typing import List
 
 import numpy as np
 
-from Utils.Constants import PCT, one
+from Utils.Constants import PCT, one, oneIncCoeExp
 from Utils.TextStyle import TextStyle
 
 
@@ -32,7 +32,7 @@ class StatInfo:
 
     def println(self, hits: np.double):
         value = hits * self.onceIncrementMax
-        count = hits / 0.85
+        count = hits / oneIncCoeExp
         if PCT in self.key:
             self.textStyle.println(f"{self.key.replace(PCT, '')}: {value:.2f} % (x {count: .2f})")
         else:

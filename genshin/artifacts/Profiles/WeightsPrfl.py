@@ -29,6 +29,7 @@ class WeightsPrfl:
         DEF_PCT: StatInfo,
         textStyle: TextStyle,
         threshold: np.double,
+        legendary: bool = False,
         normalized: bool = True,
     ):
         mainStatMapKeyWeight = {stat.key: stat.weight for stat in allowMainStatList}
@@ -52,9 +53,10 @@ class WeightsPrfl:
         if not normalized:
             self.weightsVec /= np.max(self.weightsVec)
         self.textStyle = textStyle
+        self.legendary = legendary
         self.threshold = threshold
 
-    def println(self, stats_vec: np.array):
+    def println(self, stats_vec: np.array, iterNum: int = None):
         base = (stats_vec < -one).astype(np.double) @ self.mainWeightsVec
         if base < one - eps:
             return
@@ -62,9 +64,14 @@ class WeightsPrfl:
         res = vec @ self.weightsVec
         self.textStyle.print(f"{self.key}: {res:.2f}    ")
         if base + res - one > self.threshold - np.double(0.01):
-            WeightsPrfl.PassStyle.println("  ")
-        else:
-            self.textStyle.println("")
+            WeightsPrfl.PassStyle.print("Ｏ")
+        if self.legendary and iterNum and iterNum > 0:
+            candidates = (stats_vec > eps).astype(np.double)
+            if abs(candidates.sum() - 4) < eps:
+                preferred = (candidates * self.weightsVec).max() * iterNum * oneIncCoeExp
+                if base + res + preferred - one > self.threshold - np.double(0.01):
+                    WeightsPrfl.PassStyle.print("？")
+        self.textStyle.println("")
 
 
 CritScorePrfl: WeightsPrfl = WeightsPrfl(
@@ -204,7 +211,7 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
-RaidenScorePrfl: WeightsPrfl = WeightsPrfl(
+RaidenPrfl: WeightsPrfl = WeightsPrfl(
     key="Raiden Score",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -217,7 +224,6 @@ RaidenScorePrfl: WeightsPrfl = WeightsPrfl(
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
-        HEALING_BONUS.setWeight(np.double(1)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -226,11 +232,12 @@ RaidenScorePrfl: WeightsPrfl = WeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(5.8),
+    legendary=True,
 )
 
-XianglingScorePrfl: WeightsPrfl = WeightsPrfl(
+XianglingPrfl: WeightsPrfl = WeightsPrfl(
     key="Xiangling Score",
     baseATK=np.double(735.14),  # Xiangling + "The Catch"
     baseHP=np.double(15307.39),  # Furina
@@ -243,7 +250,6 @@ XianglingScorePrfl: WeightsPrfl = WeightsPrfl(
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
-        HEALING_BONUS.setWeight(np.double(1)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -252,11 +258,12 @@ XianglingScorePrfl: WeightsPrfl = WeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(5.8),
+    legendary=True,
 )
 
-YelanScorePrfl: WeightsPrfl = WeightsPrfl(
+YelanPrfl: WeightsPrfl = WeightsPrfl(
     key="Yelan Score",
     baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(14450.17),  # Yelan
@@ -269,7 +276,6 @@ YelanScorePrfl: WeightsPrfl = WeightsPrfl(
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
-        HEALING_BONUS.setWeight(np.double(1)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -280,6 +286,33 @@ YelanScorePrfl: WeightsPrfl = WeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(5.8),
+    legendary=True,
+)
+
+ChioriPrfl: WeightsPrfl = WeightsPrfl(
+    key="Chiori Score",
+    baseATK=np.double(244.26) + np.double(510),  # Chiori + The Stringless
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(953.01),  # Chiori
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        DEF_PCT,
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    textStyle=TextStyle("yellow", "on_black", ["bold"]),
+    threshold=np.double(5.8),
+    legendary=True,
 )
 
 ShinobuPrfl: WeightsPrfl = WeightsPrfl(
@@ -402,9 +435,10 @@ WeightsPrfls = {
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
-    RaidenScorePrfl.key: RaidenScorePrfl,
-    XianglingScorePrfl.key: XianglingScorePrfl,
-    YelanScorePrfl.key: YelanScorePrfl,
+    RaidenPrfl.key: RaidenPrfl,
+    XianglingPrfl.key: XianglingPrfl,
+    YelanPrfl.key: YelanPrfl,
+    ChioriPrfl.key: ChioriPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     KiraraPrfl.key: KiraraPrfl,
