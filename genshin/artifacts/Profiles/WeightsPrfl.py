@@ -12,6 +12,7 @@ from Utils.TextStyle import TextStyle
 
 class WeightsPrfl:
     PassStyle = TextStyle("white", "on_green", ["bold"])
+    FailStyle = TextStyle("white", "on_red", ["bold"])
 
     def __init__(
         self,
@@ -67,10 +68,18 @@ class WeightsPrfl:
             WeightsPrfl.PassStyle.print("Ｏ")
         if self.legendary and iterNum and iterNum > 0:
             candidates = (stats_vec > eps).astype(np.double)
-            if abs(candidates.sum() - 4) < eps:
-                preferred = (candidates * self.weightsVec).max() * iterNum * oneIncCoeExp
-                if base + res + preferred - one > self.threshold - np.double(0.01):
-                    WeightsPrfl.PassStyle.print("？")
+            preferred = res
+            while candidates.sum() < 4 - eps and iterNum > 0:
+                blocked = (stats_vec < -one).astype(np.double)
+                top = np.argmax(((candidates + blocked) < eps) * self.weightsVec)
+                candidates[top] = one
+                preferred += self.weightsVec[top] * oneIncCoeExp
+                iterNum -= 1
+            preferred += (candidates * self.weightsVec).max() * iterNum * oneIncCoeExp
+            if base + preferred - one > self.threshold - np.double(0.01):
+                WeightsPrfl.PassStyle.print(f"{preferred:.2f}")
+            else:
+                WeightsPrfl.FailStyle.print(f"{preferred:.2f}")
         self.textStyle.println("")
 
 

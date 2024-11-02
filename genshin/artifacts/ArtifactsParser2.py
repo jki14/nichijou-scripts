@@ -83,7 +83,6 @@ class ArtifactsParser:
             res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
-            res = res.replace("Plume of Death", "ATK")
             res = res.replace(",", "")
             self.lastocr = res
             return res
@@ -173,9 +172,7 @@ class ArtifactsParser:
             contents = self.ocr(img).split("\n")[::-1]
             it = iter(contents)
             row = next(it)
-            while "Piece Set" in row:
-                row = next(it)
-            while "•" not in row:
+            while "Piece Set" in row or "•" not in row:
                 row = next(it)
             while "•" in row:
                 try:
@@ -189,6 +186,16 @@ class ArtifactsParser:
             levCur = self.get_int(row) // 4
             main_val = next(it)
             main_key = next(it)
+            if "Plume of Death" in main_key and "ATK" in main_val:
+                main_key, main_val = "ATK", "9999"
+            elif "Sands of Eon" in main_key and "Elemental Mastery" in main_val:
+                main_key, main_val = "Elemental Mastery", "9999"
+            elif "Goblet of Eonothem" in main_key and "HP" in main_val:
+                main_key, main_val = "HP", "99.99%"
+            elif "Goblet of Eonothem" in main_key and "Elemental Mastery" in main_val:
+                main_key, main_val = "Elemental Mastery", "9999"
+            elif "Goblet of Eonothem" in main_key and "DMG Bonus" in main_val:
+                main_key, main_val = "DMG Bonus", "99.99%"
             self.put_stat(main_key, main_val, stats_vec, True)
 
         # Summarize Current
@@ -212,7 +219,7 @@ class ArtifactsParser:
                 self.understanding(img)
             except Exception as e:
                 DebugStyle.println("\n".join([str(e), "********HEAD********", self.lastocr, "********TAIL********"]), dynamic=True)
-                sleep(4.0)
+                sleep(0.1)
             if self.debug:
                 break
             sleep(0.100)
