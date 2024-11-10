@@ -85,7 +85,7 @@ class WeightsPrfl:
 
 CritScorePrfl: WeightsPrfl = WeightsPrfl(
     key="Crit Score",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
@@ -109,12 +109,13 @@ CritScorePrfl: WeightsPrfl = WeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0)),
     DEF_PCT=DEF_PCT.setWeight(np.double(0)),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
-    threshold=np.double(100),
+    threshold=np.double(33),
+    legendary=True,
 )
 
 CritCountPrfl: WeightsPrfl = WeightsPrfl(
     key="Crit Count",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
@@ -143,7 +144,7 @@ CritCountPrfl: WeightsPrfl = WeightsPrfl(
 
 ATKCountPrfl: WeightsPrfl = WeightsPrfl(
     key="ATK Count",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
@@ -170,7 +171,7 @@ ATKCountPrfl: WeightsPrfl = WeightsPrfl(
 
 HPCountPrfl: WeightsPrfl = WeightsPrfl(
     key="HP Count",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
@@ -196,7 +197,7 @@ HPCountPrfl: WeightsPrfl = WeightsPrfl(
 
 DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     key="DEF Count",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
@@ -220,42 +221,17 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
-RaidenPrfl: WeightsPrfl = WeightsPrfl(
-    key="Raiden Score",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
+GamingPrfl: WeightsPrfl = WeightsPrfl(
+    key="Gaming Hunter Score",
+    baseATK=np.double(301.60) + np.double(674),  # Gaming + Verdict
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
         ENERGY_RECHARGE.setWeight(np.double(1)),
-        ATK_PCT,
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(5.8),
-    legendary=True,
-)
-
-XianglingPrfl: WeightsPrfl = WeightsPrfl(
-    key="Xiangling Score",
-    baseATK=np.double(735.14),  # Xiangling + "The Catch"
-    baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(798.55),  # Noelle
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ATK_PCT,
+        ATK_PCT.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
@@ -268,20 +244,20 @@ XianglingPrfl: WeightsPrfl = WeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
-    threshold=np.double(5.8),
+    threshold=np.double(6.0),
     legendary=True,
 )
 
-YelanPrfl: WeightsPrfl = WeightsPrfl(
-    key="Yelan Score",
-    baseATK=np.double(945.24),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double(14450.17),  # Yelan
+NeuvillettePrfl: WeightsPrfl = WeightsPrfl(
+    key="Neuvillette Hunter Score",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(14695.09),  # Neuvillette
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
         ENERGY_RECHARGE.setWeight(np.double(1)),
-        HP_PCT,
+        HP_PCT.setWeight(np.double(1)),
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
@@ -294,20 +270,20 @@ YelanPrfl: WeightsPrfl = WeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(5.8),
+    threshold=np.double(6.0),
     legendary=True,
 )
 
-ChioriPrfl: WeightsPrfl = WeightsPrfl(
-    key="Chiori Score",
-    baseATK=np.double(244.26) + np.double(510),  # Chiori + The Stringless
+NoellePrfl: WeightsPrfl = WeightsPrfl(
+    key="Noelle Hunter Score",
+    baseATK=np.double(244.26) + np.double(510),  # Noelle + The Stringless
     baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(953.01),  # Chiori
+    baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
         ENERGY_RECHARGE.setWeight(np.double(1)),
-        DEF_PCT,
+        DEF_PCT.setWeight(np.double(1)),
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
@@ -320,9 +296,166 @@ ChioriPrfl: WeightsPrfl = WeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
-    threshold=np.double(5.8),
+    threshold=np.double(6.0),
     legendary=True,
 )
+
+FischlPrfl: WeightsPrfl = WeightsPrfl(
+    key="Fischl Troupe Score",
+    baseATK=np.double(244.26) + np.double(510),  # Fischl + The String­les
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+FurinaPrfl: WeightsPrfl = WeightsPrfl(
+    key="Furina Troupe Score",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+ChioriPrfl: WeightsPrfl = WeightsPrfl(
+    key="Chiori Troupe Score",
+    baseATK=np.double(244.26) + np.double(510),  # Chiori + The Stringless
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(953.01),  # Chiori
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        DEF_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    textStyle=TextStyle("yellow", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+RaidenPrfl: WeightsPrfl = WeightsPrfl(
+    key="Raiden Fate Score",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+XianglingPrfl: WeightsPrfl = WeightsPrfl(
+    key="Xiangling Fate Score",
+    baseATK=np.double(225.14) + np.double(510),  # Xiangling + "The Catch"
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+YelanPrfl: WeightsPrfl = WeightsPrfl(
+    key="Yelan Fate Score",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(14450.17),  # Yelan
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 
 ShinobuPrfl: WeightsPrfl = WeightsPrfl(
     key="Shinobu Count",
@@ -444,10 +577,15 @@ WeightsPrfls = {
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
+    GamingPrfl.key: GamingPrfl,
+    NeuvillettePrfl.key: NeuvillettePrfl,
+    NoellePrfl.key: NoellePrfl,
+    FischlPrfl.key: FischlPrfl,
+    FurinaPrfl.key: FurinaPrfl,
+    ChioriPrfl.key: ChioriPrfl,
     RaidenPrfl.key: RaidenPrfl,
     XianglingPrfl.key: XianglingPrfl,
     YelanPrfl.key: YelanPrfl,
-    ChioriPrfl.key: ChioriPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     KiraraPrfl.key: KiraraPrfl,

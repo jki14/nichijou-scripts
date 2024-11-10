@@ -83,6 +83,7 @@ class ArtifactsParser:
             res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
+            res = res.replace("CRIT DG", "CRIT DMG")
             res = res.replace(",", "")
             self.lastocr = res
             return res
