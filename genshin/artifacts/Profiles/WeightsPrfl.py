@@ -549,9 +549,9 @@ BennettPrfl: WeightsPrfl = WeightsPrfl(
 
 XilonenPrfl: WeightsPrfl = WeightsPrfl(
     key="Xilonen Count",
-    baseATK=np.double(275) + np.double(454),  # Xilonen + Favonius Sword
-    baseHP=np.double(12405),  # Xilonen
-    baseDEF=np.double(930),  # Xilonen
+    baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
+    baseHP=np.double(12405.11),  # Xilonen
+    baseDEF=np.double(929.95),  # Xilonen
     allowMainStatList=[
         HP,
         ATK,
@@ -567,6 +567,30 @@ XilonenPrfl: WeightsPrfl = WeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4),
+)
+
+JeanPrfl: WeightsPrfl = WeightsPrfl(
+    key="Jean Count",
+    baseATK=np.double(239.18) + np.double(454),  # Jean + Favonius Sword
+    baseHP=np.double(14695.09),  # Jean
+    baseDEF=np.double(768.55),  # Jean
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        HEALING_BONUS,
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_green", "on_black", ["bold"]),
     threshold=np.double(4),
 )
@@ -591,4 +615,5 @@ WeightsPrfls = {
     KiraraPrfl.key: KiraraPrfl,
     BennettPrfl.key: BennettPrfl,
     XilonenPrfl.key: XilonenPrfl,
+    JeanPrfl.key: JeanPrfl,
 }

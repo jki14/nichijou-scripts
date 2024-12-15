@@ -196,6 +196,7 @@ class ArtifactsParser:
 
 
 def main():
+    exit(2)
     just_fix_windows_console()
 
     argument_parser = ArgumentParser(description="Genshin Impact artifacts stat parser.")

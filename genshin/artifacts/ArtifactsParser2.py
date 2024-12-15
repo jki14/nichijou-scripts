@@ -85,15 +85,13 @@ class ArtifactsParser:
             res = res.replace("Bonu:", "Bonus")
             res = res.replace("CRIT DG", "CRIT DMG")
             res = res.replace(",", "")
+            res = res.replace(chr(1040), chr(65))  # А -> A
             self.lastocr = res
             return res
         else:
             raise RuntimeError("Error performing OCR")
 
     def put_stat(self, key: str, value: str, stats_vec: np.array, isMainStat: bool = False):
-        if PCT not in value:
-            value = value
-
         validated = np.array([one if stat.validate(key, value) else zero for stat in Stats], dtype=np.double)
         if np.sum(validated) == 0:
             raise ValueError(f"No stat match found for: ({key}: {value})")
