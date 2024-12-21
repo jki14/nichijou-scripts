@@ -479,7 +479,7 @@ ShinobuPrfl: WeightsPrfl = WeightsPrfl(
 )
 
 NahidaPrfl: WeightsPrfl = WeightsPrfl(
-    key="Nahida Count",
+    key="Nahida Deepwood Score",
     baseATK=np.double(298.97) + np.double(542),  # Nahida + A Thousand Floating Dreams
     baseHP=np.double(10360.04),  # Nahida
     baseDEF=np.double(630.21),  # Nahida
@@ -493,13 +493,40 @@ NahidaPrfl: WeightsPrfl = WeightsPrfl(
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_green", "on_black", ["bold"]),
-    threshold=np.double(5),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+ColleiPrfl: WeightsPrfl = WeightsPrfl(
+    key="Collei Deepwood Score",
+    baseATK=np.double(199.65) + np.double(454),  # Collei + Favonius Warbow
+    baseHP=np.double(9787.42),  # Collei
+    baseDEF=np.double(600.62),  # Collei
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
 )
 
 KiraraPrfl: WeightsPrfl = WeightsPrfl(
@@ -612,6 +639,7 @@ WeightsPrfls = {
     YelanPrfl.key: YelanPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
+    ColleiPrfl.key: ColleiPrfl,
     KiraraPrfl.key: KiraraPrfl,
     BennettPrfl.key: BennettPrfl,
     XilonenPrfl.key: XilonenPrfl,
