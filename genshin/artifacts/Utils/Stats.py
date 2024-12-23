@@ -11,12 +11,14 @@ class StatInfo:
     def __init__(
         self,
         key: str,
+        zhTW: str,
         onceIncrementMax: np.double,
         appendFactor: np.double,
         weight: np.double,
         textStyle: TextStyle,
     ):
         self.key = key
+        self.zhTW = zhTW
         self.onceIncrementMax = onceIncrementMax
         self.appendFactor = appendFactor
         self.weight = weight
@@ -41,6 +43,7 @@ class StatInfo:
 
 CRIT_RATE = StatInfo(
     key="CRIT Rate%",
+    zhTW="暴擊率",
     onceIncrementMax=np.double(3.89),
     appendFactor=np.double(75),
     weight=np.double(0),
@@ -49,6 +52,7 @@ CRIT_RATE = StatInfo(
 
 CRIT_DMG = StatInfo(
     key="CRIT DMG%",
+    zhTW="暴擊傷害",
     onceIncrementMax=np.double(7.77),
     appendFactor=np.double(75),
     weight=np.double(0),
@@ -57,6 +61,7 @@ CRIT_DMG = StatInfo(
 
 ENERGY_RECHARGE = StatInfo(
     key="Energy Recharge%",
+    zhTW="元素充能效率",
     onceIncrementMax=np.double(6.48),
     appendFactor=np.double(100),
     weight=np.double(0),
@@ -65,6 +70,7 @@ ENERGY_RECHARGE = StatInfo(
 
 ELEMENTAL_MASTERY = StatInfo(
     key="Elemental Mastery",
+    zhTW="元素精通",
     onceIncrementMax=np.double(23.31),
     appendFactor=np.double(100),
     weight=np.double(0),
@@ -73,6 +79,7 @@ ELEMENTAL_MASTERY = StatInfo(
 
 ATK_PCT = StatInfo(
     key="ATK%",
+    zhTW="攻擊力",
     onceIncrementMax=np.double(5.83),
     appendFactor=np.double(100),
     weight=np.double(0),
@@ -81,6 +88,7 @@ ATK_PCT = StatInfo(
 
 HP_PCT = StatInfo(
     key="HP%",
+    zhTW="生命值",
     onceIncrementMax=np.double(5.83),
     appendFactor=np.double(100),
     weight=np.double(0),
@@ -89,6 +97,7 @@ HP_PCT = StatInfo(
 
 DEF_PCT = StatInfo(
     key="DEF%",
+    zhTW="防禦力",
     onceIncrementMax=np.double(7.29),
     appendFactor=np.double(100),
     weight=np.double(0),
@@ -97,6 +106,7 @@ DEF_PCT = StatInfo(
 
 ATK = StatInfo(
     key="ATK",
+    zhTW="攻擊力",
     onceIncrementMax=np.double(19.45),
     appendFactor=np.double(150),
     weight=np.double(0),
@@ -105,6 +115,7 @@ ATK = StatInfo(
 
 HP = StatInfo(
     key="HP",
+    zhTW="生命值",
     onceIncrementMax=np.double(298.75),
     appendFactor=np.double(150),
     weight=np.double(0),
@@ -113,6 +124,7 @@ HP = StatInfo(
 
 DEF = StatInfo(
     key="DEF",
+    zhTW="防禦力",
     onceIncrementMax=np.double(23.15),
     appendFactor=np.double(150),
     weight=np.double(0),
@@ -121,6 +133,7 @@ DEF = StatInfo(
 
 DMG_BONUS = StatInfo(
     key="DMG Bonus%",
+    zhTW="傷害加成",
     onceIncrementMax=np.double(1),
     appendFactor=np.double(0),
     weight=np.double(0),
@@ -129,6 +142,7 @@ DMG_BONUS = StatInfo(
 
 HEALING_BONUS = StatInfo(
     key="Healing Bonus%",
+    zhTW="治療加成",
     onceIncrementMax=np.double(1),
     appendFactor=np.double(0),
     weight=np.double(0),

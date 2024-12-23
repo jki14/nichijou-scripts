@@ -47,7 +47,7 @@ class ArtifactsParser:
         self.fourstars = fourstars
 
         self.request = Vision.VNRecognizeTextRequest.alloc().init()
-        self.request.setRecognitionLanguages_(["en"])
+        self.request.setRecognitionLanguages_(["zh-TW", "en"])
 
     def screenshot(self):
         shot = ImageGrab.grab(bbox=self.regionPrfl.full)
@@ -81,6 +81,11 @@ class ArtifactsParser:
         handler = Vision.VNImageRequestHandler.alloc().initWithCGImage_options_(cg_image, {})
         if handler.performRequests_error_([self.request], None):
             res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
+            # zhTW to en
+            for stat in Stats:
+                res = res.replace(stat.zhTW, stat.key.strip("%"))
+            res = res.replace("＋", "+")
+            # Corner Case
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
             res = res.replace("CRIT DG", "CRIT DMG")
