@@ -321,7 +321,7 @@ FischlPrfl: WeightsPrfl = WeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
