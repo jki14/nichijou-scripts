@@ -85,6 +85,11 @@ class ArtifactsParser:
             for stat in Stats:
                 res = res.replace(stat.zhTW, stat.key.strip("%"))
             res = res.replace("＋", "+")
+            res = res.replace("生之花", "Flower of Life")
+            res = res.replace("死之羽", "Plume of Death")
+            res = res.replace("時之沙", "Sands of Eon")
+            res = res.replace("空之杯", "Goblet of Eonothem")
+            res = res.replace("理之冠", "Circlet of Logos")
             # Corner Case
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
@@ -190,16 +195,44 @@ class ArtifactsParser:
             levCur = self.get_int(row) // 4
             main_val = next(it)
             main_key = next(it)
-            if "Plume of Death" in main_key and "ATK" in main_val:
+            if "Flower of Life" in main_key and "HP" in main_val:
+                main_key, main_val = "HP", "9999"
+            elif "Plume of Death" in main_key and "ATK" in main_val:
                 main_key, main_val = "ATK", "9999"
+            elif "Sands of Eon" in main_key and "Energy Recharge" in main_val:
+                main_key, main_val = "Energy Recharge", "99.99%"
             elif "Sands of Eon" in main_key and "Elemental Mastery" in main_val:
                 main_key, main_val = "Elemental Mastery", "9999"
-            elif "Goblet of Eonothem" in main_key and "HP" in main_val:
+            elif "Sands of Eon" in main_key and "ATK" in main_val:
+                main_key, main_val = "ATK", "99.99%"
+            elif "Sands of Eon" in main_key and "HP" in main_val:
                 main_key, main_val = "HP", "99.99%"
+            elif "Sands of Eon" in main_key and "DEF" in main_val:
+                main_key, main_val = "DEF", "99.99%"
             elif "Goblet of Eonothem" in main_key and "Elemental Mastery" in main_val:
                 main_key, main_val = "Elemental Mastery", "9999"
+            elif "Goblet of Eonothem" in main_key and "ATK" in main_val:
+                main_key, main_val = "ATK", "99.99%"
+            elif "Goblet of Eonothem" in main_key and "HP" in main_val:
+                main_key, main_val = "HP", "99.99%"
+            elif "Goblet of Eonothem" in main_key and "DEF" in main_val:
+                main_key, main_val = "DEF", "99.99%"
             elif "Goblet of Eonothem" in main_key and "DMG Bonus" in main_val:
                 main_key, main_val = "DMG Bonus", "99.99%"
+            elif "Circlet of Logos" in main_key and "CRIT Rate" in main_val:
+                main_key, main_val = "CRIT Rate", "99.99%"
+            elif "Circlet of Logos" in main_key and "CRIT DMG" in main_val:
+                main_key, main_val = "CRIT DMG", "99.99%"
+            elif "Circlet of Logos" in main_key and "Elemental Mastery" in main_val:
+                main_key, main_val = "Elemental Mastery", "9999"
+            elif "Circlet of Logos" in main_key and "ATK" in main_val:
+                main_key, main_val = "ATK", "99.99%"
+            elif "Circlet of Logos" in main_key and "HP" in main_val:
+                main_key, main_val = "HP", "99.99%"
+            elif "Circlet of Logos" in main_key and "DEF" in main_val:
+                main_key, main_val = "DEF", "99.99%"
+            elif "Circlet of Logos" in main_key and "Healing Bonus" in main_val:
+                main_key, main_val = "Healing Bonus", "99.99%"
             self.put_stat(main_key, main_val, stats_vec, True)
 
         # Summarize Current
