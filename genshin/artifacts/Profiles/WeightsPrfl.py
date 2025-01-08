@@ -221,6 +221,32 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
+MavuikaPrfl: WeightsPrfl = WeightsPrfl(
+    key="Mavuika Obsidian Score",
+    baseATK=np.double(558.77) + np.double(741),  # Mavuika + A Thousand Blazing Suns
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 GamingPrfl: WeightsPrfl = WeightsPrfl(
     key="Gaming Hunter Score",
     baseATK=np.double(301.60) + np.double(674),  # Gaming + Verdict
@@ -395,7 +421,7 @@ RaidenPrfl: WeightsPrfl = WeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
@@ -456,6 +482,56 @@ YelanPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
+AyatoPrfl: WeightsPrfl = WeightsPrfl(
+    key="Ayato Gladiator Score",
+    baseATK=np.double(298.97) + np.double(510),  # Ayato + The Black Sword
+    baseHP=np.double(13715.42),  # Ayato
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.3) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
+
+TighnariPrfl: WeightsPrfl = WeightsPrfl(
+    key="Tighnari Wanderer Score",
+    baseATK=np.double(267.88) + np.double(565),  # Tighnari + Scion of the Blazing Sun
+    baseHP=np.double(10849.88),  # Tighnari
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
 
 ShinobuPrfl: WeightsPrfl = WeightsPrfl(
     key="Shinobu Count",
@@ -598,6 +674,29 @@ XilonenPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
+CitlaliPrfl: WeightsPrfl = WeightsPrfl(
+    key="Citlali Count",
+    baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
+    baseHP=np.double(11633.62),  # Citlali
+    baseDEF=np.double(763.17),  # Citlali
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4),
+)
+
 JeanPrfl: WeightsPrfl = WeightsPrfl(
     key="Jean Count",
     baseATK=np.double(239.18) + np.double(454),  # Jean + Favonius Sword
@@ -628,6 +727,7 @@ WeightsPrfls = {
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
+    MavuikaPrfl.key: MavuikaPrfl,
     GamingPrfl.key: GamingPrfl,
     NeuvillettePrfl.key: NeuvillettePrfl,
     NoellePrfl.key: NoellePrfl,
@@ -637,11 +737,14 @@ WeightsPrfls = {
     RaidenPrfl.key: RaidenPrfl,
     XianglingPrfl.key: XianglingPrfl,
     YelanPrfl.key: YelanPrfl,
+    AyatoPrfl.key: AyatoPrfl,
+    TighnariPrfl.key: TighnariPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     ColleiPrfl.key: ColleiPrfl,
     KiraraPrfl.key: KiraraPrfl,
     BennettPrfl.key: BennettPrfl,
     XilonenPrfl.key: XilonenPrfl,
+    CitlaliPrfl.key: CitlaliPrfl,
     JeanPrfl.key: JeanPrfl,
 }
