@@ -533,6 +533,32 @@ TighnariPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
+HutaoPrfl: WeightsPrfl = WeightsPrfl(
+    key="Hutao Reminiscence/Hunter Score",
+    baseATK=np.double(106.43) + np.double(608),  # Hutao + Staff of Homa
+    baseHP=np.double(15552.31),  # Hutao
+    baseDEF=np.double(876.15),  # Hutao
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.6) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 ShinobuPrfl: WeightsPrfl = WeightsPrfl(
     key="Shinobu Count",
     baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
@@ -739,6 +765,7 @@ WeightsPrfls = {
     YelanPrfl.key: YelanPrfl,
     AyatoPrfl.key: AyatoPrfl,
     TighnariPrfl.key: TighnariPrfl,
+    HutaoPrfl.key: HutaoPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     ColleiPrfl.key: ColleiPrfl,
