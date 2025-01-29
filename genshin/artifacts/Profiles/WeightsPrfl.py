@@ -247,6 +247,32 @@ MavuikaPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
+MualaniPrfl: WeightsPrfl = WeightsPrfl(
+    key="Mualani Obsidian Score",
+    baseATK=np.double(181.78) + np.double(542),  # Mualani + Surf's Up
+    baseHP=np.double(15184.93),  # Mualani
+    baseDEF=np.double(570.27),  # Mualani
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 GamingPrfl: WeightsPrfl = WeightsPrfl(
     key="Gaming Hunter Score",
     baseATK=np.double(301.60) + np.double(674),  # Gaming + Verdict
@@ -754,6 +780,7 @@ WeightsPrfls = {
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
     MavuikaPrfl.key: MavuikaPrfl,
+    MualaniPrfl.key: MualaniPrfl,
     GamingPrfl.key: GamingPrfl,
     NeuvillettePrfl.key: NeuvillettePrfl,
     NoellePrfl.key: NoellePrfl,
