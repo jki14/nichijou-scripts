@@ -1,3 +1,4 @@
+import copy
 import os
 import sys
 from typing import List
@@ -56,6 +57,12 @@ class WeightsPrfl:
         self.textStyle = textStyle
         self.legendary = legendary
         self.threshold = threshold
+
+    def plus(self, plus_num: int) -> "WeightsPrfl":
+        cloned = copy.deepcopy(self)
+        cloned.key += "+" * plus_num
+        cloned.threshold += 0.5 * plus_num
+        return cloned
 
     def println(self, stats_vec: np.array, iterNum: int = None):
         base = (stats_vec < -one).astype(np.double) @ self.mainWeightsVec

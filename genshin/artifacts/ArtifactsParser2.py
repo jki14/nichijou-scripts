@@ -41,8 +41,13 @@ class ArtifactsParser:
         self.lastocr = ""
         self.presenting = None
         self.regionPrfl: RegionsPrfl = RegionsPrfls[regionKey]
-        self.weightsPrfls: List[RegionsPrfl] = [
-            wp for wp in WeightsPrfls.values() if any([key.upper() in wp.key.upper() for key in weightsKeys])
+        # self.weightsPrfls: List[WeightsPrfl] = [
+        #     wp for wp in WeightsPrfls.values() if any([key.upper() in wp.key.upper() for key in weightsKeys])
+        # ]
+        self.weightsPrfls: List[WeightsPrfl] = [
+            wp.plus(next((key.count("+") for key in reversed(weightsKeys) if key.rstrip("+").upper() in wp.key.upper()), 0))
+            for wp in WeightsPrfls.values()
+            if any([key.rstrip("+").upper() in wp.key.upper() for key in weightsKeys])
         ]
         self.fourstars = fourstars
 
