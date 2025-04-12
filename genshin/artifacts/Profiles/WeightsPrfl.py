@@ -11,10 +11,67 @@ from Utils.Stats import (ATK, ATK_PCT, CRIT_DMG, CRIT_RATE, DEF, DEF_PCT, DMG_BO
 from Utils.TextStyle import TextStyle
 
 
-class WeightsPrfl:
+class WeightsPrflBase:
     PassStyle = TextStyle("white", "on_green", ["bold"])
     FailStyle = TextStyle("white", "on_red", ["bold"])
 
+    def __init__(
+        self,
+        key: str,
+        baseATK: np.double,
+        baseHP: np.double,
+        baseDEF: np.double,
+        allowMainStatList: List[StatInfo],
+        statsWeighted: List[StatInfo],
+        statsAll: List[StatInfo],
+        textStyle: TextStyle,
+        threshold: np.double,
+        legendary: bool = False,
+        normalized: bool = True,
+    ):
+        mainStatMapKeyWeight = {stat.key: stat.weight for stat in allowMainStatList}
+        self.key = key
+        self.mainWeightsVec = np.array([mainStatMapKeyWeight.get(s.key, -one) + one for s in statsAll], dtype=np.double)
+        self.weightsVec = np.array([s.weight for s in statsWeighted], dtype=np.double)
+        if not normalized:
+            self.weightsVec /= np.max(self.weightsVec)
+        self.textStyle = textStyle
+        self.legendary = legendary
+        self.threshold = threshold
+
+    def plus(self, plus_num: int) -> "WeightsPrflBase":
+        cloned = copy.deepcopy(self)
+        cloned.key += "+" * plus_num
+        cloned.threshold += 0.5 * plus_num
+        return cloned
+
+    def println(self, stats_vec: np.array, iterNum: int = None):
+        base = (stats_vec < -one).astype(np.double) @ self.mainWeightsVec
+        if base < one - eps:
+            return
+        vec = stats_vec * (stats_vec > -eps).astype(np.double)
+        res = vec @ self.weightsVec
+        self.textStyle.print(f"{self.key}: {res:.2f}    ")
+        if base + res - one > self.threshold - np.double(0.01):
+            WeightsPrflBase.PassStyle.print("Ｏ")
+        if self.legendary and iterNum and iterNum > 0:
+            candidates = (stats_vec > eps).astype(np.double)
+            preferred = res
+            while candidates.sum() < 4 - eps and iterNum > 0:
+                blocked = (stats_vec < -one).astype(np.double)
+                top = np.argmax(((candidates + blocked) < eps) * self.weightsVec)
+                candidates[top] = one
+                preferred += self.weightsVec[top] * oneIncCoeExp
+                iterNum -= 1
+            preferred += (candidates * self.weightsVec).max() * iterNum * oneIncCoeExp
+            if base + preferred - one > self.threshold - np.double(0.01):
+                WeightsPrflBase.PassStyle.print(f"{preferred:.2f}")
+            else:
+                WeightsPrflBase.FailStyle.print(f"{preferred:.2f}")
+        self.textStyle.println("")
+
+
+class GWeightsPrfl(WeightsPrflBase):
     def __init__(
         self,
         key: str,
@@ -34,7 +91,6 @@ class WeightsPrfl:
         legendary: bool = False,
         normalized: bool = True,
     ):
-        mainStatMapKeyWeight = {stat.key: stat.weight for stat in allowMainStatList}
         stats: List[StatInfo] = [
             CRIT_RATE,
             CRIT_DMG,
@@ -49,48 +105,10 @@ class WeightsPrfl:
             DMG_BONUS,
             HEALING_BONUS,
         ]
-        self.key = key
-        self.mainWeightsVec = np.array([mainStatMapKeyWeight.get(s.key, -one) + one for s in Stats], dtype=np.double)
-        self.weightsVec = np.array([s.weight for s in stats], dtype=np.double)
-        if not normalized:
-            self.weightsVec /= np.max(self.weightsVec)
-        self.textStyle = textStyle
-        self.legendary = legendary
-        self.threshold = threshold
-
-    def plus(self, plus_num: int) -> "WeightsPrfl":
-        cloned = copy.deepcopy(self)
-        cloned.key += "+" * plus_num
-        cloned.threshold += 0.5 * plus_num
-        return cloned
-
-    def println(self, stats_vec: np.array, iterNum: int = None):
-        base = (stats_vec < -one).astype(np.double) @ self.mainWeightsVec
-        if base < one - eps:
-            return
-        vec = stats_vec * (stats_vec > -eps).astype(np.double)
-        res = vec @ self.weightsVec
-        self.textStyle.print(f"{self.key}: {res:.2f}    ")
-        if base + res - one > self.threshold - np.double(0.01):
-            WeightsPrfl.PassStyle.print("Ｏ")
-        if self.legendary and iterNum and iterNum > 0:
-            candidates = (stats_vec > eps).astype(np.double)
-            preferred = res
-            while candidates.sum() < 4 - eps and iterNum > 0:
-                blocked = (stats_vec < -one).astype(np.double)
-                top = np.argmax(((candidates + blocked) < eps) * self.weightsVec)
-                candidates[top] = one
-                preferred += self.weightsVec[top] * oneIncCoeExp
-                iterNum -= 1
-            preferred += (candidates * self.weightsVec).max() * iterNum * oneIncCoeExp
-            if base + preferred - one > self.threshold - np.double(0.01):
-                WeightsPrfl.PassStyle.print(f"{preferred:.2f}")
-            else:
-                WeightsPrfl.FailStyle.print(f"{preferred:.2f}")
-        self.textStyle.println("")
+        super().__init__(key, baseATK, baseHP, baseDEF, allowMainStatList, stats, Stats, textStyle, threshold, legendary, normalized)
 
 
-CritScorePrfl: WeightsPrfl = WeightsPrfl(
+CritScorePrfl: GWeightsPrfl = GWeightsPrfl(
     key="Crit Score",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -120,7 +138,7 @@ CritScorePrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-CritCountPrfl: WeightsPrfl = WeightsPrfl(
+CritCountPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Crit Count",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -149,7 +167,7 @@ CritCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
-ATKCountPrfl: WeightsPrfl = WeightsPrfl(
+ATKCountPrfl: GWeightsPrfl = GWeightsPrfl(
     key="ATK Count",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -176,7 +194,7 @@ ATKCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
-HPCountPrfl: WeightsPrfl = WeightsPrfl(
+HPCountPrfl: GWeightsPrfl = GWeightsPrfl(
     key="HP Count",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -202,7 +220,7 @@ HPCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
-DEFCountPrfl: WeightsPrfl = WeightsPrfl(
+DEFCountPrfl: GWeightsPrfl = GWeightsPrfl(
     key="DEF Count",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -228,7 +246,7 @@ DEFCountPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
-MavuikaPrfl: WeightsPrfl = WeightsPrfl(
+MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Mavuika Obsidian Score",
     baseATK=np.double(558.77) + np.double(741),  # Mavuika + A Thousand Blazing Suns
     baseHP=np.double(15307.39),  # Furina
@@ -254,7 +272,7 @@ MavuikaPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-MualaniPrfl: WeightsPrfl = WeightsPrfl(
+MualaniPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Mualani Obsidian Score",
     baseATK=np.double(181.78) + np.double(542),  # Mualani + Surf's Up
     baseHP=np.double(15184.93),  # Mualani
@@ -280,7 +298,7 @@ MualaniPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-GamingPrfl: WeightsPrfl = WeightsPrfl(
+GamingPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Gaming Hunter Score",
     baseATK=np.double(301.60) + np.double(674),  # Gaming + Verdict
     baseHP=np.double(15307.39),  # Furina
@@ -307,7 +325,7 @@ GamingPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-NeuvillettePrfl: WeightsPrfl = WeightsPrfl(
+NeuvillettePrfl: GWeightsPrfl = GWeightsPrfl(
     key="Neuvillette Hunter Score",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(14695.09),  # Neuvillette
@@ -333,7 +351,7 @@ NeuvillettePrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-NoellePrfl: WeightsPrfl = WeightsPrfl(
+NoellePrfl: GWeightsPrfl = GWeightsPrfl(
     key="Noelle Hunter Score",
     baseATK=np.double(244.26) + np.double(510),  # Noelle + The Stringless
     baseHP=np.double(15307.39),  # Furina
@@ -359,7 +377,7 @@ NoellePrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-FischlPrfl: WeightsPrfl = WeightsPrfl(
+FischlPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Fischl Troupe Score",
     baseATK=np.double(244.26) + np.double(510),  # Fischl + The String­les
     baseHP=np.double(15307.39),  # Furina
@@ -385,7 +403,7 @@ FischlPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-FurinaPrfl: WeightsPrfl = WeightsPrfl(
+FurinaPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Furina Troupe Score",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -411,7 +429,7 @@ FurinaPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-ChioriPrfl: WeightsPrfl = WeightsPrfl(
+ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Chiori Troupe Score",
     baseATK=np.double(244.26) + np.double(510),  # Chiori + The Stringless
     baseHP=np.double(15307.39),  # Furina
@@ -437,7 +455,7 @@ ChioriPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-RaidenPrfl: WeightsPrfl = WeightsPrfl(
+RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Raiden Fate Score",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(15307.39),  # Furina
@@ -463,7 +481,7 @@ RaidenPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-XianglingPrfl: WeightsPrfl = WeightsPrfl(
+XianglingPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Xiangling Fate Score",
     baseATK=np.double(225.14) + np.double(510),  # Xiangling + "The Catch"
     baseHP=np.double(15307.39),  # Furina
@@ -489,7 +507,7 @@ XianglingPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-YelanPrfl: WeightsPrfl = WeightsPrfl(
+YelanPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Yelan Fate Score",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
     baseHP=np.double(14450.17),  # Yelan
@@ -515,7 +533,7 @@ YelanPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-AyatoPrfl: WeightsPrfl = WeightsPrfl(
+AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Ayato Gladiator Score",
     baseATK=np.double(298.97) + np.double(510),  # Ayato + The Black Sword
     baseHP=np.double(13715.42),  # Ayato
@@ -540,7 +558,7 @@ AyatoPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-TighnariPrfl: WeightsPrfl = WeightsPrfl(
+TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Tighnari Wanderer Score",
     baseATK=np.double(267.88) + np.double(565),  # Tighnari + Scion of the Blazing Sun
     baseHP=np.double(10849.88),  # Tighnari
@@ -566,7 +584,7 @@ TighnariPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-HutaoPrfl: WeightsPrfl = WeightsPrfl(
+HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Hutao Reminiscence/Hunter Score",
     baseATK=np.double(106.43) + np.double(608),  # Hutao + Staff of Homa
     baseHP=np.double(15552.31),  # Hutao
@@ -592,7 +610,7 @@ HutaoPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-ShinobuPrfl: WeightsPrfl = WeightsPrfl(
+ShinobuPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Shinobu Count",
     baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
     baseHP=np.double(12288.65),  # Shinobu
@@ -613,7 +631,7 @@ ShinobuPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(5),
 )
 
-NahidaPrfl: WeightsPrfl = WeightsPrfl(
+NahidaPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Nahida Deepwood Score",
     baseATK=np.double(298.97) + np.double(542),  # Nahida + A Thousand Floating Dreams
     baseHP=np.double(10360.04),  # Nahida
@@ -638,7 +656,7 @@ NahidaPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-ColleiPrfl: WeightsPrfl = WeightsPrfl(
+ColleiPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Collei Deepwood Score",
     baseATK=np.double(199.65) + np.double(454),  # Collei + Favonius Warbow
     baseHP=np.double(9787.42),  # Collei
@@ -664,7 +682,7 @@ ColleiPrfl: WeightsPrfl = WeightsPrfl(
     legendary=True,
 )
 
-KiraraPrfl: WeightsPrfl = WeightsPrfl(
+KiraraPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Kirara Count",
     baseATK=np.double(223.02) + np.double(454),  # Kirara + Favonius Sword
     baseHP=np.double(12179.90),  # Kirara
@@ -685,7 +703,7 @@ KiraraPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
-BennettPrfl: WeightsPrfl = WeightsPrfl(
+BennettPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Bennett Count",
     baseATK=np.double(191.16) + np.double(454),  # Bennett + Favonius Sword
     baseHP=np.double(12397.40),  # Bennett
@@ -709,7 +727,7 @@ BennettPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
-XilonenPrfl: WeightsPrfl = WeightsPrfl(
+XilonenPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Xilonen Count",
     baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
     baseHP=np.double(12405.11),  # Xilonen
@@ -733,7 +751,7 @@ XilonenPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
-CitlaliPrfl: WeightsPrfl = WeightsPrfl(
+CitlaliPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Citlali Count",
     baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
     baseHP=np.double(11633.62),  # Citlali
@@ -756,7 +774,7 @@ CitlaliPrfl: WeightsPrfl = WeightsPrfl(
     threshold=np.double(4),
 )
 
-JeanPrfl: WeightsPrfl = WeightsPrfl(
+JeanPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Jean Count",
     baseATK=np.double(239.18) + np.double(454),  # Jean + Favonius Sword
     baseHP=np.double(14695.09),  # Jean
@@ -809,3 +827,6 @@ WeightsPrfls = {
     CitlaliPrfl.key: CitlaliPrfl,
     JeanPrfl.key: JeanPrfl,
 }
+
+def weights_prfls() -> List[WeightsPrflBase]:
+    return WeightsPrfls

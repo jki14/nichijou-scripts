@@ -1,7 +1,7 @@
 import numpy as np
 
 from Utils.Constants import eps
-from Utils.Stats import StatAppendFactorsVec, StatsN
+from Utils.Stats import stats_num, stats_prob
 
 
 class SubStatsAdder:
@@ -12,13 +12,13 @@ class SubStatsAdder:
     def __init__(self, statsVec, debug):
         self.debug = debug
 
-        self.f = np.zeros(1 << StatsN, dtype=np.double)
+        self.f = np.zeros(1 << stats_num(), dtype=np.double)
         self.r = (np.fabs(statsVec) > eps).astype(np.double)
         self.r = SubStatsAdder.toExsists(statsVec)
 
         self.presented_msk = 0
         self.presented_num = 0
-        for i in range(StatsN):
+        for i in range(stats_num()):
             if self.r[i] > eps:
                 self.presented_msk |= 1 << i
                 self.presented_num += 1
@@ -35,20 +35,20 @@ class SubStatsAdder:
         msk = (1 << self.presented_num) - 1
         while msk < len(self.f):
             if self.f[msk] > eps:
-                not_exsisted = np.array([0 if msk & (1 << i) else 1 for i in range(StatsN)], dtype=np.double)
-                w_sum = not_exsisted @ StatAppendFactorsVec
-                incremental = StatAppendFactorsVec / w_sum * self.f[msk] * not_exsisted
-                for i in range(StatsN):
+                not_exsisted = np.array([0 if msk & (1 << i) else 1 for i in range(stats_num())], dtype=np.double)
+                w_sum = not_exsisted @ stats_prob()
+                incremental = stats_prob() / w_sum * self.f[msk] * not_exsisted
+                for i in range(stats_num()):
                     self.f[msk | (1 << i)] += incremental[i]
             if msk == 0:
                 break
             msk = self.mask_next(msk)
         self.presented_num += 1
 
-        self.r = np.zeros(StatsN, dtype=np.double)
+        self.r = np.zeros(stats_num(), dtype=np.double)
         msk = (1 << self.presented_num) - 1
         while msk < len(self.f):
-            for i in range(StatsN):
+            for i in range(stats_num()):
                 if msk & (1 << i):
                     self.r[i] += self.f[msk]
             if msk == 0:
@@ -66,7 +66,7 @@ class SubStatsAdder:
 
 
 def main():
-    substats_demo = SubStatsAdder(np.zeros(StatsN, dtype=np.double), debug=True)
+    substats_demo = SubStatsAdder(np.zeros(stats_num(), dtype=np.double), debug=True)
     substats_demo.calc(iterNum=4)
 
 

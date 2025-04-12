@@ -13,11 +13,13 @@ from colorama import just_fix_windows_console
 from cv2 import COLOR_RGB2BGR, cvtColor, destroyAllWindows, imshow, waitKey
 from PIL import ImageGrab
 
+import Profiles.WeightsPrfl_HSR
+import Utils.Stats_HSR
 from Profiles.RegionsPrfl import RegionsPrfl, RegionsPrfls
-from Profiles.WeightsPrfl import WeightsPrfls
+from Profiles.WeightsPrfl import weights_prfls
 from SubStatsAdder import SubStatsAdder
 from Utils.Constants import PCT, TailKWs, eps, fourCoe, inf, one, oneIncCoeExp, zero
-from Utils.Stats import StatHitsVec, Stats, StatsN
+from Utils.Stats import stats_hit, stats_list, stats_num
 from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle, clear
 
 
@@ -36,7 +38,9 @@ class ArtifactsParser:
             raise ValueError(f"Failed to get int: {text}")
         return int(res[0])
 
-    def __init__(self, regionKey, weightsKeys, fourstars=False, debug=False):
+    def __init__(self, regionKey, weightsKeys, fourstars=False, hsr=False, debug=False):
+        self.fourstars = fourstars
+        self.hsr = hsr
         self.debug = debug
         self.lastocr = ""
         self.presenting = None
@@ -44,12 +48,11 @@ class ArtifactsParser:
         # self.weightsPrfls: List[WeightsPrfl] = [
         #     wp for wp in WeightsPrfls.values() if any([key.upper() in wp.key.upper() for key in weightsKeys])
         # ]
-        self.weightsPrfls: List[WeightsPrfl] = [
+        self.weightsPrfls: List[WeightsPrflBase] = [
             wp.plus(next((key.count("+") for key in reversed(weightsKeys) if key.rstrip("+").upper() in wp.key.upper()), 0))
-            for wp in WeightsPrfls.values()
+            for wp in weights_prfls().values()
             if any([key.rstrip("+").upper() in wp.key.upper() for key in weightsKeys])
         ]
-        self.fourstars = fourstars
 
         self.request = Vision.VNRecognizeTextRequest.alloc().init()
         self.request.setRecognitionLanguages_(["zh-TW", "en"])
@@ -87,7 +90,7 @@ class ArtifactsParser:
         if handler.performRequests_error_([self.request], None):
             res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
             # zhTW to en
-            for stat in Stats:
+            for stat in stats_list():
                 res = res.replace(stat.zhTW, stat.key.strip("%"))
             res = res.replace("＋", "+")
             res = res.replace("生之花", "Flower of Life")
@@ -107,7 +110,7 @@ class ArtifactsParser:
             raise RuntimeError("Error performing OCR")
 
     def put_stat(self, key: str, value: str, stats_vec: np.array, isMainStat: bool = False):
-        validated = np.array([one if stat.validate(key, value) else zero for stat in Stats], dtype=np.double)
+        validated = np.array([one if stat.validate(key, value) else zero for stat in stats_list()], dtype=np.double)
         if np.sum(validated) == 0:
             raise ValueError(f"No stat match found for: ({key}: {value})")
         elif np.sum(validated) > 1:
@@ -117,32 +120,35 @@ class ArtifactsParser:
 
         standardized_value = -inf if isMainStat else self.get_double(value)
 
-        self.debugtext("%s : %.2f" % (Stats[np.where(validated > one - eps)[0].flat[0]].key, standardized_value))
+        self.debugtext("%s : %.2f" % (stats_list()[np.where(validated > one - eps)[0].flat[0]].key, standardized_value))
 
         if self.fourstars:
-            stats_vec += validated * standardized_value * StatHitsVec / fourCoe
+            stats_vec += validated * standardized_value * stats_hit() / fourCoe
         else:
-            stats_vec += validated * standardized_value * StatHitsVec
+            stats_vec += validated * standardized_value * stats_hit()
 
-    def summarize(self, organic_vec: np.array, levCur: int, expVec: np.array = np.zeros(StatsN, dtype=np.double)):
+    def summarize(self, organic_vec: np.array, levCur: int, expVec: np.array = None):
+        if expVec is None:
+            expVec = np.zeros(stats_num(), dtype=np.double)
+
         stats_vec = np.copy(organic_vec)
 
         if np.sum(expVec) > eps:
             stats_vec = organic_vec - SubStatsAdder.toExsists(organic_vec) * oneIncCoeExp + expVec * oneIncCoeExp
 
-        main_key = Stats[np.where(stats_vec < -one)[0].flat[0]].key
+        main_key = stats_list()[np.where(stats_vec < -one)[0].flat[0]].key
         MainStatStyle.println(main_key)
 
         LevelStyle.println("+%d" % levCur)
         iterNum = (4 if self.fourstars else 5) - levCur
 
-        for i in range(StatsN):
+        for i in range(stats_num()):
             if stats_vec[i] < np.double(0.65):
                 continue
             if self.fourstars:
-                Stats[i].println(stats_vec[i] * fourCoe)
+                stats_list()[i].println(stats_vec[i] * fourCoe)
             else:
-                Stats[i].println(stats_vec[i])
+                stats_list()[i].println(stats_vec[i])
 
         InfoStyle.println("v" * 32)
 
@@ -159,7 +165,7 @@ class ArtifactsParser:
 
     def understanding(self, img):
         self.debugimg(img)
-        stats_vec = np.zeros(StatsN, dtype=np.double)
+        stats_vec = np.zeros(stats_num(), dtype=np.double)
 
         if not self.regionPrfl.single:
             # Main Stats
@@ -169,17 +175,28 @@ class ArtifactsParser:
             levMax = 4 if self.fourstars else 5
             # Level
             levCur4Str = self.ocr(img, self.regionPrfl.level)
-            levCur = self.get_int(levCur4Str) // 4
+            levCur = self.get_int(levCur4Str) // (4 if not self.hsr else 3)
             # Sub Stats
             for substat in self.regionPrfl.substats:
-                sub_kv = self.ocr(img, substat)
-                if self.tailing(sub_kv):
-                    break
                 sub_key, sub_value = None, None
-                try:
-                    sub_key, sub_value = sub_kv.split("+")
-                except ValueError:
-                    raise ValueError(f"Bad SubStat: {sub_kv}")
+                if len(substat) == 4:
+                    sub_kv = self.ocr(img, substat)
+                    if self.tailing(sub_kv):
+                        break
+                    sub_key, sub_value = None, None
+                    try:
+                        sub_key, sub_value = sub_kv.split("+")
+                    except ValueError:
+                        raise ValueError(f"Bad SubStat: {sub_kv}")
+                else:
+                    sub_key = self.ocr(img, substat[:2] + substat[4:5] + substat[3:4])
+                    sub_value = self.ocr(img, substat[4:5] + substat[1:4]).strip(" +")
+                    if sub_key == "" and sub_value == "":
+                        break
+                    elif sub_key == "SPD" and sub_value == "":
+                        # lef = (substat[2] + substat[4]) // 2
+                        # sub_value = self.ocr(img, (lef,) + substat[1:4]).strip(" +")
+                        sub_value = "5"
                 self.put_stat(sub_key, sub_value, stats_vec)
         else:
             sub_num = 0
@@ -275,9 +292,16 @@ def main():
     argument_parser.add_argument("--region", default="C3440X1440")
     argument_parser.add_argument("--fourstars", action="store_true")
     argument_parser.add_argument("--weights", action="extend", nargs="+")
+    argument_parser.add_argument("--hsr", action="store_true")
     args = argument_parser.parse_args()
 
-    artifacts_parser = ArtifactsParser(regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, debug=args.debug)
+    if args.hsr:
+        Utils.Stats_HSR.override()
+        Profiles.WeightsPrfl_HSR.override()
+
+    artifacts_parser = ArtifactsParser(
+        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, hsr=args.hsr, debug=args.debug
+    )
     artifacts_parser.start()
 
 
