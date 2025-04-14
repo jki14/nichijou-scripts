@@ -163,7 +163,114 @@ RuanmeiScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(0.0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(4.0),
+    legendary=True,
+)
+
+CastoriceScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Castorice Netherwing Score",
+    baseATK=np.double(523) + np.double(529),  # Castorice + Make Farewells More Beautiful
+    baseHP=np.double(1629) + np.double(1270),  # Castorice + Make Farewells More Beautiful
+    baseDEF=np.double(485) + np.double(396),  # Castorice + Make Farewells More Beautiful
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        DMG_BOOST.setWeight(np.double(0)),
+    ],
+    SPD=SPD.setWeight(np.double(0.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(5.0),
+    legendary=True,
+)
+
+TrailblazerScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Trailblazer Netherwing Score",
+    baseATK=np.double(543) + np.double(476),  # Trailblazer + Victory In a Blink
+    baseHP=np.double(1047) + np.double(846),  # Trailblazer + Victory In a Blink
+    baseDEF=np.double(630) + np.double(396),  # Trailblazer + Victory In a Blink
+    allowMainStatList=[
+        SPD.setWeight(np.double(1)),
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_REGENERATION.setWeight(np.double(1)),
+    ],
+    SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(4.0),
+    legendary=True,
+)
+
+GallagherScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Gallagher Netherwing Score",
+    baseATK=np.double(529) + np.double(423),  # Gallagher + Post-Op Conversation
+    baseHP=np.double(1305) + np.double(1058),  # Gallagher + Post-Op Conversation
+    baseDEF=np.double(441) + np.double(330),  # Gallagher + Post-Op Conversation
+    allowMainStatList=[
+        SPD.setWeight(np.double(1)),
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        BREAK_EFFECT.setWeight(np.double(1)),
+        ENERGY_REGENERATION.setWeight(np.double(1)),
+        HEALING_BOOST.setWeight(np.double(1)),
+    ],
+    SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(1.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(0.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(4.0),
+    legendary=True,
+)
+
+PelaScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Pela Netherwing Score",
+    baseATK=np.double(546) + np.double(476),  # Pela + Resolution Shines As Pearls of Sweat
+    baseHP=np.double(987) + np.double(952),  # Pela + Resolution Shines As Pearls of Sweat
+    baseDEF=np.double(463) + np.double(330),  # Pela + Resolution Shines As Pearls of Sweat
+    allowMainStatList=[
+        SPD.setWeight(np.double(1)),
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        ENERGY_REGENERATION.setWeight(np.double(1)),
+    ],
+    SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(1.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(0.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(4.0),
     legendary=True,
 )
 
@@ -172,6 +279,10 @@ WeightsPrfls = {
     FugueScorePrfl.key: FugueScorePrfl,
     LingshaScorePrfl.key: LingshaScorePrfl,
     RuanmeiScorePrfl.key: RuanmeiScorePrfl,
+    CastoriceScorePrfl.key: CastoriceScorePrfl,
+    TrailblazerScorePrfl.key: TrailblazerScorePrfl,
+    GallagherScorePrfl.key: GallagherScorePrfl,
+    PelaScorePrfl.key: PelaScorePrfl,
 }
 
 def override():
