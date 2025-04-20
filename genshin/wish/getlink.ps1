@@ -2,7 +2,7 @@ Add-Type -AssemblyName System.Web
 
 # $logLocation = "%userprofile%\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt";
 # $logLocationChina = "%userprofile%\AppData\LocalLow\miHoYo\$([char]0x539f)$([char]0x795e)\output_log.txt";
-$logLocation = "$Env:HOME/Library/Application Support/Yaagl OS/wineprefix/drive_c/users/crossover/AppData/LocalLow/miHoYo/Genshin Impact/output_log.txt";
+$logLocation = "$Env:HOME/Library/Application Support/Yaagl OS/wineprefix/drive_c/users/jki14/AppData/LocalLow/miHoYo/Genshin Impact/output_log.txt";
 $logLocationChina = "%userprofile%\AppData\LocalLow\miHoYo\$([char]0x539f)$([char]0x795e)\output_log.txt";
 
 $reg = $args[0]
