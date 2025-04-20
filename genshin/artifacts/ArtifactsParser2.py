@@ -5,12 +5,12 @@ from io import BytesIO
 from time import sleep
 from typing import List
 
+import cv2
 import numpy as np
 import Quartz
 import Vision
 from Cocoa import NSData
 from colorama import just_fix_windows_console
-from cv2 import COLOR_RGB2BGR, cvtColor, destroyAllWindows, imshow, waitKey
 from PIL import ImageGrab
 
 import Profiles.WeightsPrfl_HSR
@@ -55,7 +55,8 @@ class ArtifactsParser:
         ]
 
         self.request = Vision.VNRecognizeTextRequest.alloc().init()
-        self.request.setRecognitionLanguages_(["zh-TW", "en"])
+        self.request.setRecognitionLanguages_(["zh-TW", "en"] if not hsr else ["zh-TW"])
+        self.request.setRecognitionLevel_(Vision.VNRequestTextRecognitionLevelAccurate)
 
     def screenshot(self):
         shot = ImageGrab.grab(bbox=self.regionPrfl.full)
@@ -64,9 +65,9 @@ class ArtifactsParser:
     def debugimg(self, img):
         if self.debug:
             img = np.array(img)
-            imshow("ArtifactsParser", cvtColor(img, COLOR_RGB2BGR))
-            waitKey(0)
-            destroyAllWindows()
+            cv2.imshow("ArtifactsParser", cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     def debugtext(self, text):
         if self.debug:
@@ -88,7 +89,8 @@ class ArtifactsParser:
 
         handler = Vision.VNImageRequestHandler.alloc().initWithCGImage_options_(cg_image, {})
         if handler.performRequests_error_([self.request], None):
-            res = "\n".join([res.topCandidates_(1)[0].string() for res in self.request.results()])
+            responses = self.request.results()
+            res = "\n".join([res.topCandidates_(1)[0].string() for res in responses])
             # zhTW to en
             for stat in stats_list():
                 res = res.replace(stat.zhTW, stat.key.strip("%"))
@@ -104,6 +106,38 @@ class ArtifactsParser:
             res = res.replace("CRIT DG", "CRIT DMG")
             res = res.replace(",", "")
             res = res.replace(chr(1040), chr(65))  # А -> A
+            # 6 vs. 9
+            only69 = lambda s: "".join(filter(str.isdigit, s)) in ["6", "9"]
+            if only69(res):
+                bbox = [observation.boundingBox() for observation in responses if only69(observation.topCandidates_(1)[0].string())][0]
+                bbox = (
+                    int((target[2] - target[0]) * bbox.origin.x),
+                    int((target[3] - target[1]) * (1.0 - bbox.origin.y - bbox.size.height)),
+                    int((target[2] - target[0]) * bbox.size.width),
+                    int((target[3] - target[1]) * bbox.size.height)
+                ) if "+" not in res else (
+                    int((target[2] - target[0]) * (bbox.origin.x + bbox.size.width * 0.5)),
+                    int((target[3] - target[1]) * (1.0 - bbox.origin.y - bbox.size.height)),
+                    int((target[2] - target[0]) * bbox.size.width * 0.5),
+                    int((target[3] - target[1]) * bbox.size.height)
+                )
+                bbox = (target[0] + bbox[0], target[1] + bbox[1], target[0] + bbox[0] + bbox[2], target[1] + bbox[1] + bbox[3])
+                with BytesIO() as dummy_io:
+                    region = tuple(bbox[i] - self.regionPrfl.full[i & 1] for i in range(4))
+                    img.crop(region).save(dummy_io, format="PNG")
+                    iimg = cv2.imdecode(np.frombuffer(dummy_io.getvalue(), np.uint8), cv2.IMREAD_GRAYSCALE)
+                _, iimg = cv2.threshold(iimg, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                cols = np.where(np.any(iimg > 0, axis=0))[0]
+                iimg = iimg[:, cols[0]:cols[-1] + 1]
+                mid = iimg.shape[1] * 1 // 2
+                self.debugimg(iimg[:, :mid])
+                self.debugimg(iimg[:, -mid:])
+                lhs = cv2.countNonZero(iimg[:, :mid])
+                rhs = cv2.countNonZero(iimg[:, -mid:])
+                if lhs > rhs:
+                    res = res.replace("9", "6")
+                else:
+                    res = res.replace("6", "9")
             self.lastocr = res
             return res
         else:
