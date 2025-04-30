@@ -604,6 +604,166 @@ HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Citlali Tenacity ER Score",
+    baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
+    baseHP=np.double(11633.62),  # Citlali
+    baseDEF=np.double(763.17),  # Citlali
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(4.5)),
+        ELEMENTAL_MASTERY.setWeight(np.double(3)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+CitlaliEMPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Citlali Cinder EM Score",
+    baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
+    baseHP=np.double(11633.62),  # Citlali
+    baseDEF=np.double(763.17),  # Citlali
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(3)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
+
+XilonenCRPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Xilonen Cinder CR Score",
+    baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
+    baseHP=np.double(12405.11),  # Xilonen
+    baseDEF=np.double(929.95),  # Xilonen
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        DEF_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Xilonen Cinder DEF Score",
+    baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
+    baseHP=np.double(12405.11),  # Xilonen
+    baseDEF=np.double(929.95),  # Xilonen
+    allowMainStatList=[
+        HP,
+        ATK,
+        DEF_PCT.setWeight(np.double(3)),
+        HEALING_BONUS.setWeight(np.double(3)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
+
+XianyunPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Xianyun Gladiator/Reminiscence Score",
+    baseATK=np.double(334.85) + np.double(674),  # Xianyun + Skyward Atlas
+    baseHP=np.double(10409.02),  # Xianyun
+    baseDEF=np.double(572.57),  # Xianyun
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(2)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+ChevreusePrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Chevreuse Cinder Score",
+    baseATK=np.double(193.28) + np.double(565),  # Chevreuse + Favonius Lance
+    baseHP=np.double(11962.41),  # Chevreuse
+    baseDEF=np.double(604.71),  # Chevreuse
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(3)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
+
+CharlottePrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Charlotte Cinder ER Score",
+    baseATK=np.double(173.10) + np.double(510),  # Charlotte + Prototype Amber
+    baseHP=np.double(10766.17),  # Charlotte
+    baseDEF=np.double(546.02),  # Charlotte
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(4.5)),
+        ATK_PCT.setWeight(np.double(3)),
+        HEALING_BONUS.setWeight(np.double(2)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 ShinobuPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Shinobu Count",
     baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
@@ -676,6 +836,53 @@ ColleiPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+CitlaliPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Citlali Count",
+    baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
+    baseHP=np.double(11633.62),  # Citlali
+    baseDEF=np.double(763.17),  # Citlali
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4),
+)
+
+XilonenPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Xilonen Count",
+    baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
+    baseHP=np.double(12405.11),  # Xilonen
+    baseDEF=np.double(929.95),  # Xilonen
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        DEF_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+        HEALING_BONUS,
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4),
+)
+
 KiraraPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Kirara Count",
     baseATK=np.double(223.02) + np.double(454),  # Kirara + Favonius Sword
@@ -716,53 +923,6 @@ BennettPrfl: GWeightsPrfl = GWeightsPrfl(
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_green", "on_black", ["bold"]),
-    threshold=np.double(4),
-)
-
-XilonenPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xilonen Count",
-    baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
-    baseHP=np.double(12405.11),  # Xilonen
-    baseDEF=np.double(929.95),  # Xilonen
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        DEF_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
-        HEALING_BONUS,
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
-    textStyle=TextStyle("light_green", "on_black", ["bold"]),
-    threshold=np.double(4),
-)
-
-CitlaliPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Citlali Count",
-    baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
-    baseHP=np.double(11633.62),  # Citlali
-    baseDEF=np.double(763.17),  # Citlali
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_green", "on_black", ["bold"]),
     threshold=np.double(4),
@@ -812,13 +972,20 @@ WeightsPrfls = {
     AyatoPrfl.key: AyatoPrfl,
     TighnariPrfl.key: TighnariPrfl,
     HutaoPrfl.key: HutaoPrfl,
+    CitlaliERPrfl.key: CitlaliERPrfl,
+    CitlaliEMPrfl.key: CitlaliEMPrfl,
+    XilonenCRPrfl.key: XilonenCRPrfl,
+    XilonenDEFPrfl.key: XilonenDEFPrfl,
+    XianyunPrfl.key: XianyunPrfl,
+    ChevreusePrfl.key: ChevreusePrfl,
+    CharlottePrfl.key: CharlottePrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     ColleiPrfl.key: ColleiPrfl,
+    CitlaliPrfl.key: CitlaliPrfl,
+    XilonenPrfl.key: XilonenPrfl,
     KiraraPrfl.key: KiraraPrfl,
     BennettPrfl.key: BennettPrfl,
-    XilonenPrfl.key: XilonenPrfl,
-    CitlaliPrfl.key: CitlaliPrfl,
     JeanPrfl.key: JeanPrfl,
 }
 
