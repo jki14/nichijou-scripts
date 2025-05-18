@@ -450,6 +450,32 @@ ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Escoffier Troupe Score",
+    baseATK=np.double(346.81) + np.double(454),  # Escoffier + Deathmatch
+    baseHP=np.double(13348.04),  # Escoffier
+    baseDEF=np.double(731.66),  # Furina
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Raiden Fate Score",
     baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
@@ -612,8 +638,8 @@ CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(4.5)),
-        ELEMENTAL_MASTERY.setWeight(np.double(3)),
+        ENERGY_RECHARGE.setWeight(np.double(3)),
+        ELEMENTAL_MASTERY.setWeight(np.double(2)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
@@ -623,7 +649,7 @@ CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(5.0),
     legendary=True,
 )
 
@@ -761,6 +787,28 @@ CharlottePrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
     threshold=np.double(6.0),
+    legendary=True,
+)
+
+ZhongliPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Zhongli Tenacity/Vourukasha Score",
+    baseATK=np.double(251.14) + np.double(354),  # Zhongli + Black Tassel
+    baseHP=np.double(14695.09),  # Zhongli
+    baseDEF=np.double(737.81),  # Zhongli
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(3.3)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(4.7),
     legendary=True,
 )
 
@@ -966,6 +1014,7 @@ WeightsPrfls = {
     FischlPrfl.key: FischlPrfl,
     FurinaPrfl.key: FurinaPrfl,
     ChioriPrfl.key: ChioriPrfl,
+    EscoffierPrfl.key: EscoffierPrfl,
     RaidenPrfl.key: RaidenPrfl,
     XianglingPrfl.key: XianglingPrfl,
     YelanPrfl.key: YelanPrfl,
@@ -979,6 +1028,7 @@ WeightsPrfls = {
     XianyunPrfl.key: XianyunPrfl,
     ChevreusePrfl.key: ChevreusePrfl,
     CharlottePrfl.key: CharlottePrfl,
+    ZhongliPrfl.key: ZhongliPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     ColleiPrfl.key: ColleiPrfl,
