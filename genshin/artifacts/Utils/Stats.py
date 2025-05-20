@@ -168,14 +168,18 @@ StatsN: int = len(Stats)
 StatHitsVec = np.array([one / stat.onceIncrementMax for stat in Stats], dtype=np.double)
 StatAppendFactorsVec = np.array([stat.appendFactor for stat in Stats], dtype=np.double)
 
+
 def stats_list() -> List[StatInfo]:
     return Stats
+
 
 def stats_num() -> int:
     return StatsN
 
+
 def stats_hit() -> np.typing.NDArray[np.double]:
     return StatHitsVec
+
 
 def stats_prob() -> np.typing.NDArray[np.double]:
     return StatAppendFactorsVec

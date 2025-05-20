@@ -8,20 +8,11 @@ from Utils.Constants import one, oneIncCoeExp
 from Utils.Stats import StatInfo
 from Utils.TextStyle import TextStyle
 
-SPD = StatInfo(
-    key="SPD",
-    zhTW="速度",
-    onceIncrementMax=np.double(2.3) / oneIncCoeExp,
-    appendFactor=np.double(4),
-    weight=np.double(0),
-    textStyle=TextStyle("yellow", "on_black", ["bold"]),
-)
-
 HP = StatInfo(
     key="HP",
     zhTW="生命值",
-    onceIncrementMax=np.double(38.103755) / oneIncCoeExp,
-    appendFactor=np.double(10),
+    onceIncrementMax=np.double(112) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("green", "on_black", []),
 )
@@ -29,8 +20,8 @@ HP = StatInfo(
 ATK = StatInfo(
     key="ATK",
     zhTW="攻擊力",
-    onceIncrementMax=np.double(19.051877) / oneIncCoeExp,
-    appendFactor=np.double(10),
+    onceIncrementMax=np.double(19) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("green", "on_black", []),
 )
@@ -38,8 +29,8 @@ ATK = StatInfo(
 DEF = StatInfo(
     key="DEF",
     zhTW="防禦力",
-    onceIncrementMax=np.double(19.051877) / oneIncCoeExp,
-    appendFactor=np.double(10),
+    onceIncrementMax=np.double(15) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("dark_grey", "on_black", []),
 )
@@ -47,8 +38,8 @@ DEF = StatInfo(
 HP_PCT = StatInfo(
     key="HP%",
     zhTW="生命值",
-    onceIncrementMax=np.double(3.888) / oneIncCoeExp,
-    appendFactor=np.double(10),
+    onceIncrementMax=np.double(3) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
 )
@@ -56,8 +47,8 @@ HP_PCT = StatInfo(
 ATK_PCT = StatInfo(
     key="ATK%",
     zhTW="攻擊力",
-    onceIncrementMax=np.double(3.888) / oneIncCoeExp,
-    appendFactor=np.double(10),
+    onceIncrementMax=np.double(3) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
 )
@@ -65,44 +56,17 @@ ATK_PCT = StatInfo(
 DEF_PCT = StatInfo(
     key="DEF%",
     zhTW="防禦力",
-    onceIncrementMax=np.double(4.86) / oneIncCoeExp,
-    appendFactor=np.double(10),
+    onceIncrementMax=np.double(4.8) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("dark_grey", "on_black", []),
-)
-
-BREAK_EFFECT = StatInfo(
-    key="Break Effect%",
-    zhTW="擊破特攻",
-    onceIncrementMax=np.double(5.832) / oneIncCoeExp,
-    appendFactor=np.double(8),
-    weight=np.double(0),
-    textStyle=TextStyle("yellow", "on_black", ["bold"]),
-)
-
-EFFECT_HIT = StatInfo(
-    key="Effect Hit%",
-    zhTW="效果命中",
-    onceIncrementMax=np.double(3.888) / oneIncCoeExp,
-    appendFactor=np.double(8),
-    weight=np.double(0),
-    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-)
-
-EFFECT_RES = StatInfo(
-    key="Effect RES%",
-    zhTW="效果抗性",
-    onceIncrementMax=np.double(3.888) / oneIncCoeExp,
-    appendFactor=np.double(8),
-    weight=np.double(0),
-    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
 )
 
 CRIT_RATE = StatInfo(
     key="CRIT Rate%",
     zhTW="暴擊率",
-    onceIncrementMax=np.double(2.916) / oneIncCoeExp,
-    appendFactor=np.double(6),
+    onceIncrementMax=np.double(2.4) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
 )
@@ -110,33 +74,69 @@ CRIT_RATE = StatInfo(
 CRIT_DMG = StatInfo(
     key="CRIT DMG%",
     zhTW="暴擊傷害",
-    onceIncrementMax=np.double(5.832) / oneIncCoeExp,
-    appendFactor=np.double(6),
+    onceIncrementMax=np.double(4.8) / oneIncCoeExp,
+    appendFactor=np.double(1),
     weight=np.double(0),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
 )
 
-ENERGY_REGENERATION = StatInfo(
-    key="Energy Regeneration%",
-    zhTW="能量恢復效率",
+ANOMALY_PROFICIENCY = StatInfo(
+    key="Anomaly Proficiency",
+    zhTW="異常精通",
+    onceIncrementMax=np.double(9) / oneIncCoeExp,
+    appendFactor=np.double(1),
+    weight=np.double(0),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+)
+
+PEN = StatInfo(
+    key="PEN",
+    zhTW="穿透值",
+    onceIncrementMax=np.double(9) / oneIncCoeExp,
+    appendFactor=np.double(1),
+    weight=np.double(0),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+)
+
+PEN_RATIO = StatInfo(
+    key="PEN Ratio%",
+    zhTW="穿透率",
+    onceIncrementMax=np.double(1),
+    appendFactor=np.double(0),
+    weight=np.double(0),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+)
+
+DMG_BONUS = StatInfo(
+    key="DMG Bonus%",
+    zhTW="傷害加成",
     onceIncrementMax=np.double(1),
     appendFactor=np.double(0),
     weight=np.double(0),
     textStyle=TextStyle("green", "on_black", []),
 )
 
-HEALING_BOOST = StatInfo(
-    key="Healing Boost%",
-    zhTW="治療量",
+ANOMALY_MASTERY = StatInfo(
+    key="Anomaly Mastery%",
+    zhTW="異常掌控",
     onceIncrementMax=np.double(1),
     appendFactor=np.double(0),
     weight=np.double(0),
     textStyle=TextStyle("green", "on_black", []),
 )
 
-DMG_BOOST = StatInfo(
-    key="DMG Boost%",
-    zhTW="傷害提高",
+IMPACT = StatInfo(
+    key="Impact%",
+    zhTW="衝擊力",
+    onceIncrementMax=np.double(1),
+    appendFactor=np.double(0),
+    weight=np.double(0),
+    textStyle=TextStyle("green", "on_black", []),
+)
+
+ENERGY_REGEN = StatInfo(
+    key="Energy Regen%",
+    zhTW="能量自動回復",
     onceIncrementMax=np.double(1),
     appendFactor=np.double(0),
     weight=np.double(0),
@@ -144,21 +144,21 @@ DMG_BOOST = StatInfo(
 )
 
 Stats: List[StatInfo] = [
-    SPD,
     HP,
     ATK,
     DEF,
     HP_PCT,
     ATK_PCT,
     DEF_PCT,
-    BREAK_EFFECT,
-    EFFECT_HIT,
-    EFFECT_RES,
     CRIT_RATE,
     CRIT_DMG,
-    ENERGY_REGENERATION,
-    HEALING_BOOST,
-    DMG_BOOST,
+    ANOMALY_PROFICIENCY,
+    PEN,
+    PEN_RATIO,
+    DMG_BONUS,
+    ANOMALY_MASTERY,
+    IMPACT,
+    ENERGY_REGEN,
 ]
 
 StatsN: int = len(Stats)

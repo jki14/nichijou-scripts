@@ -3,7 +3,7 @@ import re
 from argparse import ArgumentParser
 from io import BytesIO
 from time import sleep
-from typing import List
+from typing import List, Optional
 
 import cv2
 import numpy as np
@@ -14,7 +14,9 @@ from colorama import just_fix_windows_console
 from PIL import ImageGrab
 
 import Profiles.WeightsPrfl_HSR
+import Profiles.WeightsPrfl_ZZZ
 import Utils.Stats_HSR
+import Utils.Stats_ZZZ
 from Profiles.RegionsPrfl import RegionsPrfl, RegionsPrfls
 from Profiles.WeightsPrfl import weights_prfls
 from SubStatsAdder import SubStatsAdder
@@ -38,9 +40,10 @@ class ArtifactsParser:
             raise ValueError(f"Failed to get int: {text}")
         return int(res[0])
 
-    def __init__(self, regionKey, weightsKeys, fourstars=False, hsr=False, debug=False):
+    def __init__(self, regionKey, weightsKeys, fourstars=False, hsr=False, zzz=False, debug=False):
         self.fourstars = fourstars
         self.hsr = hsr
+        self.zzz = zzz
         self.debug = debug
         self.lastocr = ""
         self.presenting = None
@@ -109,17 +112,23 @@ class ArtifactsParser:
             # 6 vs. 9
             only69 = lambda s: "".join(filter(str.isdigit, s)) in ["6", "9"]
             if only69(res):
+                if self.zzz and "%" in res and target[2] == 1900:
+                    return self.ocr(img, target[:2] + (1870,) + target[3:]) + "%"
                 bbox = [observation.boundingBox() for observation in responses if only69(observation.topCandidates_(1)[0].string())][0]
                 bbox = (
-                    int((target[2] - target[0]) * bbox.origin.x),
-                    int((target[3] - target[1]) * (1.0 - bbox.origin.y - bbox.size.height)),
-                    int((target[2] - target[0]) * bbox.size.width),
-                    int((target[3] - target[1]) * bbox.size.height)
-                ) if "+" not in res else (
-                    int((target[2] - target[0]) * (bbox.origin.x + bbox.size.width * 0.5)),
-                    int((target[3] - target[1]) * (1.0 - bbox.origin.y - bbox.size.height)),
-                    int((target[2] - target[0]) * bbox.size.width * 0.5),
-                    int((target[3] - target[1]) * bbox.size.height)
+                    (
+                        int((target[2] - target[0]) * bbox.origin.x),
+                        int((target[3] - target[1]) * (1.0 - bbox.origin.y - bbox.size.height)),
+                        int((target[2] - target[0]) * bbox.size.width),
+                        int((target[3] - target[1]) * bbox.size.height),
+                    )
+                    if "+" not in res
+                    else (
+                        int((target[2] - target[0]) * (bbox.origin.x + bbox.size.width * 0.5)),
+                        int((target[3] - target[1]) * (1.0 - bbox.origin.y - bbox.size.height)),
+                        int((target[2] - target[0]) * bbox.size.width * 0.5),
+                        int((target[3] - target[1]) * bbox.size.height),
+                    )
                 )
                 bbox = (target[0] + bbox[0], target[1] + bbox[1], target[0] + bbox[0] + bbox[2], target[1] + bbox[1] + bbox[3])
                 with BytesIO() as dummy_io:
@@ -128,7 +137,7 @@ class ArtifactsParser:
                     iimg = cv2.imdecode(np.frombuffer(dummy_io.getvalue(), np.uint8), cv2.IMREAD_GRAYSCALE)
                 _, iimg = cv2.threshold(iimg, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
                 cols = np.where(np.any(iimg > 0, axis=0))[0]
-                iimg = iimg[:, cols[0]:cols[-1] + 1]
+                iimg = iimg[:, cols[0] : cols[-1] + 1]
                 mid = iimg.shape[1] * 1 // 2
                 self.debugimg(iimg[:, :mid])
                 self.debugimg(iimg[:, -mid:])
@@ -143,7 +152,7 @@ class ArtifactsParser:
         else:
             raise RuntimeError("Error performing OCR")
 
-    def put_stat(self, key: str, value: str, stats_vec: np.array, isMainStat: bool = False):
+    def put_stat(self, key: str, value: str, stats_vec: np.array, isMainStat: bool = False, hint: Optional[int] = None):
         validated = np.array([one if stat.validate(key, value) else zero for stat in stats_list()], dtype=np.double)
         if np.sum(validated) == 0:
             raise ValueError(f"No stat match found for: ({key}: {value})")
@@ -153,6 +162,8 @@ class ArtifactsParser:
             raise ValueError(f"Redundant stat match found for: ({key}: {value})")
 
         standardized_value = -inf if isMainStat else self.get_double(value)
+        if standardized_value > eps and hint is not None:
+            standardized_value = one / (validated @ stats_hit()) * hint * oneIncCoeExp
 
         self.debugtext("%s : %.2f" % (stats_list()[np.where(validated > one - eps)[0].flat[0]].key, standardized_value))
 
@@ -209,7 +220,9 @@ class ArtifactsParser:
             levMax = 4 if self.fourstars else 5
             # Level
             levCur4Str = self.ocr(img, self.regionPrfl.level)
-            levCur = self.get_int(levCur4Str) // (4 if not self.hsr else 3)
+            if self.zzz:
+                levCur4Str = levCur4Str.replace("/15", "").replace("等級", "")
+            levCur = self.get_int(levCur4Str) // (4 if not self.hsr and not self.zzz else 3)
             # Sub Stats
             for substat in self.regionPrfl.substats:
                 sub_key, sub_value = None, None
@@ -227,10 +240,25 @@ class ArtifactsParser:
                     sub_value = self.ocr(img, substat[4:5] + substat[1:4]).strip(" +")
                     if sub_key == "" and sub_value == "":
                         break
+                    elif "裝效果" in sub_key:
+                        break
                     elif sub_key == "SPD" and sub_value == "":
                         # lef = (substat[2] + substat[4]) // 2
                         # sub_value = self.ocr(img, (lef,) + substat[1:4]).strip(" +")
                         sub_value = "5"
+                """
+                if self.zzz:
+                    hint = [("+%d" % i) in sub_key for i in range(6)]
+                    count = hint.count(True)
+                    if count == 0:
+                        self.put_stat(sub_key, sub_value, stats_vec, hint = 1)
+                    elif count == 1:
+                        self.put_stat(sub_key, sub_value, stats_vec, hint = hint.index(True) + 1)
+                    else:
+                        raise ValueError(f"Bad Hints: {sub_key}")
+                else:
+                    self.put_stat(sub_key, sub_value, stats_vec)
+                """
                 self.put_stat(sub_key, sub_value, stats_vec)
         else:
             sub_num = 0
@@ -327,14 +355,18 @@ def main():
     argument_parser.add_argument("--fourstars", action="store_true")
     argument_parser.add_argument("--weights", action="extend", nargs="+")
     argument_parser.add_argument("--hsr", action="store_true")
+    argument_parser.add_argument("--zzz", action="store_true")
     args = argument_parser.parse_args()
 
     if args.hsr:
         Utils.Stats_HSR.override()
         Profiles.WeightsPrfl_HSR.override()
+    elif args.zzz:
+        Utils.Stats_ZZZ.override()
+        Profiles.WeightsPrfl_ZZZ.override()
 
     artifacts_parser = ArtifactsParser(
-        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, hsr=args.hsr, debug=args.debug
+        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, hsr=args.hsr, zzz=args.zzz, debug=args.debug
     )
     artifacts_parser.start()
 
