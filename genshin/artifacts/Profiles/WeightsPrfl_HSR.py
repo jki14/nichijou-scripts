@@ -220,6 +220,33 @@ TrailblazerScorePrfl: HWeightsPrfl = HWeightsPrfl(
     legendary=True,
 )
 
+HyacineScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Hyacine Netherwing Score",
+    baseATK=np.double(388) + np.double(476),  # Hyacine + Post-Op Conversation
+    baseHP=np.double(1086) + np.double(1164),  # Hyacine + Post-Op Conversation
+    baseDEF=np.double(630) + np.double(529),  # Hyacine + Post-Op Conversation
+    allowMainStatList=[
+        SPD.setWeight(np.double(2)),
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        ENERGY_REGENERATION.setWeight(np.double(1)),
+        HEALING_BOOST.setWeight(np.double(1)),
+    ],
+    SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.67) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(0.34) / oneIncCoeExp),
+    textStyle=TextStyle("light_green", "on_black", ["bold"]),
+    threshold=np.double(4.0),
+    legendary=True,
+)
+
 GallagherScorePrfl: HWeightsPrfl = HWeightsPrfl(
     key="Gallagher Netherwing Score",
     baseATK=np.double(529) + np.double(423),  # Gallagher + Post-Op Conversation
@@ -281,6 +308,7 @@ WeightsPrfls = {
     RuanmeiScorePrfl.key: RuanmeiScorePrfl,
     CastoriceScorePrfl.key: CastoriceScorePrfl,
     TrailblazerScorePrfl.key: TrailblazerScorePrfl,
+    HyacineScorePrfl.key: HyacineScorePrfl,
     GallagherScorePrfl.key: GallagherScorePrfl,
     PelaScorePrfl.key: PelaScorePrfl,
 }

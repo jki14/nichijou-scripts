@@ -3,7 +3,7 @@ import re
 from argparse import ArgumentParser
 from io import BytesIO
 from time import sleep
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 import cv2
 import numpy as np
@@ -12,6 +12,7 @@ import Vision
 from Cocoa import NSData
 from colorama import just_fix_windows_console
 from PIL import ImageGrab
+from pytesseract import image_to_string, pytesseract
 
 import Profiles.WeightsPrfl_HSR
 import Profiles.WeightsPrfl_ZZZ
@@ -76,7 +77,7 @@ class ArtifactsParser:
         if self.debug:
             DebugStyle.println(text)
 
-    def ocr(self, img, target=None):
+    def ocr(self, img, target=None, fallback_pred: Callable[[str], bool] = lambda s: False):
         subimg = img
         if target is not None:
             region = tuple(target[i] - self.regionPrfl.full[i & 1] for i in range(4))
@@ -109,9 +110,9 @@ class ArtifactsParser:
             res = res.replace("CRIT DG", "CRIT DMG")
             res = res.replace(",", "")
             res = res.replace(chr(1040), chr(65))  # А -> A
-            # 6 vs. 9
-            only69 = lambda s: "".join(filter(str.isdigit, s)) in ["6", "9"]
-            if only69(res):
+            # fallback to tesseract
+            if fallback_pred(res):
+                """
                 if self.zzz and "%" in res and target[2] == 1900:
                     return self.ocr(img, target[:2] + (1870,) + target[3:]) + "%"
                 bbox = [observation.boundingBox() for observation in responses if only69(observation.topCandidates_(1)[0].string())][0]
@@ -147,6 +148,8 @@ class ArtifactsParser:
                     res = res.replace("9", "6")
                 else:
                     res = res.replace("6", "9")
+                """
+                res = image_to_string(subimg, config="--oem 1 --psm 7").strip()
             self.lastocr = res
             return res
         else:
@@ -211,15 +214,16 @@ class ArtifactsParser:
     def understanding(self, img):
         self.debugimg(img)
         stats_vec = np.zeros(stats_num(), dtype=np.double)
+        corrupted_pred: Callable[[str], bool] = lambda s: s == "" or "".join(filter(str.isdigit, s)) in ["5", "6", "8", "9"]
 
         if not self.regionPrfl.single:
             # Main Stats
             main_key = self.ocr(img, self.regionPrfl.main_key)
-            main_val = self.ocr(img, self.regionPrfl.main_val)
+            main_val = self.ocr(img, self.regionPrfl.main_val, corrupted_pred)
             self.put_stat(main_key, main_val, stats_vec, True)
             levMax = 4 if self.fourstars else 5
             # Level
-            levCur4Str = self.ocr(img, self.regionPrfl.level)
+            levCur4Str = self.ocr(img, self.regionPrfl.level, corrupted_pred)
             if self.zzz:
                 levCur4Str = levCur4Str.replace("/15", "").replace("等級", "")
             levCur = self.get_int(levCur4Str) // (4 if not self.hsr and not self.zzz else 3)
@@ -237,15 +241,15 @@ class ArtifactsParser:
                         raise ValueError(f"Bad SubStat: {sub_kv}")
                 else:
                     sub_key = self.ocr(img, substat[:2] + substat[4:5] + substat[3:4])
-                    sub_value = self.ocr(img, substat[4:5] + substat[1:4]).strip(" +")
+                    sub_value = self.ocr(img, substat[4:5] + substat[1:4], corrupted_pred).strip(" +")
                     if sub_key == "" and sub_value == "":
                         break
                     elif "裝效果" in sub_key:
                         break
-                    elif sub_key == "SPD" and sub_value == "":
-                        # lef = (substat[2] + substat[4]) // 2
-                        # sub_value = self.ocr(img, (lef,) + substat[1:4]).strip(" +")
-                        sub_value = "5"
+                    # elif sub_key == "SPD" and sub_value == "":
+                    #   # lef = (substat[2] + substat[4]) // 2
+                    #   # sub_value = self.ocr(img, (lef,) + substat[1:4]).strip(" +")
+                    #   sub_value = "5"
                 """
                 if self.zzz:
                     hint = [("+%d" % i) in sub_key for i in range(6)]
