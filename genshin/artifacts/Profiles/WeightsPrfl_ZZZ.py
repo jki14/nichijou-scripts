@@ -56,9 +56,9 @@ class ZWeightsPrfl(WeightsPrflBase):
 
 CritScorePrfl: ZWeightsPrfl = ZWeightsPrfl(
     key="Crit Score",
-    baseATK=np.double(805) + np.double(743),  # Miyabi + Hailstorm Shrine
-    baseHP=np.double(7673),  # Miyabi
-    baseDEF=np.double(606),  # Miyabi
+    baseATK=np.double(840) + np.double(684),  # Harumasa + The Brimstone
+    baseHP=np.double(7405),  # Harumasa
+    baseDEF=np.double(600),  # Harumasa
     allowMainStatList=[
         HP,
         ATK,
@@ -107,9 +107,37 @@ AnomalyScorePrfl: ZWeightsPrfl = ZWeightsPrfl(
     legendary=True,
 )
 
+MiyabiScorePrfl: ZWeightsPrfl = ZWeightsPrfl(
+    key="Miyabi Score",
+    baseATK=np.double(805) + np.double(743),  # Miyabi + Hailstorm Shrine
+    baseHP=np.double(7673),  # Miyabi
+    baseDEF=np.double(606),  # Miyabi
+    allowMainStatList=[
+        HP,
+        ATK,
+        DEF,
+        ATK_PCT.setWeight(np.double(2)),
+        ANOMALY_PROFICIENCY.setWeight(np.double(2)),
+        DMG_BONUS.setWeight(np.double(2)),
+        ANOMALY_MASTERY.setWeight(np.double(2)),
+        ENERGY_REGEN.setWeight(np.double(2)),
+    ],
+    HP_PCT=HP_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
+    ANOMALY_PROFICIENCY=ANOMALY_PROFICIENCY.setWeight(np.double(0.5) / oneIncCoeExp),
+    PEN=PEN.setWeight(np.double(0.34) / oneIncCoeExp),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 WeightsPrfls = {
     CritScorePrfl.key: CritScorePrfl,
     AnomalyScorePrfl.key: AnomalyScorePrfl,
+    MiyabiScorePrfl.key: MiyabiScorePrfl,
 }
 
 
