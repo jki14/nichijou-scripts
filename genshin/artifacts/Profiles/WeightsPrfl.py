@@ -649,7 +649,7 @@ CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(5.0),
+    threshold=np.double(5.1),
     legendary=True,
 )
 
@@ -700,7 +700,7 @@ XilonenCRPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xilonen Cinder DEF Score",
+    key="Xilonen Cinder DE𝑭 Score",
     baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
     baseHP=np.double(12405.11),  # Xilonen
     baseDEF=np.double(929.95),  # Xilonen
