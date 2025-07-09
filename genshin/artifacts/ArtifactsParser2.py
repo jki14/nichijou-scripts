@@ -53,9 +53,11 @@ class ArtifactsParser:
         #     wp for wp in WeightsPrfls.values() if any([key.upper() in wp.key.upper() for key in weightsKeys])
         # ]
         self.weightsPrfls: List[WeightsPrflBase] = [
-            wp.plus(next((key.count("+") for key in reversed(weightsKeys) if key.rstrip("+").upper() in wp.key.upper()), 0))
+            wp.plus(
+                next((key.count("+") - key.count("-") for key in reversed(weightsKeys) if key.rstrip("+-").upper() in wp.key.upper()), 0)
+            )
             for wp in weights_prfls().values()
-            if any([key.rstrip("+").upper() in wp.key.upper() for key in weightsKeys])
+            if any([key.rstrip("+-").upper() in wp.key.upper() for key in weightsKeys])
         ]
 
         self.request = Vision.VNRecognizeTextRequest.alloc().init()

@@ -42,6 +42,7 @@ class WeightsPrflBase:
     def plus(self, plus_num: int) -> "WeightsPrflBase":
         cloned = copy.deepcopy(self)
         cloned.key += "+" * plus_num
+        cloned.key += "-" * -plus_num
         cloned.threshold += 0.5 * plus_num
         return cloned
 
@@ -467,6 +468,31 @@ EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Skirk Galleries/Hunter/Gladiator Score",
+    baseATK=np.double(358.77) + np.double(674),  # Skirk + Azurelight
+    baseHP=np.double(12417.35),  # Skirk
+    baseDEF=np.double(806.21),  # Skirk
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
@@ -1015,6 +1041,7 @@ WeightsPrfls = {
     FurinaPrfl.key: FurinaPrfl,
     ChioriPrfl.key: ChioriPrfl,
     EscoffierPrfl.key: EscoffierPrfl,
+    SkirkPrfl.key: SkirkPrfl,
     RaidenPrfl.key: RaidenPrfl,
     XianglingPrfl.key: XianglingPrfl,
     YelanPrfl.key: YelanPrfl,
