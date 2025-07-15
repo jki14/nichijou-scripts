@@ -62,6 +62,30 @@ py3init() {
     fi
 }
 
+kill-genshin() {
+  local matches
+  matches=$(ps aux | grep genshin | grep is_cloud | grep -v grep)
+
+  if [ -z "$matches" ]; then
+    echo "error: no matching process found." >&2
+    return 1
+  fi
+
+  local count
+  count=$(echo "$matches" | grep -c '^')
+
+  if [ "$count" -eq 1 ]; then
+    local pid
+    pid=$(echo "$matches" | awk '{print $2}')
+    echo "info: killing pid: $pid"
+    kill "$pid"
+  else
+    echo "error: multiple matching processes found. aborting." >&2
+    echo "$matches" >&2
+    return 1
+  fi
+}
+
 alias ts0='ts '\''[%Y-%m-%d %H:%M:%S]'\'''
 
 alias roll='od -N1 -An -i /dev/random'
