@@ -390,7 +390,7 @@ FischlPrfl: GWeightsPrfl = GWeightsPrfl(
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
