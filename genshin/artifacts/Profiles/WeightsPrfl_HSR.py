@@ -193,8 +193,8 @@ CastoriceScorePrfl: HWeightsPrfl = HWeightsPrfl(
     legendary=True,
 )
 
-TribbieScorePrfl: HWeightsPrfl = HWeightsPrfl(
-    key="Tribbie Netherwing Score",
+TribbieSlowScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Tribbie Slow Netherwing Score",
     baseATK=np.double(523) + np.double(317),  # Tribbie + Meshing Cogs
     baseHP=np.double(1047) + np.double(846),  # Tribbie + Meshing Cogs
     baseDEF=np.double(727) + np.double(264),  # Tribbie + Meshing Cogs
@@ -215,6 +215,34 @@ TribbieScorePrfl: HWeightsPrfl = HWeightsPrfl(
     EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+    threshold=np.double(5.0),
+    legendary=True,
+)
+
+TribbieFastScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Tribbie Fast Netherwing Score",
+    baseATK=np.double(523) + np.double(317),  # Tribbie + Meshing Cogs
+    baseHP=np.double(1047) + np.double(846),  # Tribbie + Meshing Cogs
+    baseDEF=np.double(727) + np.double(264),  # Tribbie + Meshing Cogs
+    allowMainStatList=[
+        SPD.setWeight(np.double(1)),
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_REGENERATION.setWeight(np.double(1)),
+    ],
+    SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(0.5) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(5.0),
     legendary=True,
@@ -334,7 +362,8 @@ WeightsPrfls = {
     LingshaScorePrfl.key: LingshaScorePrfl,
     RuanmeiScorePrfl.key: RuanmeiScorePrfl,
     CastoriceScorePrfl.key: CastoriceScorePrfl,
-    TribbieScorePrfl.key: TribbieScorePrfl,
+    TribbieSlowScorePrfl.key: TribbieSlowScorePrfl,
+    TribbieFastScorePrfl.key: TribbieFastScorePrfl,
     TrailblazerScorePrfl.key: TrailblazerScorePrfl,
     HyacineScorePrfl.key: HyacineScorePrfl,
     GallagherScorePrfl.key: GallagherScorePrfl,
