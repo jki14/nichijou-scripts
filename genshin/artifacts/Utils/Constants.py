@@ -41,6 +41,8 @@ TailKWs: List[str] = [
     "serker",
     "structor",
     "Petra",
+    "Deep",
+    "Night",
     "險家",
     "運兒",
     "醫",
@@ -91,4 +93,6 @@ TailKWs: List[str] = [
     "竟的遐",
     "城勇者",
     "曜秘典",
+    "終曲",
+    "之誓",
 ]

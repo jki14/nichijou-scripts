@@ -702,7 +702,7 @@ CitlaliEMPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 XilonenCRPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xilonen Cinder CR Score",
+    key="Xilonen Cinder/Noblesse CR Score",
     baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
     baseHP=np.double(12405.11),  # Xilonen
     baseDEF=np.double(929.95),  # Xilonen
@@ -726,7 +726,7 @@ XilonenCRPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xilonen Cinder DE𝑭 Score",
+    key="Xilonen Cinder/Noblesse DE𝑭 Score",
     baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
     baseHP=np.double(12405.11),  # Xilonen
     baseDEF=np.double(929.95),  # Xilonen
@@ -835,6 +835,104 @@ ZhongliPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
     threshold=np.double(4.7),
+    legendary=True,
+)
+
+DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Dahlia Noblesse CR Score",
+    baseATK=np.double(189.03) + np.double(454),  # Dahlia + Favonius Sword
+    baseHP=np.double(12506.15),  # Dahlia
+    baseDEF=np.double(559.67),  # Dahlia
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Rosaria Noblesse DMG Score",
+    baseATK=np.double(240.01) + np.double(454),  # Rosaria + Deathmatch
+    baseHP=np.double(12288.65),  # Rosaria
+    baseDEF=np.double(709.82),  # Rosaria
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+MonaERPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Mona Noblesse ER Score",
+    baseATK=np.double(287.01) + np.double(401),  # Mona + Thrilling Tales of Dragon Slayers
+    baseHP=np.double(10409.02),  # Mona
+    baseDEF=np.double(653.27),  # Mona
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(4)),
+        ATK_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.2) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0.2) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.2) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.1),
+    legendary=True,
+)
+
+BennettERPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Bennett Noblesse ER Score",
+    baseATK=np.double(191.16) + np.double(454),  # Bennett + Favonius Sword
+    baseHP=np.double(12397.40),  # Bennett
+    baseDEF=np.double(771.25),  # Bennett
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(3)),
+        HP_PCT.setWeight(np.double(2)),
+        HEALING_BONUS.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.1),
     legendary=True,
 )
 
@@ -1056,6 +1154,10 @@ WeightsPrfls = {
     ChevreusePrfl.key: ChevreusePrfl,
     CharlottePrfl.key: CharlottePrfl,
     ZhongliPrfl.key: ZhongliPrfl,
+    DahliaCRPrfl.key: DahliaCRPrfl,
+    RosariaDMGPrfl.key: RosariaDMGPrfl,
+    MonaERPrfl.key: MonaERPrfl,
+    BennettERPrfl.key: BennettERPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     NahidaPrfl.key: NahidaPrfl,
     ColleiPrfl.key: ColleiPrfl,

@@ -66,6 +66,7 @@ class ArtifactsParser:
 
     def screenshot(self):
         shot = ImageGrab.grab(bbox=self.regionPrfl.full)
+        shot = shot.convert("L")
         return shot
 
     def debugimg(self, img):
@@ -97,6 +98,9 @@ class ArtifactsParser:
         if handler.performRequests_error_([self.request], None):
             responses = self.request.results()
             res = "\n".join([res.topCandidates_(1)[0].string() for res in responses])
+            # zhTW patching
+            res = res.replace("玫擊力", "攻擊力")
+            res = res.replace("恭擊率", "暴擊率")
             # zhTW to en
             for stat in stats_list():
                 res = res.replace(stat.zhTW, stat.key.strip("%"))
