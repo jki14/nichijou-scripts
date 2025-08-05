@@ -193,6 +193,33 @@ CastoriceScorePrfl: HWeightsPrfl = HWeightsPrfl(
     legendary=True,
 )
 
+TribbieScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Tribbie Netherwing Score",
+    baseATK=np.double(523) + np.double(317),  # Tribbie + Meshing Cogs
+    baseHP=np.double(1047) + np.double(846),  # Tribbie + Meshing Cogs
+    baseDEF=np.double(727) + np.double(264),  # Tribbie + Meshing Cogs
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_REGENERATION.setWeight(np.double(1)),
+    ],
+    SPD=SPD.setWeight(np.double(0.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+    threshold=np.double(5.0),
+    legendary=True,
+)
+
 TrailblazerScorePrfl: HWeightsPrfl = HWeightsPrfl(
     key="Trailblazer Netherwing Score",
     baseATK=np.double(543) + np.double(476),  # Trailblazer + Victory In a Blink
@@ -307,6 +334,7 @@ WeightsPrfls = {
     LingshaScorePrfl.key: LingshaScorePrfl,
     RuanmeiScorePrfl.key: RuanmeiScorePrfl,
     CastoriceScorePrfl.key: CastoriceScorePrfl,
+    TribbieScorePrfl.key: TribbieScorePrfl,
     TrailblazerScorePrfl.key: TrailblazerScorePrfl,
     HyacineScorePrfl.key: HyacineScorePrfl,
     GallagherScorePrfl.key: GallagherScorePrfl,
