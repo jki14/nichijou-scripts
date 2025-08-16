@@ -31,6 +31,7 @@ class ZWeightsPrfl(WeightsPrflBase):
         PEN: StatInfo,
         textStyle: TextStyle,
         threshold: np.double,
+        misscount: int = 0,
         legendary: bool = False,
         normalized: bool = True,
     ):
@@ -51,7 +52,20 @@ class ZWeightsPrfl(WeightsPrflBase):
             IMPACT,
             ENERGY_REGEN,
         ]
-        super().__init__(key, baseATK, baseHP, baseDEF, allowMainStatList, stats, Stats, textStyle, threshold, legendary, normalized)
+        super().__init__(
+            key=key,
+            baseATK=baseATK,
+            baseHP=baseHP,
+            baseDEF=baseDEF,
+            allowMainStatList=allowMainStatList,
+            statsWeighted=stats,
+            statsAll=Stats,
+            textStyle=textStyle,
+            threshold=threshold,
+            misscount=misscount,
+            legendary=legendary,
+            normalized=normalized,
+        )
 
 
 CritScorePrfl: ZWeightsPrfl = ZWeightsPrfl(

@@ -26,8 +26,9 @@ class WeightsPrflBase:
         statsAll: List[StatInfo],
         textStyle: TextStyle,
         threshold: np.double,
-        legendary: bool = False,
-        normalized: bool = True,
+        misscount: int,
+        legendary: bool,
+        normalized: bool,
     ):
         mainStatMapKeyWeight = {stat.key: stat.weight for stat in allowMainStatList}
         self.key = key
@@ -36,6 +37,7 @@ class WeightsPrflBase:
         if not normalized:
             self.weightsVec /= np.max(self.weightsVec)
         self.textStyle = textStyle
+        self.misscount = misscount
         self.legendary = legendary
         self.threshold = threshold
 
@@ -49,6 +51,18 @@ class WeightsPrflBase:
     def println(self, stats_vec: np.array, iterNum: int = None):
         base = (stats_vec < -one).astype(np.double) @ self.mainWeightsVec
         if base < one - eps:
+            return
+        if self.misscount > 0:
+            self.textStyle.print(f"{self.key}: ")
+            presence = (stats_vec > eps).astype(int)
+            if presence.sum() <= 4:
+                missed = presence @ (self.weightsVec < 0.6).astype(int)
+                if missed < self.misscount:
+                    WeightsPrflBase.PassStyle.print(f"-{missed}")
+                else:
+                    WeightsPrflBase.FailStyle.print(f"-{missed}")
+                self.textStyle.println("")
+        if self.threshold < eps:
             return
         vec = stats_vec * (stats_vec > -eps).astype(np.double)
         res = vec @ self.weightsVec
@@ -89,6 +103,7 @@ class GWeightsPrfl(WeightsPrflBase):
         DEF_PCT: StatInfo,
         textStyle: TextStyle,
         threshold: np.double,
+        misscount: int = 0,
         legendary: bool = False,
         normalized: bool = True,
     ):
@@ -106,8 +121,82 @@ class GWeightsPrfl(WeightsPrflBase):
             DMG_BONUS,
             HEALING_BONUS,
         ]
-        super().__init__(key, baseATK, baseHP, baseDEF, allowMainStatList, stats, Stats, textStyle, threshold, legendary, normalized)
+        super().__init__(
+            key=key,
+            baseATK=baseATK,
+            baseHP=baseHP,
+            baseDEF=baseDEF,
+            allowMainStatList=allowMainStatList,
+            statsWeighted=stats,
+            statsAll=Stats,
+            textStyle=textStyle,
+            threshold=threshold,
+            misscount=misscount,
+            legendary=legendary,
+            normalized=normalized,
+        )
 
+
+ATKMissPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="ATK Miss",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        ELEMENTAL_MASTERY,
+        ATK_PCT,
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    misscount=2,
+    threshold=np.double(0),
+)
+
+HPMissPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="HP Miss",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP_PCT,
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    misscount=2,
+    threshold=np.double(0),
+)
+
+DEFMissPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="DEF Miss",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        DEF_PCT,
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    misscount=2,
+    threshold=np.double(0),
+)
 
 CritScorePrfl: GWeightsPrfl = GWeightsPrfl(
     key="Crit Score",
@@ -1125,6 +1214,9 @@ JeanPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 WeightsPrfls = {
+    ATKMissPrfl.key: ATKMissPrfl,
+    HPMissPrfl.key: HPMissPrfl,
+    DEFMissPrfl.key: DEFMissPrfl,
     CritScorePrfl.key: CritScorePrfl,
     CritCountPrfl.key: CritCountPrfl,
     ATKCountPrfl.key: ATKCountPrfl,

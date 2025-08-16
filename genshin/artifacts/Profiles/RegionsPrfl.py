@@ -96,7 +96,7 @@ RegionsPrfls = {
     "G3440CA": G3440CA,
     "G3440MO": G3440MO,
     "G3440K": G3440K,
-    "G3440P": G3440P,       # Genshin 1440p PlayCover
+    "G3440P": G3440P,  # Genshin 1440p PlayCover
     "H3440": H3440,
     "Z3440": Z3440,
 }
