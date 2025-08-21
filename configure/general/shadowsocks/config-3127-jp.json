@@ -4,7 +4,7 @@
   "local_port": 3127,
   "password": "kokyo",
   "timeout": 300,
-  "method": "chacha20-ietf-poly1305",
+  "method": "xchacha20-ietf-poly1305",
   "fast_open": true,
   "mode": "tcp_and_udp"
 }
