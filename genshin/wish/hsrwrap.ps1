@@ -22,6 +22,7 @@ $game_path = ""
 
 Write-Output "Attempting to locate Warp Url!"
 
+<#
 if ($args.Length -eq 0) {
     $app_data = [Environment]::GetFolderPath('ApplicationData')
     $locallow_path = "$app_data\..\LocalLow\Cognosphere\Star Rail\"
@@ -67,6 +68,9 @@ if ($args.Length -eq 0) {
 } else {
     $game_path = $args[0]
 }
+#>
+
+$game_path = "$Env:HOME/apps/starrail/StarRail_Data"
 
 if ([string]::IsNullOrEmpty($game_path)) {
     Write-Output "Failed to locate game path! (2)"

@@ -19,6 +19,7 @@ Add-Type -AssemblyName System.Web
 $ProgressPreference = 'SilentlyContinue'
 
 $game_path = ""
+$set_path = "$Env:HOME/apps/zenless/ZenlessZoneZero_Data"
 
 Write-Output "Attempting to locate Search History url!"
 
