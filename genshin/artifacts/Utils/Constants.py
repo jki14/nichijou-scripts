@@ -11,6 +11,7 @@ onePCT: np.double = np.double(0.01)
 zero: np.double = np.double(0)
 
 PCT: str = "%"
+unactivated: str = "unactivated"
 TailKWs: List[str] = [
     "Beloved",
     "Codex",

@@ -1,6 +1,7 @@
 import os
 import re
 from argparse import ArgumentParser
+from enum import Enum
 from io import BytesIO
 from time import sleep
 from typing import Callable, List, Optional
@@ -21,9 +22,15 @@ import Utils.Stats_ZZZ
 from Profiles.RegionsPrfl import RegionsPrfl, RegionsPrfls
 from Profiles.WeightsPrfl import weights_prfls
 from SubStatsAdder import SubStatsAdder
-from Utils.Constants import PCT, TailKWs, eps, fourCoe, inf, one, oneIncCoeExp, zero
+from Utils.Constants import PCT, TailKWs, eps, fourCoe, inf, one, oneIncCoeExp, unactivated, zero
 from Utils.Stats import stats_hit, stats_list, stats_num
 from Utils.TextStyle import DebugStyle, InfoStyle, LevelStyle, MainStatStyle, clear
+
+
+class Game(Enum):
+    G = 1  # for Genshin Impact
+    H = 2  # for Honkai: Star Rail
+    Z = 3  # for Zenless Zone Zero
 
 
 class ArtifactsParser:
@@ -41,10 +48,9 @@ class ArtifactsParser:
             raise ValueError(f"Failed to get int: {text}")
         return int(res[0])
 
-    def __init__(self, regionKey, weightsKeys, fourstars=False, hsr=False, zzz=False, debug=False):
+    def __init__(self, regionKey, weightsKeys, fourstars, game, debug=False):
         self.fourstars = fourstars
-        self.hsr = hsr
-        self.zzz = zzz
+        self.game = game
         self.debug = debug
         self.lastocr = ""
         self.presenting = None
@@ -61,7 +67,7 @@ class ArtifactsParser:
         ]
 
         self.request = Vision.VNRecognizeTextRequest.alloc().init()
-        self.request.setRecognitionLanguages_(["zh-TW", "en"] if not hsr else ["zh-TW"])
+        self.request.setRecognitionLanguages_(["zh-TW", "en"] if game == Game.G else ["zh-TW"])
         self.request.setRecognitionLevel_(Vision.VNRequestTextRecognitionLevelAccurate)
 
     def screenshot(self):
@@ -113,6 +119,7 @@ class ArtifactsParser:
             res = res.replace("時之沙", "Sands of Eon")
             res = res.replace("空之杯", "Goblet of Eonothem")
             res = res.replace("理之冠", "Circlet of Logos")
+            res = res.replace("待啟動", unactivated)
             # Corner Case
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
@@ -233,14 +240,16 @@ class ArtifactsParser:
             levMax = 4 if self.fourstars else 5
             # Level
             levCur4Str = self.ocr(img, self.regionPrfl.level, corrupted_pred)
-            if self.zzz:
+            if self.game == Game.Z:
                 levCur4Str = levCur4Str.replace("/15", "").replace("等級", "")
-            levCur = self.get_int(levCur4Str) // (4 if not self.hsr and not self.zzz else 3)
+            levCur = self.get_int(levCur4Str) // (4 if self.game == Game.G else 3)
             # Sub Stats
             for substat in self.regionPrfl.substats:
                 sub_key, sub_value = None, None
                 if len(substat) == 4:
                     sub_kv = self.ocr(img, substat)
+                    if unactivated in sub_kv:
+                        levCur += 1
                     if self.tailing(sub_kv):
                         break
                     sub_key, sub_value = None, None
@@ -364,22 +373,23 @@ def main():
 
     argument_parser = ArgumentParser(description="Genshin Impact artifacts stat parser.")
     argument_parser.add_argument("--debug", action="store_true")
-    argument_parser.add_argument("--region", default="C3440X1440")
+    argument_parser.add_argument("--region", default="G3440")
     argument_parser.add_argument("--fourstars", action="store_true")
     argument_parser.add_argument("--weights", action="extend", nargs="+")
-    argument_parser.add_argument("--hsr", action="store_true")
-    argument_parser.add_argument("--zzz", action="store_true")
     args = argument_parser.parse_args()
 
-    if args.hsr:
+    game = Game.G
+    if args.region.startswith("H"):
         Utils.Stats_HSR.override()
         Profiles.WeightsPrfl_HSR.override()
-    elif args.zzz:
+        game = Game.H
+    elif args.region.startswith("Z"):
         Utils.Stats_ZZZ.override()
         Profiles.WeightsPrfl_ZZZ.override()
+        game = Game.Z
 
     artifacts_parser = ArtifactsParser(
-        regionKey=args.region.upper(), fourstars=args.fourstars, weightsKeys=args.weights, hsr=args.hsr, zzz=args.zzz, debug=args.debug
+        regionKey=args.region.upper(), weightsKeys=args.weights, fourstars=args.fourstars, game=game, debug=args.debug
     )
     artifacts_parser.start()
 
