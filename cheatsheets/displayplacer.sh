@@ -55,3 +55,6 @@ displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color
 
 # 7cf34dea6f6d (P27h-20)
 displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0" "id:A2FD2A80-C870-4B53-BBB8-69D9A4D4D476 res:2560x1440 hz:60 color_depth:8 enabled:true scaling:off origin:(-524,-1440) degree:0"
+
+# 7cf34dea6f6d (LC34G55T)
+displayplacer "id:EBCB4DEF-3D6A-421C-BB99-C6918E4A7FE5 res:3440x1440 hz:60 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(964,1440) degree:0"
