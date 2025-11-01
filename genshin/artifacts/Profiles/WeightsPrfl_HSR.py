@@ -207,6 +207,33 @@ CastoriceScorePrfl: HWeightsPrfl = HWeightsPrfl(
     legendary=True,
 )
 
+EvernightScorePrfl: HWeightsPrfl = HWeightsPrfl(
+    key="Evernight Netherwing Score",
+    baseATK=np.double(543) + np.double(529),  # Evernight + To Evernight's Stars
+    baseHP=np.double(1319) + np.double(1164),  # Evernight + To Evernight's Stars
+    baseDEF=np.double(582) + np.double(463),  # Evernight + To Evernight's Stars
+    allowMainStatList=[
+        SPD.setWeight(np.double(1)),
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+        DMG_BOOST.setWeight(np.double(0)),
+    ],
+    SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0) / oneIncCoeExp),
+    BREAK_EFFECT=BREAK_EFFECT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_HIT=EFFECT_HIT.setWeight(np.double(0.0) / oneIncCoeExp),
+    EFFECT_RES=EFFECT_RES.setWeight(np.double(0.0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(5.0),
+    legendary=True,
+)
+
 TribbieSlowScorePrfl: HWeightsPrfl = HWeightsPrfl(
     key="Tribbie Slow Netherwing Score",
     baseATK=np.double(523) + np.double(317),  # Tribbie + Meshing Cogs
@@ -376,6 +403,7 @@ WeightsPrfls = {
     LingshaScorePrfl.key: LingshaScorePrfl,
     RuanmeiScorePrfl.key: RuanmeiScorePrfl,
     CastoriceScorePrfl.key: CastoriceScorePrfl,
+    EvernightScorePrfl.key: EvernightScorePrfl,
     TribbieSlowScorePrfl.key: TribbieSlowScorePrfl,
     TribbieFastScorePrfl.key: TribbieFastScorePrfl,
     TrailblazerScorePrfl.key: TrailblazerScorePrfl,
