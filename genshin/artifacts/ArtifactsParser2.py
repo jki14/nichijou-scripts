@@ -109,6 +109,7 @@ class ArtifactsParser:
                 return self.ocr(img.convert("L"), target, fallback_pred)
             # zhTW patching
             res = res.replace("玫擊力", "攻擊力")
+            res = res.replace("政擊力", "攻擊力")
             res = res.replace("恭擊率", "暴擊率")
             # zhTW to en
             for stat in stats_list():
@@ -283,6 +284,7 @@ class ArtifactsParser:
                 """
                 self.put_stat(sub_key, sub_value, stats_vec)
         else:
+            levCur = 0
             sub_num = 0
             contents = self.ocr(img).split("\n")[::-1]
             it = iter(contents)
@@ -294,11 +296,13 @@ class ArtifactsParser:
                     sub_key, sub_value = row.split("+")
                 except ValueError:
                     raise ValueError(f"Bad SubStat: {row}")
+                if unactivated in sub_value:
+                    levCur += 1
                 self.put_stat(sub_key, sub_value, stats_vec)
                 sub_num += 1
                 row = next(it)
             levMax = 4 if self.fourstars else 5
-            levCur = self.get_int(row) // 4
+            levCur += self.get_int(row) // 4
             main_val = next(it)
             main_key = next(it)
             if "Flower of Life" in main_key and "HP" in main_val:
