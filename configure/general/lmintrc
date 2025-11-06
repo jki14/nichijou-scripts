@@ -50,6 +50,13 @@ tmux-alt () {
         tmux rename-window Yuu
         tmux new-window -d -n Touko
         tmux new-window -d -n Sayaka
+    fi
+    # Walküre
+    tmux new-session -d -s Walkure
+    if [ $? -eq 0 ]; then
+        tmux rename-window Kaname
+        tmux new-window -d -n Freyja
+        tmux new-window -d -n Makina
         # tmux split-window -h -p 44
     fi
 }
