@@ -336,6 +336,30 @@ DEFCountPrfl: GWeightsPrfl = GWeightsPrfl(
     threshold=np.double(5),
 )
 
+NeferPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Nefer Unveiling Score",
+    baseATK=np.double(303.87) + np.double(542),  # Nefer + Reliquary of Truth
+    baseHP=np.double(11208.37),  # Nefer
+    baseDEF=np.double(705.20),  # Nefer
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Mavuika Obsidian Score",
     baseATK=np.double(558.77) + np.double(741),  # Mavuika + A Thousand Blazing Suns
@@ -1222,6 +1246,7 @@ WeightsPrfls = {
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
+    NeferPrfl.key: NeferPrfl,
     MavuikaPrfl.key: MavuikaPrfl,
     MualaniPrfl.key: MualaniPrfl,
     GamingPrfl.key: GamingPrfl,
