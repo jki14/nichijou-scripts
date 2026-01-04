@@ -234,18 +234,27 @@ class ArtifactsParser:
         corrupted_pred: Callable[[str], bool] = lambda s: s == "" or "".join(filter(str.isdigit, s)) in ["5", "6", "8", "9"]
 
         if not self.regionPrfl.single:
+            regionPrfl = self.regionPrfl
             # Main Stats
-            main_key = self.ocr(img, self.regionPrfl.main_key)
-            main_val = self.ocr(img, self.regionPrfl.main_val, corrupted_pred)
+            main_key = self.ocr(img, regionPrfl.main_key)
+            main_val = self.ocr(img, regionPrfl.main_val, corrupted_pred)
             self.put_stat(main_key, main_val, stats_vec, True)
             levMax = 4 if self.fourstars else 5
             # Level
-            levCur4Str = self.ocr(img, self.regionPrfl.level, corrupted_pred)
+            levCur4Str = self.ocr(img, regionPrfl.level, corrupted_pred)
             if self.game == Game.Z:
                 levCur4Str = levCur4Str.replace("/15", "").replace("等級", "")
-            levCur = self.get_int(levCur4Str) // (4 if self.game == Game.G else 3)
+            try:
+                levCur = self.get_int(levCur4Str) // (4 if self.game == Game.G else 3)
+            except ValueError:
+                if self.game == Game.G:
+                    regionPrfl = regionPrfl.translated(0, regionPrfl.dy)
+                    levCur4Str = self.ocr(img, regionPrfl.level, corrupted_pred)
+                    levCur = self.get_int(levCur4Str) // (4 if self.game == Game.G else 3)
+                else:
+                    raise
             # Sub Stats
-            for substat in self.regionPrfl.substats:
+            for substat in regionPrfl.substats:
                 sub_key, sub_value = None, None
                 if len(substat) == 4:
                     sub_kv = self.ocr(img, substat)
