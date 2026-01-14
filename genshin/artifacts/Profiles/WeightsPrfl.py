@@ -408,7 +408,7 @@ MualaniPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(7.0),
     legendary=True,
 )
 
@@ -591,7 +591,7 @@ EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Skirk Galleries/Hunter/Gladiator Score",
+    key="Skirk Galleries/Hunter Score",
     baseATK=np.double(358.77) + np.double(674),  # Skirk + Azurelight
     baseHP=np.double(12417.35),  # Skirk
     baseDEF=np.double(806.21),  # Skirk
@@ -710,8 +710,8 @@ AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.3) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.6431) / oneIncCoeExp),  # 0.6431 -> 0.7895
+    HP_PCT=HP_PCT.setWeight(np.double(0.3392) / oneIncCoeExp),  # 0.3392 -> 0.4167
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(7.0),
@@ -734,8 +734,8 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6222) / oneIncCoeExp),  # 0.6222 -> 0.8825
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4622) / oneIncCoeExp),  # 0.4622 -> 0.5668
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
@@ -862,7 +862,7 @@ XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 XianyunPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xianyun Gladiator/Reminiscence Score",
+    key="Xianyun RisingWinds Score",
     baseATK=np.double(334.85) + np.double(674),  # Xianyun + Skyward Atlas
     baseHP=np.double(10409.02),  # Xianyun
     baseDEF=np.double(572.57),  # Xianyun
