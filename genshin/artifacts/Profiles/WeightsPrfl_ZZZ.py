@@ -125,7 +125,7 @@ AnomalyScorePrfl: ZWeightsPrfl = ZWeightsPrfl(
 )
 
 MiyabiScorePrfl: ZWeightsPrfl = ZWeightsPrfl(
-    key="Miyabi Score",
+    key="Miyabi Sc0re",
     baseATK=np.double(805) + np.double(743),  # Miyabi + Hailstorm Shrine
     baseHP=np.double(7673),  # Miyabi
     baseDEF=np.double(606),  # Miyabi
