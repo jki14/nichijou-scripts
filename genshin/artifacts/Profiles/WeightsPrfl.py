@@ -454,8 +454,8 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.9169) / oneIncCoeExp),  # Iansan C2 + Bennett: 0.9169 -> 1.5502
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5797) / oneIncCoeExp),  # Iansan C2 + Bennett: 0.5797 -> 0.7346
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
@@ -615,14 +615,15 @@ NoellePrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
-FischlPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Fischl Troupe Score",
-    baseATK=np.double(244.26) + np.double(510),  # Fischl + The String­les
-    baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(798.55),  # Noelle
+EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Escoffier Troupe Score",
+    baseATK=np.double(346.81) + np.double(454),  # Escoffier + Deathmatch
+    baseHP=np.double(13348.04),  # Escoffier
+    baseDEF=np.double(731.66),  # Furina
     allowMainStatList=[
         HP,
         ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
         ATK_PCT.setWeight(np.double(0.5)),
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
@@ -630,12 +631,37 @@ FischlPrfl: GWeightsPrfl = GWeightsPrfl(
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.4954) / oneIncCoeExp),  # 0.4954 -> 0.5757
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Chiori Troupe Score",
+    baseATK=np.double(244.26) + np.double(510),  # Chiori + The Stringless
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(953.01),  # Chiori
+    allowMainStatList=[
+        HP,
+        ATK,
+        DEF_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    textStyle=TextStyle("yellow", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
@@ -666,15 +692,15 @@ FurinaPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
-ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Chiori Troupe Score",
-    baseATK=np.double(244.26) + np.double(510),  # Chiori + The Stringless
-    baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(953.01),  # Chiori
+NahidaPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Nahida Deepwood Score",
+    baseATK=np.double(298.97) + np.double(542),  # Nahida + A Thousand Floating Dreams
+    baseHP=np.double(10360.04),  # Nahida
+    baseDEF=np.double(630.21),  # Nahida
     allowMainStatList=[
         HP,
         ATK,
-        DEF_PCT.setWeight(np.double(0.5)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
@@ -682,25 +708,25 @@ ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    textStyle=TextStyle("yellow", "on_black", ["bold"]),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
 
-EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Escoffier Troupe Score",
-    baseATK=np.double(346.81) + np.double(454),  # Escoffier + Deathmatch
-    baseHP=np.double(13348.04),  # Escoffier
-    baseDEF=np.double(731.66),  # Furina
+ColleiPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Collei Deepwood Score",
+    baseATK=np.double(199.65) + np.double(454),  # Collei + Favonius Warbow
+    baseHP=np.double(9787.42),  # Collei
+    baseDEF=np.double(600.62),  # Collei
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
         ATK_PCT.setWeight(np.double(0.5)),
+        ENERGY_RECHARGE.setWeight(np.double(1)),
         DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
         CRIT_DMG.setWeight(np.double(1)),
@@ -712,7 +738,83 @@ EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+YelanPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Yelan Fate Score",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(14450.17),  # Yelan
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Rosaria Noblesse DMG Score",
+    baseATK=np.double(240.01) + np.double(454),  # Rosaria + Deathmatch
+    baseHP=np.double(12288.65),  # Rosaria
+    baseDEF=np.double(709.82),  # Rosaria
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+FischlPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Fischl Troupe Score",
+    baseATK=np.double(244.26) + np.double(510),  # Fischl + The String­les
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4954) / oneIncCoeExp),  # 0.4954 -> 0.5757
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
@@ -743,28 +845,26 @@ XianglingPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
-YelanPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Yelan Fate Score",
-    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double(14450.17),  # Yelan
-    baseDEF=np.double(798.55),  # Noelle
+DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Dahlia Noblesse CR Score",
+    baseATK=np.double(189.03) + np.double(454),  # Dahlia + Favonius Sword
+    baseHP=np.double(12506.15),  # Dahlia
+    baseDEF=np.double(559.67),  # Dahlia
     allowMainStatList=[
         HP,
         ATK,
         ENERGY_RECHARGE.setWeight(np.double(1)),
         HP_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
         CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
@@ -951,55 +1051,6 @@ ZhongliPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
-DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Dahlia Noblesse CR Score",
-    baseATK=np.double(189.03) + np.double(454),  # Dahlia + Favonius Sword
-    baseHP=np.double(12506.15),  # Dahlia
-    baseDEF=np.double(559.67),  # Dahlia
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        HP_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
-)
-
-RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Rosaria Noblesse DMG Score",
-    baseATK=np.double(240.01) + np.double(454),  # Rosaria + Deathmatch
-    baseHP=np.double(12288.65),  # Rosaria
-    baseDEF=np.double(709.82),  # Rosaria
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ATK_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
-)
-
 MonaERPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Mona Noblesse ER Score",
     baseATK=np.double(287.01) + np.double(401),  # Mona + Thrilling Tales of Dragon Slayers
@@ -1068,57 +1119,6 @@ ShinobuPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(5),
-)
-
-NahidaPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Nahida Deepwood Score",
-    baseATK=np.double(298.97) + np.double(542),  # Nahida + A Thousand Floating Dreams
-    baseHP=np.double(10360.04),  # Nahida
-    baseDEF=np.double(630.21),  # Nahida
-    allowMainStatList=[
-        HP,
-        ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.4) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("green", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
-)
-
-ColleiPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Collei Deepwood Score",
-    baseATK=np.double(199.65) + np.double(454),  # Collei + Favonius Warbow
-    baseHP=np.double(9787.42),  # Collei
-    baseDEF=np.double(600.62),  # Collei
-    allowMainStatList=[
-        HP,
-        ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("green", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
 )
 
 CitlaliPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -1238,14 +1238,17 @@ JeanPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 WeightsPrfls = {
+    # General Miss
     ATKMissPrfl.key: ATKMissPrfl,
     HPMissPrfl.key: HPMissPrfl,
     DEFMissPrfl.key: DEFMissPrfl,
+    # General Count
     CritScorePrfl.key: CritScorePrfl,
     CritCountPrfl.key: CritCountPrfl,
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
+    # Main DPS
     NeferPrfl.key: NeferPrfl,
     SkirkPrfl.key: SkirkPrfl,
     MavuikaPrfl.key: MavuikaPrfl,
@@ -1257,12 +1260,18 @@ WeightsPrfls = {
     RaidenPrfl.key: RaidenPrfl,
     HutaoPrfl.key: HutaoPrfl,
     NoellePrfl.key: NoellePrfl,
-    FischlPrfl.key: FischlPrfl,
-    FurinaPrfl.key: FurinaPrfl,
-    ChioriPrfl.key: ChioriPrfl,
+    # Sub DPS
     EscoffierPrfl.key: EscoffierPrfl,
-    XianglingPrfl.key: XianglingPrfl,
+    ChioriPrfl.key: ChioriPrfl,
+    FurinaPrfl.key: FurinaPrfl,
+    NahidaPrfl.key: NahidaPrfl,
+    ColleiPrfl.key: ColleiPrfl,
     YelanPrfl.key: YelanPrfl,
+    RosariaDMGPrfl.key: RosariaDMGPrfl,
+    FischlPrfl.key: FischlPrfl,
+    XianglingPrfl.key: XianglingPrfl,
+    # Support
+    DahliaCRPrfl.key: DahliaCRPrfl,
     CitlaliERPrfl.key: CitlaliERPrfl,
     CitlaliEMPrfl.key: CitlaliEMPrfl,
     XilonenCRPrfl.key: XilonenCRPrfl,
@@ -1271,18 +1280,15 @@ WeightsPrfls = {
     ChevreusePrfl.key: ChevreusePrfl,
     CharlottePrfl.key: CharlottePrfl,
     ZhongliPrfl.key: ZhongliPrfl,
-    DahliaCRPrfl.key: DahliaCRPrfl,
-    RosariaDMGPrfl.key: RosariaDMGPrfl,
     MonaERPrfl.key: MonaERPrfl,
     BennettERPrfl.key: BennettERPrfl,
-    ShinobuPrfl.key: ShinobuPrfl,
-    NahidaPrfl.key: NahidaPrfl,
-    ColleiPrfl.key: ColleiPrfl,
+    # Legacy Count
     CitlaliPrfl.key: CitlaliPrfl,
     XilonenPrfl.key: XilonenPrfl,
     KiraraPrfl.key: KiraraPrfl,
-    BennettPrfl.key: BennettPrfl,
+    ShinobuPrfl.key: ShinobuPrfl,
     JeanPrfl.key: JeanPrfl,
+    BennettPrfl.key: BennettPrfl,
 }
 
 
