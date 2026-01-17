@@ -351,11 +351,36 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.7096 / 2.0) / oneIncCoeExp),  # 0.7096 -> 0.9385
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.7096) / oneIncCoeExp),  # 0.7096 -> 0.9385
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Skirk Galleries/Hunter Score",
+    baseATK=np.double(358.77) + np.double(674),  # Skirk + Azurelight
+    baseHP=np.double(12417.35),  # Skirk
+    baseDEF=np.double(806.21),  # Skirk
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.6071) / oneIncCoeExp),  # 0.6071 -> 0.8380
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
@@ -377,8 +402,8 @@ MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.8531) / oneIncCoeExp),  # ATK-S: 0.8531 -> 1.5619; EM-S: 0.5943 -> 0.9919
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5822) / oneIncCoeExp),  # ATK-S: 0.5822 -> 0.7716;  EM-S: 0.6543 -> 0.8808
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
@@ -460,6 +485,108 @@ NeuvillettePrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.0),
+    legendary=True,
+)
+
+TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Tighnari Wanderer Score",
+    baseATK=np.double(267.88) + np.double(565),  # Tighnari + Scion of the Blazing Sun
+    baseHP=np.double(10849.88),  # Tighnari
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6222) / oneIncCoeExp),  # 0.6222 -> 0.8825
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4622) / oneIncCoeExp),  # 0.4622 -> 0.5668
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("green", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
+
+AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Ayato Gladiator Score",
+    baseATK=np.double(298.97) + np.double(510),  # Ayato + The Black Sword
+    baseHP=np.double(13715.42),  # Ayato
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.6431) / oneIncCoeExp),  # 0.6431 -> 0.7895
+    HP_PCT=HP_PCT.setWeight(np.double(0.3392) / oneIncCoeExp),  # 0.3392 -> 0.4167
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(7.0),
+    legendary=True,
+)
+
+RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Raiden Fate Score",
+    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseHP=np.double(15307.39),  # Furina
+    baseDEF=np.double(798.55),  # Noelle
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.5)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.2752) / oneIncCoeExp),  # Durin C1: 0.2752 -> 0.3741
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.3301) / oneIncCoeExp),  # Durin C1: 0.3301 -> 0.4769
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
+HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Hutao Reminiscence/Hunter Score",
+    baseATK=np.double(106.43) + np.double(608),  # Hutao + Staff of Homa
+    baseHP=np.double(15552.31),  # Hutao
+    baseDEF=np.double(876.15),  # Hutao
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(0.5)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1)),
+        DMG_BONUS.setWeight(np.double(1)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.4) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.6) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(7.0),
     legendary=True,
 )
 
@@ -590,57 +717,6 @@ EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
-SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Skirk Galleries/Hunter Score",
-    baseATK=np.double(358.77) + np.double(674),  # Skirk + Azurelight
-    baseHP=np.double(12417.35),  # Skirk
-    baseDEF=np.double(806.21),  # Skirk
-    allowMainStatList=[
-        HP,
-        ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.6071) / oneIncCoeExp),  # 0.6071 -> 0.8380
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
-)
-
-RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Raiden Fate Score",
-    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
-    baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(798.55),  # Noelle
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
-)
-
 XianglingPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Xiangling Fate Score",
     baseATK=np.double(225.14) + np.double(510),  # Xiangling + "The Catch"
@@ -690,82 +766,6 @@ YelanPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.0),
-    legendary=True,
-)
-
-AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Ayato Gladiator Score",
-    baseATK=np.double(298.97) + np.double(510),  # Ayato + The Black Sword
-    baseHP=np.double(13715.42),  # Ayato
-    baseDEF=np.double(798.55),  # Noelle
-    allowMainStatList=[
-        HP,
-        ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.6431) / oneIncCoeExp),  # 0.6431 -> 0.7895
-    HP_PCT=HP_PCT.setWeight(np.double(0.3392) / oneIncCoeExp),  # 0.3392 -> 0.4167
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(7.0),
-    legendary=True,
-)
-
-TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Tighnari Wanderer Score",
-    baseATK=np.double(267.88) + np.double(565),  # Tighnari + Scion of the Blazing Sun
-    baseHP=np.double(10849.88),  # Tighnari
-    baseDEF=np.double(798.55),  # Noelle
-    allowMainStatList=[
-        HP,
-        ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6222) / oneIncCoeExp),  # 0.6222 -> 0.8825
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.4622) / oneIncCoeExp),  # 0.4622 -> 0.5668
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("green", "on_black", ["bold"]),
-    threshold=np.double(7.0),
-    legendary=True,
-)
-
-HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Hutao Reminiscence/Hunter Score",
-    baseATK=np.double(106.43) + np.double(608),  # Hutao + Staff of Homa
-    baseHP=np.double(15552.31),  # Hutao
-    baseDEF=np.double(876.15),  # Hutao
-    allowMainStatList=[
-        HP,
-        ATK,
-        HP_PCT.setWeight(np.double(0.5)),
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.4) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.6) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_red", "on_black", ["bold"]),
-    threshold=np.double(7.0),
     legendary=True,
 )
 
@@ -1247,22 +1247,22 @@ WeightsPrfls = {
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,
     NeferPrfl.key: NeferPrfl,
+    SkirkPrfl.key: SkirkPrfl,
     MavuikaPrfl.key: MavuikaPrfl,
     MualaniPrfl.key: MualaniPrfl,
     GamingPrfl.key: GamingPrfl,
     NeuvillettePrfl.key: NeuvillettePrfl,
+    TighnariPrfl.key: TighnariPrfl,
+    AyatoPrfl.key: AyatoPrfl,
+    RaidenPrfl.key: RaidenPrfl,
+    HutaoPrfl.key: HutaoPrfl,
     NoellePrfl.key: NoellePrfl,
     FischlPrfl.key: FischlPrfl,
     FurinaPrfl.key: FurinaPrfl,
     ChioriPrfl.key: ChioriPrfl,
     EscoffierPrfl.key: EscoffierPrfl,
-    SkirkPrfl.key: SkirkPrfl,
-    RaidenPrfl.key: RaidenPrfl,
     XianglingPrfl.key: XianglingPrfl,
     YelanPrfl.key: YelanPrfl,
-    AyatoPrfl.key: AyatoPrfl,
-    TighnariPrfl.key: TighnariPrfl,
-    HutaoPrfl.key: HutaoPrfl,
     CitlaliERPrfl.key: CitlaliERPrfl,
     CitlaliEMPrfl.key: CitlaliEMPrfl,
     XilonenCRPrfl.key: XilonenCRPrfl,
