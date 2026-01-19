@@ -615,6 +615,31 @@ NoellePrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+ColumbinaPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Columbina SMS Score",
+    baseATK=np.double(95.67) + np.double(510),  # Columbina + Favonius Codex
+    baseHP=np.double(14695.09),  # Columbina
+    baseDEF=np.double(514.93),  # Columbina
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+        CRIT_DMG.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
+)
+
 EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Escoffier Troupe Score",
     baseATK=np.double(346.81) + np.double(454),  # Escoffier + Deathmatch
@@ -1076,6 +1101,28 @@ MonaERPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+SucroseSMSPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Sucrose SMS Score",
+    baseATK=np.double(169.92) + np.double(454),  # Sucrose + Sacrificial Fragments
+    baseHP=np.double(9243.68),  # Sucrose
+    baseDEF=np.double(703.00),  # Sucrose
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(3.5)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.5),
+    legendary=True,
+)
+
 BennettERPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Bennett Noblesse ER Score",
     baseATK=np.double(191.16) + np.double(454),  # Bennett + Favonius Sword
@@ -1261,6 +1308,7 @@ WeightsPrfls = {
     HutaoPrfl.key: HutaoPrfl,
     NoellePrfl.key: NoellePrfl,
     # Sub DPS
+    ColumbinaPrfl.key: ColumbinaPrfl,
     EscoffierPrfl.key: EscoffierPrfl,
     ChioriPrfl.key: ChioriPrfl,
     FurinaPrfl.key: FurinaPrfl,
@@ -1288,6 +1336,7 @@ WeightsPrfls = {
     KiraraPrfl.key: KiraraPrfl,
     ShinobuPrfl.key: ShinobuPrfl,
     JeanPrfl.key: JeanPrfl,
+    SucroseSMSPrfl.key: SucroseSMSPrfl,
     BennettPrfl.key: BennettPrfl,
 }
 
