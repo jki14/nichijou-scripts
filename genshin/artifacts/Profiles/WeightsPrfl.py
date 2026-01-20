@@ -344,9 +344,9 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(0.5844)),
+        CRIT_RATE.setWeight(np.double(1.1139)),
+        CRIT_DMG.setWeight(np.double(1.1139)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -356,7 +356,7 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.2314),
     legendary=True,
 )
 
@@ -368,10 +368,10 @@ SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.5000)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.2164)),
+        CRIT_DMG.setWeight(np.double(1.2164)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -381,23 +381,23 @@ SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.1470),
     legendary=True,
 )
 
 MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Mavuika Obsidian Score",
-    baseATK=np.double(558.77) + np.double(741),  # Mavuika + A Thousand Blazing Suns
+    baseATK=np.double(558.77) + np.double(741),  # Mavuika C2 + A Thousand Blazing Suns
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.7026)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.2231)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.3441)),
+        CRIT_DMG.setWeight(np.double(1.3441)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -407,7 +407,7 @@ MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.3496),
     legendary=True,
 )
 
@@ -445,11 +445,11 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.7551)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.2777)),
+        DMG_BONUS.setWeight(np.double(1.0)),
+        CRIT_RATE.setWeight(np.double(1.3461)),
+        CRIT_DMG.setWeight(np.double(1.3461)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -459,7 +459,7 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.4022),
     legendary=True,
 )
 
@@ -496,10 +496,10 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.1318)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.4429)),
+        CRIT_DMG.setWeight(np.double(1.4429)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -509,7 +509,7 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
-    threshold=np.double(7.0),
+    threshold=np.double(6.1594),
     legendary=True,
 )
 
@@ -987,7 +987,7 @@ XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 XianyunPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xianyun RisingWinds Score",
+    key="Xianyun Gladiator/Reminiscence/RisingWinds Score",
     baseATK=np.double(334.85) + np.double(674),  # Xianyun + Skyward Atlas
     baseHP=np.double(10409.02),  # Xianyun
     baseDEF=np.double(572.57),  # Xianyun
