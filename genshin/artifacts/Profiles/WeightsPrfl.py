@@ -348,8 +348,8 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
         CRIT_RATE.setWeight(np.double(1.1139)),
         CRIT_DMG.setWeight(np.double(1.1139)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.7096) / oneIncCoeExp),  # 0.7096 -> 0.9385
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
@@ -373,8 +373,8 @@ SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
         CRIT_RATE.setWeight(np.double(1.2164)),
         CRIT_DMG.setWeight(np.double(1.2164)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0.6071) / oneIncCoeExp),  # 0.6071 -> 0.8380
@@ -399,8 +399,8 @@ MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
         CRIT_RATE.setWeight(np.double(1.3441)),
         CRIT_DMG.setWeight(np.double(1.3441)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.8531) / oneIncCoeExp),  # ATK-S: 0.8531 -> 1.5619; EM-S: 0.5943 -> 0.9919
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5822) / oneIncCoeExp),  # ATK-S: 0.5822 -> 0.7716;  EM-S: 0.6543 -> 0.8808
@@ -451,8 +451,8 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
         CRIT_RATE.setWeight(np.double(1.3461)),
         CRIT_DMG.setWeight(np.double(1.3461)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.9169) / oneIncCoeExp),  # Iansan C2 + Bennett: 0.9169 -> 1.5502
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5797) / oneIncCoeExp),  # Iansan C2 + Bennett: 0.5797 -> 0.7346
@@ -501,8 +501,8 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
         CRIT_RATE.setWeight(np.double(1.4429)),
         CRIT_DMG.setWeight(np.double(1.4429)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.6222) / oneIncCoeExp),  # 0.6222 -> 0.8825
     ATK_PCT=ATK_PCT.setWeight(np.double(0.4622) / oneIncCoeExp),  # 0.4622 -> 0.5668
@@ -894,6 +894,29 @@ DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Lauma Deepwood/SMS ER Score",
+    baseATK=np.double(254.96) + np.double(510),  # Lauma + Etherlight Spindlelute
+    baseHP=np.double(10653.94),  # Lauma
+    baseDEF=np.double(668.64),  # Lauma
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(3.8235)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.9118)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5000) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.7353),
+    legendary=True,
+)
+
 CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Citlali Tenacity ER Score",
     baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
@@ -1054,6 +1077,28 @@ CharlottePrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+ShinobuEMPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Shinobu Deepwood/Wanderer/SMS EM Score",
+    baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
+    baseHP=np.double(12288.65),  # Shinobu
+    baseDEF=np.double(750.77),  # Shinobu
+    allowMainStatList=[
+        HP,
+        ATK,
+        ELEMENTAL_MASTERY.setWeight(np.double(2.3235)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5000) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.1470),
+    legendary=True,
+)
+
 ZhongliPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Zhongli Tenacity/Vourukasha Score",
     baseATK=np.double(251.14) + np.double(354),  # Zhongli + Black Tassel
@@ -1102,24 +1147,24 @@ MonaERPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 SucroseSMSPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Sucrose SMS Score",
+    key="Sucrose Wanderer/SMS Score",
     baseATK=np.double(169.92) + np.double(454),  # Sucrose + Sacrificial Fragments
     baseHP=np.double(9243.68),  # Sucrose
     baseDEF=np.double(703.00),  # Sucrose
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(3.5)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.3235)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.5000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1.0000) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(5.5),
+    threshold=np.double(6.0588),
     legendary=True,
 )
 
@@ -1145,50 +1190,6 @@ BennettERPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
     threshold=np.double(5.1),
     legendary=True,
-)
-
-ShinobuPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Shinobu Count",
-    baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
-    baseHP=np.double(12288.65),  # Shinobu
-    baseDEF=np.double(750.77),  # Shinobu
-    allowMainStatList=[
-        HP,
-        ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(5),
-)
-
-CitlaliPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Citlali Count",
-    baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
-    baseHP=np.double(11633.62),  # Citlali
-    baseDEF=np.double(763.17),  # Citlali
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ELEMENTAL_MASTERY.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_green", "on_black", ["bold"]),
-    threshold=np.double(4),
 )
 
 XilonenPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -1319,6 +1320,7 @@ WeightsPrfls = {
     FischlPrfl.key: FischlPrfl,
     XianglingPrfl.key: XianglingPrfl,
     # Support
+    LaumaERPrfl.key: LaumaERPrfl,
     DahliaCRPrfl.key: DahliaCRPrfl,
     CitlaliERPrfl.key: CitlaliERPrfl,
     CitlaliEMPrfl.key: CitlaliEMPrfl,
@@ -1327,14 +1329,13 @@ WeightsPrfls = {
     XianyunPrfl.key: XianyunPrfl,
     ChevreusePrfl.key: ChevreusePrfl,
     CharlottePrfl.key: CharlottePrfl,
+    ShinobuEMPrfl.key: ShinobuEMPrfl,
     ZhongliPrfl.key: ZhongliPrfl,
     MonaERPrfl.key: MonaERPrfl,
     BennettERPrfl.key: BennettERPrfl,
     # Legacy Count
-    CitlaliPrfl.key: CitlaliPrfl,
     XilonenPrfl.key: XilonenPrfl,
     KiraraPrfl.key: KiraraPrfl,
-    ShinobuPrfl.key: ShinobuPrfl,
     JeanPrfl.key: JeanPrfl,
     SucroseSMSPrfl.key: SucroseSMSPrfl,
     BennettPrfl.key: BennettPrfl,
