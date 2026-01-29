@@ -34,6 +34,7 @@ class ZWeightsPrfl(WeightsPrflBase):
         misscount: int = 0,
         legendary: bool = False,
         normalized: bool = True,
+        v2: bool = False,
     ):
         stats: List[StatInfo] = [
             HP.setWeight(HP_PCT.weight * HP.onceIncrementMax / (HP_PCT.onceIncrementMax * onePCT * baseHP)),
@@ -65,6 +66,7 @@ class ZWeightsPrfl(WeightsPrflBase):
             misscount=misscount,
             legendary=legendary,
             normalized=normalized,
+            v2=v2,
         )
 
 

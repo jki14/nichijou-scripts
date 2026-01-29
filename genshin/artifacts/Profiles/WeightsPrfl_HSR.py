@@ -36,6 +36,7 @@ class HWeightsPrfl(WeightsPrflBase):
         misscount: int = 0,
         legendary: bool = False,
         normalized: bool = True,
+        v2: bool = False,
     ):
         stats: List[StatInfo] = [
             SPD,
@@ -67,6 +68,7 @@ class HWeightsPrfl(WeightsPrflBase):
             misscount=misscount,
             legendary=legendary,
             normalized=normalized,
+            v2=v2,
         )
 
 

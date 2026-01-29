@@ -29,6 +29,7 @@ class WeightsPrflBase:
         misscount: int,
         legendary: bool,
         normalized: bool,
+        v2: bool,
     ):
         mainStatMapKeyWeight = {stat.key: stat.weight for stat in allowMainStatList}
         self.key = key
@@ -40,6 +41,38 @@ class WeightsPrflBase:
         self.misscount = misscount
         self.legendary = legendary
         self.threshold = threshold
+
+        if v2:
+            # validate tags
+            if self.misscount != 0:
+                raise ValueError(f"{self.key}: misscount = {self.misscount} @ v2")
+            if self.legendary != True:
+                raise ValueError(f"{self.key}: legendary = {self.legendary} @ v2")
+            # validate threshold
+            x, y, z = sorted(self.weightsVec, reverse=True)[:3]
+            bar = min((x + y) * 7.0 / 8.5 + x * 4.0 + y * 1.0, (x + y + z) * 7.0 / 8.5 + x * 3.0 + y * 1.0) * oneIncCoeExp
+            if np.round(bar, 4) != self.threshold:
+                raise ValueError(f"{self.key}: threshold = {self.threshold:.6f} (suggested: {bar:.6f}) @ v2")
+            # validate main weights
+            flats = [ATK.key, HP.key]
+            for k in flats:
+                if zero != mainStatMapKeyWeight.get(k, -one):
+                    raise ValueError(f"{self.key}: main weight {k} = {mainStatMapKeyWeight.get(k, -one):.6f} (suggested: {zero:.6f}) @ v2")
+            idx = {s.key: i for i, s in enumerate(statsAll)}
+            barhig = [ATK_PCT.key, DEF_PCT.key, HP_PCT.key]
+            for k in [k for k in barhig if k in mainStatMapKeyWeight]:
+                excluded = idx[k]
+                x, y, z = sorted([v for i, v in enumerate(self.weightsVec) if i != excluded], reverse=True)[:3]
+                rhs = bar - max((x + y) * 7.0 / 8.5 + x * 3.0 + y * 1.0, (x + y + z) * 7.0 / 8.5 + x * 2.0 + y * 1.0) * oneIncCoeExp
+                if np.round(rhs, 4) != mainStatMapKeyWeight.get(k):
+                    raise ValueError(f"{self.key}: main weight {k} = {mainStatMapKeyWeight.get(k):.6f} (suggested: {rhs:.6f}) @ v2")
+            barlow = [CRIT_RATE.key, CRIT_DMG.key, ENERGY_RECHARGE.key, ELEMENTAL_MASTERY.key, DMG_BONUS.key, HEALING_BONUS.key]
+            for k in [k for k in barlow if k in mainStatMapKeyWeight]:
+                excluded = idx[k]
+                x, y, z = sorted([v for i, v in enumerate(self.weightsVec) if i != excluded], reverse=True)[:3]
+                rhs = bar - min((x + y) * 7.0 / 8.5 + x * 3.0 + y * 1.0, (x + y + z) * 7.0 / 8.5 + x * 2.0 + y * 1.0) * oneIncCoeExp
+                if np.round(rhs, 4) != mainStatMapKeyWeight.get(k):
+                    raise ValueError(f"{self.key}: main weight {k} = {mainStatMapKeyWeight.get(k):.6f} (suggested: {rhs:.6f}) @ v2")
 
     def plus(self, plus_num: int) -> "WeightsPrflBase":
         cloned = copy.deepcopy(self)
@@ -106,6 +139,7 @@ class GWeightsPrfl(WeightsPrflBase):
         misscount: int = 0,
         legendary: bool = False,
         normalized: bool = True,
+        v2: bool = False,
     ):
         stats: List[StatInfo] = [
             CRIT_RATE,
@@ -134,6 +168,7 @@ class GWeightsPrfl(WeightsPrflBase):
             misscount=misscount,
             legendary=legendary,
             normalized=normalized,
+            v2=v2,
         )
 
 
@@ -344,9 +379,9 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(0.5844)),
-        CRIT_RATE.setWeight(np.double(1.1139)),
-        CRIT_DMG.setWeight(np.double(1.1139)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.5844)),
+        CRIT_RATE.setWeight(np.double(2.1139)),
+        CRIT_DMG.setWeight(np.double(2.1139)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
@@ -358,6 +393,7 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("green", "on_black", ["bold"]),
     threshold=np.double(6.2314),
     legendary=True,
+    v2=True,
 )
 
 SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -370,8 +406,8 @@ SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
         ATK,
         ATK_PCT.setWeight(np.double(0.5000)),
         DMG_BONUS.setWeight(np.double(1.0000)),
-        CRIT_RATE.setWeight(np.double(1.2164)),
-        CRIT_DMG.setWeight(np.double(1.2164)),
+        CRIT_RATE.setWeight(np.double(2.0549)),
+        CRIT_DMG.setWeight(np.double(2.0549)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
@@ -383,6 +419,7 @@ SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
     threshold=np.double(6.1470),
     legendary=True,
+    v2=True,
 )
 
 MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -396,8 +433,8 @@ MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
         ATK_PCT.setWeight(np.double(0.7026)),
         ELEMENTAL_MASTERY.setWeight(np.double(1.2231)),
         DMG_BONUS.setWeight(np.double(1.0000)),
-        CRIT_RATE.setWeight(np.double(1.3441)),
-        CRIT_DMG.setWeight(np.double(1.3441)),
+        CRIT_RATE.setWeight(np.double(1.4910)),
+        CRIT_DMG.setWeight(np.double(1.4910)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
@@ -409,6 +446,7 @@ MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.3496),
     legendary=True,
+    v2=True,
 )
 
 MualaniPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -448,8 +486,8 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
         ATK_PCT.setWeight(np.double(0.7551)),
         ELEMENTAL_MASTERY.setWeight(np.double(1.2777)),
         DMG_BONUS.setWeight(np.double(1.0)),
-        CRIT_RATE.setWeight(np.double(1.3461)),
-        CRIT_DMG.setWeight(np.double(1.3461)),
+        CRIT_RATE.setWeight(np.double(1.4292)),
+        CRIT_DMG.setWeight(np.double(1.4292)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
@@ -461,6 +499,7 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.4022),
     legendary=True,
+    v2=True,
 )
 
 NeuvillettePrfl: GWeightsPrfl = GWeightsPrfl(
@@ -498,8 +537,8 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
         ATK,
         ELEMENTAL_MASTERY.setWeight(np.double(1.1318)),
         DMG_BONUS.setWeight(np.double(1.0000)),
-        CRIT_RATE.setWeight(np.double(1.4429)),
-        CRIT_DMG.setWeight(np.double(1.4429)),
+        CRIT_RATE.setWeight(np.double(1.8207)),
+        CRIT_DMG.setWeight(np.double(1.8207)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
@@ -509,8 +548,9 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
-    threshold=np.double(6.1594),
+    threshold=np.double(6.1595),
     legendary=True,
+    v2=True,
 )
 
 AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -521,10 +561,10 @@ AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.5296)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.7687)),
+        CRIT_DMG.setWeight(np.double(1.7687)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -534,8 +574,9 @@ AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0.3392) / oneIncCoeExp),  # 0.3392 -> 0.4167
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(7.0),
+    threshold=np.double(6.1767),
     legendary=True,
+    v2=True,
 )
 
 RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -546,11 +587,11 @@ RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
+        ATK_PCT.setWeight(np.double(0.2718)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(2.2668)),
+        CRIT_DMG.setWeight(np.double(2.2668)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -560,8 +601,9 @@ RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(5.9189),
     legendary=True,
+    v2=True,
 )
 
 HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -792,6 +834,7 @@ YelanPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.3332),
     legendary=True,
+    v2=True,
 )
 
 RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -827,10 +870,10 @@ FischlPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ATK_PCT.setWeight(np.double(0.4080)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(2.1477)),
+        CRIT_DMG.setWeight(np.double(2.1477)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
@@ -840,34 +883,63 @@ FischlPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.0550),
     legendary=True,
+    v2=True,
 )
 
 XianglingPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Xiangling Fate Score",
     baseATK=np.double(225.14) + np.double(510),  # Xiangling + "The Catch"
-    baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(798.55),  # Noelle
+    baseHP=np.double(10874.91),  # Xiangling
+    baseDEF=np.double(668.87),  # Xiangling
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        ATK_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
+        ATK_PCT.setWeight(np.double(0.4120)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.9115)),
+        CRIT_DMG.setWeight(np.double(1.9115)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.3975) / oneIncCoeExp),  # 0.3975 -> 0.5357
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5003) / oneIncCoeExp),  # 0.5003 -> 0.5592
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.0591),
     legendary=True,
+    v2=True,
+)
+
+XingqiuPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Xingqiu Fate Score",
+    baseATK=np.double(201.78) + np.double(454),  # Xingqiu + Sacrificial Sword
+    baseHP=np.double(10222.42),  # Xingqiu
+    baseDEF=np.double(757.60),  # Xingqiu
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
+        ATK_PCT.setWeight(np.double(0.6610)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.6092)),
+        CRIT_DMG.setWeight(np.double(1.6092)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.8026) / oneIncCoeExp),  # 0.8026 -> 0.9663
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    threshold=np.double(6.3080),
+    legendary=True,
+    v2=True,
 )
 
 DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -1319,6 +1391,7 @@ WeightsPrfls = {
     RosariaDMGPrfl.key: RosariaDMGPrfl,
     FischlPrfl.key: FischlPrfl,
     XianglingPrfl.key: XianglingPrfl,
+    XingqiuPrfl.key: XingqiuPrfl,
     # Support
     LaumaERPrfl.key: LaumaERPrfl,
     DahliaCRPrfl.key: DahliaCRPrfl,
