@@ -657,8 +657,33 @@ NoellePrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
-ColumbinaPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Columbina SMS Score",
+ColumbinaCDPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Columbina AoMaM CD Score",
+    baseATK=np.double(95.67) + np.double(510),  # Columbina + Favonius Codex
+    baseHP=np.double(14695.09),  # Columbina
+    baseDEF=np.double(514.93),  # Columbina
+    allowMainStatList=[
+        HP,
+        ATK,
+        HP_PCT.setWeight(np.double(0.4920)),
+        CRIT_RATE.setWeight(np.double(1.9447)),
+        CRIT_DMG.setWeight(np.double(1.9447)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.3417) / oneIncCoeExp),  # 0.3417 -> 0.5167
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5974) / oneIncCoeExp),  # 0.5974 -> 0.8240
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.1390),
+    legendary=True,
+    v2=True,
+)
+
+ColumbinaERPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Columbina SMS ER Score",
     baseATK=np.double(95.67) + np.double(510),  # Columbina + Favonius Codex
     baseHP=np.double(14695.09),  # Columbina
     baseDEF=np.double(514.93),  # Columbina
@@ -680,6 +705,31 @@ ColumbinaPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
+)
+
+IneffaPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Ineffa AoMaM Score",
+    baseATK=np.double(330.07) + np.double(454),  # Ineffa + Deathmatch
+    baseHP=np.double(12613.29),  # Ineffa
+    baseDEF=np.double(827.73),  # Ineffa
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.5777)),
+        CRIT_RATE.setWeight(np.double(1.7274)),
+        CRIT_DMG.setWeight(np.double(1.7274)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.4792) / oneIncCoeExp),  # 0.4792 -> 0.5570
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.7015) / oneIncCoeExp),  # 0.7015 -> 0.8424
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    threshold=np.double(6.2248),
+    legendary=True,
+    v2=True,
 )
 
 EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -1381,7 +1431,9 @@ WeightsPrfls = {
     HutaoPrfl.key: HutaoPrfl,
     NoellePrfl.key: NoellePrfl,
     # Sub DPS
-    ColumbinaPrfl.key: ColumbinaPrfl,
+    ColumbinaCDPrfl.key: ColumbinaCDPrfl,
+    ColumbinaERPrfl.key: ColumbinaERPrfl,
+    IneffaPrfl.key: IneffaPrfl,
     EscoffierPrfl.key: EscoffierPrfl,
     ChioriPrfl.key: ChioriPrfl,
     FurinaPrfl.key: FurinaPrfl,
