@@ -41,6 +41,7 @@ class WeightsPrflBase:
         self.misscount = misscount
         self.legendary = legendary
         self.threshold = threshold
+        self.version = 2 if v2 else 1
 
         if v2:
             # validate tags
@@ -101,7 +102,10 @@ class WeightsPrflBase:
         res = vec @ self.weightsVec
         self.textStyle.print(f"{self.key}: {res:.2f}    ")
         if base + res - one > self.threshold - np.double(0.01):
-            WeightsPrflBase.PassStyle.print("Ｏ")
+            if self.version >= 2:
+                WeightsPrflBase.PassStyle.print(f"Ｏ: {base + res - one - self.threshold:.4f}")
+            else:
+                WeightsPrflBase.PassStyle.print(f"Ｏ")
         if self.legendary and iterNum and iterNum > 0:
             candidates = (stats_vec > eps).astype(np.double)
             preferred = res
@@ -390,7 +394,7 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("green", "on_black", ["bold"]),
+    textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.2314),
     legendary=True,
     v2=True,
@@ -658,7 +662,7 @@ NoellePrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 ColumbinaCDPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Columbina Morningstar CD Score",
+    key="Columbina MorningStar CD Score",
     baseATK=np.double(95.67) + np.double(510),  # Columbina + Favonius Codex
     baseHP=np.double(14695.09),  # Columbina
     baseDEF=np.double(514.93),  # Columbina
@@ -676,7 +680,7 @@ ColumbinaCDPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0.5974) / oneIncCoeExp),  # 0.5974 -> 0.8240
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.1390),
     legendary=True,
     v2=True,
@@ -702,7 +706,7 @@ ColumbinaERPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
@@ -727,14 +731,14 @@ DurinPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.8333) / oneIncCoeExp),  # 0.8333 -> 1.051
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.3333),
     legendary=True,
     v2=True,
 )
 
 IneffaPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Ineffa Morningstar Score",
+    key="Ineffa MorningStar Score",
     baseATK=np.double(330.07) + np.double(454),  # Ineffa + Deathmatch
     baseHP=np.double(12613.29),  # Ineffa
     baseDEF=np.double(827.73),  # Ineffa
@@ -752,7 +756,7 @@ IneffaPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.7015) / oneIncCoeExp),  # 0.7015 -> 0.8424
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
+    textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.2248),
     legendary=True,
     v2=True,
@@ -805,34 +809,34 @@ ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(7.0),
     legendary=True,
 )
 
 FurinaPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Furina Troupe Score",
-    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(243.96) + np.double(510),  # Furina + Wolf-Fang
     baseHP=np.double(15307.39),  # Furina
-    baseDEF=np.double(798.55),  # Noelle
+    baseDEF=np.double(695.54),  # Furina
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        HP_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
+        HP_PCT.setWeight(np.double(0.4685)),
+        CRIT_RATE.setWeight(np.double(2.0978)),
+        CRIT_DMG.setWeight(np.double(2.0978)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.0000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5689) / oneIncCoeExp),  # 0.5689 -> 0.6354
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.1156),
     legendary=True,
+    v2=True,
 )
 
 NahidaPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -1012,7 +1016,7 @@ XingqiuPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.8026) / oneIncCoeExp),  # 0.8026 -> 0.9663
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("light_red", "on_black", ["bold"]),
+    textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.3080),
     legendary=True,
     v2=True,

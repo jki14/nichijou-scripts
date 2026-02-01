@@ -1,3 +1,6 @@
+#F: Raiden Yelan+++ Xiangling+ Xingqiu++
+#P: Raiden++ Yelan++ Xiangling++ Xingqiu+++
+
 def coeff(lhs, rhs, bar):
     lhs = (lhs - bar) / bar
     rhs = (rhs - bar) / bar
@@ -33,6 +36,12 @@ print("Ineffa EM Hig:")
 print(coeff(533058.2284, max(535603.979, 538292.7249), 526477.3693))
 print("Ineffa EM Low:")
 print(coeff(482541.9934, max(488369.7663, 488091.7887), 477180.4939))
+
+print("")
+print("Furina HP Hig:")
+print(coeff(708497, max(714296, 713858), 698393))
+print("Furina HP Low:")
+print(coeff(670934, max(677612, 677136),  662120))
 
 print("")
 print("Xiangling ATK Hig:")
