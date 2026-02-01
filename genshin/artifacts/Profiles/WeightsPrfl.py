@@ -658,7 +658,7 @@ NoellePrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 ColumbinaCDPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Columbina AoMaM CD Score",
+    key="Columbina Morningstar CD Score",
     baseATK=np.double(95.67) + np.double(510),  # Columbina + Favonius Codex
     baseHP=np.double(14695.09),  # Columbina
     baseDEF=np.double(514.93),  # Columbina
@@ -707,8 +707,34 @@ ColumbinaERPrfl: GWeightsPrfl = GWeightsPrfl(
     legendary=True,
 )
 
+DurinPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Durin RisingWinds Score",
+    baseATK=np.double(346.81) + np.double(510),  # Durin + Wolf-Fang
+    baseHP=np.double(12429.60),  # Durin
+    baseDEF=np.double(822.35),  # Durin
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.6862)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.7230)),
+        CRIT_DMG.setWeight(np.double(1.7230)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.8333) / oneIncCoeExp),  # 0.8333 -> 1.051
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
+    threshold=np.double(6.3333),
+    legendary=True,
+    v2=True,
+)
+
 IneffaPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Ineffa AoMaM Score",
+    key="Ineffa Morningstar Score",
     baseATK=np.double(330.07) + np.double(454),  # Ineffa + Deathmatch
     baseHP=np.double(12613.29),  # Ineffa
     baseDEF=np.double(827.73),  # Ineffa
@@ -1433,6 +1459,7 @@ WeightsPrfls = {
     # Sub DPS
     ColumbinaCDPrfl.key: ColumbinaCDPrfl,
     ColumbinaERPrfl.key: ColumbinaERPrfl,
+    DurinPrfl.key: DurinPrfl,
     IneffaPrfl.key: IneffaPrfl,
     EscoffierPrfl.key: EscoffierPrfl,
     ChioriPrfl.key: ChioriPrfl,
