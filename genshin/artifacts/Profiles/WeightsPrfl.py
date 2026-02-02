@@ -30,6 +30,7 @@ class WeightsPrflBase:
         legendary: bool,
         normalized: bool,
         v2: bool,
+        v2perfect: bool,
     ):
         mainStatMapKeyWeight = {stat.key: stat.weight for stat in allowMainStatList}
         self.key = key
@@ -52,22 +53,27 @@ class WeightsPrflBase:
             # validate threshold
             x, y, z = sorted(self.weightsVec, reverse=True)[:3]
             bar = min((x + y) * 7.0 / 8.5 + x * 4.0 + y * 1.0, (x + y + z) * 7.0 / 8.5 + x * 3.0 + y * 1.0) * oneIncCoeExp
+            if v2perfect:
+                bar = max((x + y) * 7.0 / 8.5 + x * 4.0 + y * 1.0, (x + y + z) * 7.0 / 8.5 + x * 3.0 + y * 1.0) * oneIncCoeExp
             if np.round(bar, 4) != self.threshold:
                 raise ValueError(f"{self.key}: threshold = {self.threshold:.6f} (suggested: {bar:.6f}) @ v2")
             # validate main weights
             flats = [ATK.key, HP.key]
+            barhig = [ATK_PCT.key, DEF_PCT.key, HP_PCT.key]
+            barlow = [CRIT_RATE.key, CRIT_DMG.key, ENERGY_RECHARGE.key, ELEMENTAL_MASTERY.key, DMG_BONUS.key, HEALING_BONUS.key]
+            if v2perfect:
+                barhig += barlow
+                barlow = []
             for k in flats:
                 if zero != mainStatMapKeyWeight.get(k, -one):
                     raise ValueError(f"{self.key}: main weight {k} = {mainStatMapKeyWeight.get(k, -one):.6f} (suggested: {zero:.6f}) @ v2")
             idx = {s.key: i for i, s in enumerate(statsAll)}
-            barhig = [ATK_PCT.key, DEF_PCT.key, HP_PCT.key]
             for k in [k for k in barhig if k in mainStatMapKeyWeight]:
                 excluded = idx[k]
                 x, y, z = sorted([v for i, v in enumerate(self.weightsVec) if i != excluded], reverse=True)[:3]
                 rhs = bar - max((x + y) * 7.0 / 8.5 + x * 3.0 + y * 1.0, (x + y + z) * 7.0 / 8.5 + x * 2.0 + y * 1.0) * oneIncCoeExp
                 if np.round(rhs, 4) != mainStatMapKeyWeight.get(k):
                     raise ValueError(f"{self.key}: main weight {k} = {mainStatMapKeyWeight.get(k):.6f} (suggested: {rhs:.6f}) @ v2")
-            barlow = [CRIT_RATE.key, CRIT_DMG.key, ENERGY_RECHARGE.key, ELEMENTAL_MASTERY.key, DMG_BONUS.key, HEALING_BONUS.key]
             for k in [k for k in barlow if k in mainStatMapKeyWeight]:
                 excluded = idx[k]
                 x, y, z = sorted([v for i, v in enumerate(self.weightsVec) if i != excluded], reverse=True)[:3]
@@ -144,6 +150,7 @@ class GWeightsPrfl(WeightsPrflBase):
         legendary: bool = False,
         normalized: bool = True,
         v2: bool = False,
+        v2perfect: bool = False,
     ):
         stats: List[StatInfo] = [
             CRIT_RATE,
@@ -172,7 +179,8 @@ class GWeightsPrfl(WeightsPrflBase):
             misscount=misscount,
             legendary=legendary,
             normalized=normalized,
-            v2=v2,
+            v2=v2 or v2perfect,
+            v2perfect=v2perfect,
         )
 
 
@@ -694,21 +702,21 @@ ColumbinaERPrfl: GWeightsPrfl = GWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        HP_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
+        HP_PCT.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.0000)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.3417) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5974) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("white", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 DurinPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -918,7 +926,7 @@ YelanPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Rosaria Noblesse DMG Score",
+    key="Rosaria Noblesse Score",
     baseATK=np.double(240.01) + np.double(454),  # Rosaria + Deathmatch
     baseHP=np.double(12288.65),  # Rosaria
     baseDEF=np.double(709.82),  # Rosaria
@@ -937,7 +945,7 @@ RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
     ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
     threshold=np.double(6.0),
     legendary=True,
 )
@@ -1047,7 +1055,7 @@ DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Lauma Deepwood/SMS ER Score",
+    key="Lauma Deepwood/SMS ER Supre",
     baseATK=np.double(254.96) + np.double(510),  # Lauma + Etherlight Spindlelute
     baseHP=np.double(10653.94),  # Lauma
     baseDEF=np.double(668.64),  # Lauma
@@ -1067,177 +1075,185 @@ LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
     threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Citlali Tenacity ER Score",
+    key="Citlali Tenacity ER Supre",
     baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
     baseHP=np.double(11633.62),  # Citlali
     baseDEF=np.double(763.17),  # Citlali
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(3)),
-        ELEMENTAL_MASTERY.setWeight(np.double(2)),
+        ENERGY_RECHARGE.setWeight(np.double(3.8235)),
+        ELEMENTAL_MASTERY.setWeight(np.double(1.9118)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.5000) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(5.1),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 CitlaliEMPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Citlali Cinder EM Score",
+    key="Citlali Cinder EM Supre",
     baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
     baseHP=np.double(11633.62),  # Citlali
     baseDEF=np.double(763.17),  # Citlali
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(3)),
+        ELEMENTAL_MASTERY.setWeight(np.double(3.8235)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1.0000) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(7.0),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 XilonenCRPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xilonen Cinder/Noblesse CR Score",
+    key="Xilonen Cinder/Noblesse CR Supre",
     baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
     baseHP=np.double(12405.11),  # Xilonen
     baseDEF=np.double(929.95),  # Xilonen
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        DEF_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
+        DEF_PCT.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(2.9118)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.5000) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xilonen Cinder/Noblesse DE𝑭 Score",
+    key="Xilonen SMS DE𝑭 Supre",
     baseATK=np.double(275.06) + np.double(454),  # Xilonen + Favonius Sword
     baseHP=np.double(12405.11),  # Xilonen
     baseDEF=np.double(929.95),  # Xilonen
     allowMainStatList=[
         HP,
         ATK,
-        DEF_PCT.setWeight(np.double(3)),
-        HEALING_BONUS.setWeight(np.double(3)),
+        DEF_PCT.setWeight(np.double(2.2008)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(1.0000) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(7.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 XianyunPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Xianyun Gladiator/Reminiscence/RisingWinds Score",
+    key="Xianyun AT𝑲2PC Supre",
     baseATK=np.double(334.85) + np.double(674),  # Xianyun + Skyward Atlas
     baseHP=np.double(10409.02),  # Xianyun
     baseDEF=np.double(572.57),  # Xianyun
     allowMainStatList=[
         HP,
         ATK,
-        ATK_PCT.setWeight(np.double(2)),
+        ATK_PCT.setWeight(np.double(2.2205)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(1.0000) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 ChevreusePrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Chevreuse Cinder Score",
+    key="Chevreuse Cinder/Noblesse Supre",
     baseATK=np.double(193.28) + np.double(565),  # Chevreuse + Favonius Lance
     baseHP=np.double(11962.41),  # Chevreuse
     baseDEF=np.double(604.71),  # Chevreuse
     allowMainStatList=[
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(3)),
+        HP_PCT.setWeight(np.double(3.3590)),
+        CRIT_RATE.setWeight(np.double(1.0000)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.3333) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.3333) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1.0000) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(7.0),
+    threshold=np.double(5.6047),
     legendary=True,
+    v2perfect=True,
 )
 
 CharlottePrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Charlotte Cinder ER Score",
+    key="Charlotte Cinder/Noblesse ER Supre",
     baseATK=np.double(173.10) + np.double(510),  # Charlotte + Prototype Amber
     baseHP=np.double(10766.17),  # Charlotte
     baseDEF=np.double(546.02),  # Charlotte
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(4.5)),
-        ATK_PCT.setWeight(np.double(3)),
-        HEALING_BONUS.setWeight(np.double(2)),
+        ENERGY_RECHARGE.setWeight(np.double(3.3782)),
+        ATK_PCT.setWeight(np.double(1.4665)),
+        HEALING_BONUS.setWeight(np.double(1.0000)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.5000) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 ShinobuEMPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Shinobu Deepwood/Wanderer/SMS EM Score",
+    key="Shinobu EM2PC Supre",
     baseATK=np.double(212.40) + np.double(510),  # Shinobu + Xiphos' Moonlight
     baseHP=np.double(12288.65),  # Shinobu
     baseDEF=np.double(750.77),  # Shinobu
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(2.3235)),
+        ELEMENTAL_MASTERY.setWeight(np.double(2.9118)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
@@ -1247,101 +1263,105 @@ ShinobuEMPrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0.5000) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(5.1470),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 ZhongliPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Zhongli Tenacity/Vourukasha Score",
+    key="Zhongli H𝑷2PC Supre",
     baseATK=np.double(251.14) + np.double(354),  # Zhongli + Black Tassel
     baseHP=np.double(14695.09),  # Zhongli
     baseDEF=np.double(737.81),  # Zhongli
     allowMainStatList=[
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(3.3)),
+        HP_PCT.setWeight(np.double(4.1261)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(1) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(1.0000) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(4.7),
+    threshold=np.double(5.4594),
     legendary=True,
+    v2perfect=True,
 )
 
 MonaERPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Mona Noblesse ER Score",
+    key="Mona Noblesse ER Supre",
     baseATK=np.double(287.01) + np.double(401),  # Mona + Thrilling Tales of Dragon Slayers
     baseHP=np.double(10409.02),  # Mona
     baseDEF=np.double(653.27),  # Mona
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(4)),
-        ATK_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(3.8235)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.9118)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.2) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0.2) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0.2) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(5.1),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 SucroseSMSPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Sucrose Wanderer/SMS Score",
+    key="Sucrose Viridescent/SMS/EM2PC Supre",
     baseATK=np.double(169.92) + np.double(454),  # Sucrose + Sacrificial Fragments
     baseHP=np.double(9243.68),  # Sucrose
     baseDEF=np.double(703.00),  # Sucrose
     allowMainStatList=[
         HP,
         ATK,
-        ELEMENTAL_MASTERY.setWeight(np.double(1.3235)),
+        ELEMENTAL_MASTERY.setWeight(np.double(3.5491)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.5000) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0.3333) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.3333) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(1.0000) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0588),
+    threshold=np.double(5.4313),
     legendary=True,
+    v2perfect=True,
 )
 
 BennettERPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Bennett Noblesse ER Score",
+    key="Bennett Noblesse ER Supre",
     baseATK=np.double(191.16) + np.double(454),  # Bennett + Favonius Sword
     baseHP=np.double(12397.40),  # Bennett
     baseDEF=np.double(771.25),  # Bennett
     allowMainStatList=[
         HP,
         ATK,
-        ENERGY_RECHARGE.setWeight(np.double(3)),
-        HP_PCT.setWeight(np.double(2)),
-        HEALING_BONUS.setWeight(np.double(1)),
+        ENERGY_RECHARGE.setWeight(np.double(3.9057)),
+        HP_PCT.setWeight(np.double(1.3566)),
+        HEALING_BONUS.setWeight(np.double(1.0000)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.3333) / oneIncCoeExp),
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(5.1),
+    threshold=np.double(5.4313),
     legendary=True,
+    v2perfect=True,
 )
 
 XilonenPrfl: GWeightsPrfl = GWeightsPrfl(
