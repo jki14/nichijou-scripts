@@ -705,6 +705,7 @@ ColumbinaERPrfl: GWeightsPrfl = GWeightsPrfl(
         ENERGY_RECHARGE.setWeight(np.double(1.0000)),
         HP_PCT.setWeight(np.double(1.0000)),
         CRIT_RATE.setWeight(np.double(1.0000)),
+        CRIT_DMG.setWeight(np.double(1.0000)),
     ],
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
