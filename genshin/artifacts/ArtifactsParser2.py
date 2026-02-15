@@ -120,7 +120,7 @@ class ArtifactsParser:
             res = res.replace("時之沙", "Sands of Eon")
             res = res.replace("空之杯", "Goblet of Eonothem")
             res = res.replace("理之冠", "Circlet of Logos")
-            res = res.replace("待啟動", unactivated)
+            res = res.replace("啟動", unactivated)
             # Corner Case
             res = res.replace("AT+", "ATK+")
             res = res.replace("Bonu:", "Bonus")
@@ -270,6 +270,9 @@ class ArtifactsParser:
                 else:
                     sub_key = self.ocr(img, substat[:2] + substat[4:5] + substat[3:4])
                     sub_value = self.ocr(img, substat[4:5] + substat[1:4], corrupted_pred).strip(" +")
+                    # self.debugtext(f"sub_kv = {sub_key}: {sub_value}")
+                    if unactivated in sub_key:
+                        levCur += 1
                     if sub_key == "" and sub_value == "":
                         break
                     elif "裝效果" in sub_key:
