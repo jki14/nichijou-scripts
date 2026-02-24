@@ -408,6 +408,31 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     v2=True,
 )
 
+FlinsPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Flins Unveiling Score",
+    baseATK=np.double(351.59) + np.double(674),  # Flins + Bloodsoaked Ruins
+    baseHP=np.double(12490.83),  # Flins
+    baseDEF=np.double(808.52),  # Flins
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(0.5003)),
+        CRIT_RATE.setWeight(np.double(1.9415)),
+        CRIT_DMG.setWeight(np.double(1.9415)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.3333) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.2835) / oneIncCoeExp),  # 0.2835 -> 0.3286
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.6075) / oneIncCoeExp),  # 0.6075 -> 0.6627
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("white", "on_black", ["bold"]),
+    threshold=np.double(6.1474),
+    legendary=True,
+    v2=True,
+)
+
 SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Skirk Galleries/Hunter Score",
     baseATK=np.double(358.77) + np.double(674),  # Skirk + Azurelight
@@ -1471,6 +1496,7 @@ WeightsPrfls = {
     DEFCountPrfl.key: DEFCountPrfl,
     # Main DPS
     NeferPrfl.key: NeferPrfl,
+    FlinsPrfl.key: FlinsPrfl,
     SkirkPrfl.key: SkirkPrfl,
     MavuikaPrfl.key: MavuikaPrfl,
     MualaniPrfl.key: MualaniPrfl,
