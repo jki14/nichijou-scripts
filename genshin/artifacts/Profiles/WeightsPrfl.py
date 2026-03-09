@@ -271,8 +271,7 @@ CritScorePrfl: GWeightsPrfl = GWeightsPrfl(
     HP_PCT=HP_PCT.setWeight(np.double(0)),
     DEF_PCT=DEF_PCT.setWeight(np.double(0)),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
-    threshold=np.double(33),
-    legendary=True,
+    threshold=np.double(10.8),
 )
 
 CritCountPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -541,27 +540,28 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
 
 NeuvillettePrfl: GWeightsPrfl = GWeightsPrfl(
     key="Neuvillette Hunter Score",
-    baseATK=np.double(337.24) + np.double(608),  # Raiden Shogun + Engulfing Lightning
+    baseATK=np.double(208.32) + np.double(542),  # Neuvillette + Tome of the Eternal Flow
     baseHP=np.double(14695.09),  # Neuvillette
-    baseDEF=np.double(798.55),  # Noelle
+    baseDEF=np.double(576.42),  # Neuvillette
     allowMainStatList=[
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(0.5797)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.8451)),
+        CRIT_DMG.setWeight(np.double(1.8451)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.3333) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.7039) / oneIncCoeExp),  # C2, HP/Hydro/HP: 0.7039 -> 0.9724
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.2267),
     legendary=True,
+    v2=True,
 )
 
 TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
