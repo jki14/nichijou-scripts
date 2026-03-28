@@ -122,4 +122,6 @@ sys.stdout.write(sys.stdin.read().replace(' ', '\ '))\""
 alias xmlformat="python3 -c \"import sys;from xml.dom import minidom; \
 sys.stdout.write(minidom.parseString(sys.stdin.read()).toprettyxml('  '))\""
 
+alias kill-fenshin="ps -ef | grep genshin | grep -v grep | awk '{print $2}' | xargs -r kill"
+
 # vi: set syntax=sh:
