@@ -670,28 +670,29 @@ HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 NoellePrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Noelle Hunter Score",
-    baseATK=np.double(244.26) + np.double(510),  # Noelle + The Stringless
-    baseHP=np.double(15307.39),  # Furina
+    key="Noelle Husk/Hunter/Unveiling Score",
+    baseATK=np.double(191.16) + np.double(542),  # Noelle + Red­horn Stone­thresh
+    baseHP=np.double(12071.16),  # Noelle
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
-        DEF_PCT.setWeight(np.double(0.5)),
-        DMG_BONUS.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
+        DEF_PCT.setWeight(np.double(0.6229)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.7460)),
+        CRIT_DMG.setWeight(np.double(1.7460)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(1) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.3333) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.3900) / oneIncCoeExp),  # 0.3900 -> 0.4342
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.7564) / oneIncCoeExp),  # 0.7564 -> 0.9188
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
-    threshold=np.double(6.0),
+    threshold=np.double(6.2700),
     legendary=True,
+    v2=True,
 )
 
 ColumbinaCDPrfl: GWeightsPrfl = GWeightsPrfl(
@@ -797,7 +798,7 @@ IneffaPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Escoffier Troupe Score",
+    key="Escoffier Troupe/Tenacity/Noblesse Score",
     baseATK=np.double(346.81) + np.double(454),  # Escoffier + Deathmatch
     baseHP=np.double(13348.04),  # Escoffier
     baseDEF=np.double(731.66),  # Furina
@@ -848,7 +849,7 @@ ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 FurinaPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Furina Troupe Score",
+    key="Furina Troupe/Tenacity Score",
     baseATK=np.double(243.96) + np.double(510),  # Furina + Wolf-Fang
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(695.54),  # Furina
@@ -977,7 +978,7 @@ RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 FischlPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Fischl Troupe Score",
+    key="Fischl Troupe/Tenacity Score",
     baseATK=np.double(244.26) + np.double(510),  # Fischl + The String­les
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
@@ -1105,7 +1106,7 @@ LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Citlali Tenacity ER Supre",
+    key="Citlali Tenacity/Noblesse ER Supre",
     baseATK=np.double(126.76) + np.double(542),  # Citlali + Starcaller's Watch
     baseHP=np.double(11633.62),  # Citlali
     baseDEF=np.double(763.17),  # Citlali
@@ -1186,9 +1187,9 @@ XilonenDEFPrfl: GWeightsPrfl = GWeightsPrfl(
         ATK,
         DEF_PCT.setWeight(np.double(2.2008)),
     ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
     CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0) / oneIncCoeExp),
     ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
     ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
