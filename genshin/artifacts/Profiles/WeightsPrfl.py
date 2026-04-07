@@ -858,6 +858,7 @@ FurinaPrfl: GWeightsPrfl = GWeightsPrfl(
         ATK,
         ENERGY_RECHARGE.setWeight(np.double(1.0000)),
         HP_PCT.setWeight(np.double(0.4685)),
+        DMG_BONUS.setWeight(np.double(1.0000)),
         CRIT_RATE.setWeight(np.double(2.0978)),
         CRIT_DMG.setWeight(np.double(2.0978)),
     ],
