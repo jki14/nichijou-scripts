@@ -112,6 +112,8 @@ class ArtifactsParser:
             res = res.replace("政擊力", "攻擊力")
             res = res.replace("恭擊率", "暴擊率")
             res = res.replace("曩擊傷害", "暴擊傷害")
+            res = res.replace("寨擊傷害", "暴擊傷害")
+            res = res.replace("桑擊傷害", "暴擊傷害")
             # zhTW to en
             for stat in stats_list():
                 res = res.replace(stat.zhTW, stat.key.strip("%"))
