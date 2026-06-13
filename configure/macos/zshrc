@@ -9,6 +9,11 @@ if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
 
+# Codex CLI
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 export LC_ALL=en_US.UTF-8
 
 export LSCOLORS=ExFxCxDxBxegedabagacad
@@ -20,7 +25,6 @@ alias google-chrome='open -a "Google Chrome"'
 alias sublime='open -a "Sublime Text"'
 
 # vi: set syntax=sh:
-
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
