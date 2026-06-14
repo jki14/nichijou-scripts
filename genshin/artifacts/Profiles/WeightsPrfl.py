@@ -14,6 +14,7 @@ from Utils.TextStyle import TextStyle
 class WeightsPrflBase:
     PassStyle = TextStyle("white", "on_green", ["bold"])
     FailStyle = TextStyle("white", "on_red", ["bold"])
+    WarningStyle = TextStyle("white", "on_yellow", ["bold"])
 
     def __init__(
         self,
@@ -27,6 +28,7 @@ class WeightsPrflBase:
         textStyle: TextStyle,
         threshold: np.double,
         misscount: int,
+        crit2: bool,
         legendary: bool,
         normalized: bool,
         v2: bool,
@@ -40,9 +42,11 @@ class WeightsPrflBase:
             self.weightsVec /= np.max(self.weightsVec)
         self.textStyle = textStyle
         self.misscount = misscount
+        self.crit2 = crit2
         self.legendary = legendary
         self.threshold = threshold
         self.version = 2 if v2 else 1
+        self.crit2Vec = np.array([s.key in [CRIT_RATE.key, CRIT_DMG.key] for s in statsAll], dtype=int)
 
         if v2:
             # validate tags
@@ -104,14 +108,22 @@ class WeightsPrflBase:
                 self.textStyle.println("")
         if self.threshold < eps:
             return
+        crit_presence = ((stats_vec > eps) | (stats_vec < -one)).astype(int)
+        crit_missing = self.crit2 and crit_presence @ self.crit2Vec < 2
         vec = stats_vec * (stats_vec > -eps).astype(np.double)
         res = vec @ self.weightsVec
         self.textStyle.print(f"{self.key}: {res:.2f}    ")
         if base + res - one > self.threshold - np.double(0.01):
             if self.version >= 2:
-                WeightsPrflBase.PassStyle.print(f"Ｏ: {base + res - one - self.threshold:.4f}")
+                if not crit_missing:
+                    WeightsPrflBase.PassStyle.print(f"Ｏ: {base + res - one - self.threshold:.4f}")
+                else:
+                    WeightsPrflBase.WarningStyle.print(f"Ｏ: {base + res - one - self.threshold:.4f}")
             else:
-                WeightsPrflBase.PassStyle.print(f"Ｏ")
+                if not crit_missing:
+                    WeightsPrflBase.PassStyle.print(f"Ｏ")
+                else:
+                    WeightsPrflBase.WarningStyle.print(f"Ｏ")
         if self.legendary and iterNum and iterNum > 0:
             candidates = (stats_vec > eps).astype(np.double)
             preferred = res
@@ -123,7 +135,10 @@ class WeightsPrflBase:
                 iterNum -= 1
             preferred += (candidates * self.weightsVec).max() * iterNum * oneIncCoeExp
             if base + preferred - one > self.threshold - np.double(0.01):
-                WeightsPrflBase.PassStyle.print(f"{preferred:.2f}")
+                if not crit_missing:
+                    WeightsPrflBase.PassStyle.print(f"{preferred:.2f}")
+                else:
+                    WeightsPrflBase.WarningStyle.print(f"{preferred:.2f}")
             else:
                 WeightsPrflBase.FailStyle.print(f"{preferred:.2f}")
         self.textStyle.println("")
@@ -147,6 +162,7 @@ class GWeightsPrfl(WeightsPrflBase):
         textStyle: TextStyle,
         threshold: np.double,
         misscount: int = 0,
+        crit2: bool = False,
         legendary: bool = False,
         normalized: bool = True,
         v2: bool = False,
@@ -177,6 +193,7 @@ class GWeightsPrfl(WeightsPrflBase):
             textStyle=textStyle,
             threshold=threshold,
             misscount=misscount,
+            crit2=crit2,
             legendary=legendary,
             normalized=normalized,
             v2=v2 or v2perfect,
@@ -403,6 +420,7 @@ NeferPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.2314),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -428,6 +446,7 @@ FlinsPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.1474),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -454,6 +473,7 @@ SkirkPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
     threshold=np.double(6.1470),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -481,6 +501,7 @@ MavuikaPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.3496),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -508,6 +529,7 @@ MualaniPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(7.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -534,6 +556,7 @@ GamingPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.4022),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -560,6 +583,7 @@ NeuvillettePrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.2267),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -586,6 +610,7 @@ TighnariPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
     threshold=np.double(6.1595),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -612,6 +637,7 @@ AyatoPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.1767),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -639,6 +665,7 @@ RaidenPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(5.9189),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -666,6 +693,7 @@ HutaoPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(7.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -691,6 +719,7 @@ NoellePrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0.7564) / oneIncCoeExp),  # 0.7564 -> 0.9188
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
     threshold=np.double(6.2700),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -716,6 +745,7 @@ ColumbinaCDPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.1390),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -742,6 +772,7 @@ ColumbinaERPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.6471),
+    crit2=True,
     legendary=True,
     v2perfect=True,
 )
@@ -768,6 +799,7 @@ DurinPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.3333),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -793,6 +825,7 @@ IneffaPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("white", "on_black", ["bold"]),
     threshold=np.double(6.2248),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -820,6 +853,7 @@ EscoffierPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
     threshold=np.double(6.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -845,6 +879,7 @@ ChioriPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
     textStyle=TextStyle("yellow", "on_black", ["bold"]),
     threshold=np.double(7.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -871,6 +906,7 @@ FurinaPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.1156),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -897,6 +933,7 @@ NahidaPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
     threshold=np.double(6.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -923,6 +960,7 @@ ColleiPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("green", "on_black", ["bold"]),
     threshold=np.double(6.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -949,6 +987,7 @@ YelanPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.3332),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -975,6 +1014,7 @@ RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_cyan", "on_black", ["bold"]),
     threshold=np.double(6.0),
+    crit2=True,
     legendary=True,
 )
 
@@ -1000,6 +1040,7 @@ FischlPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
     threshold=np.double(6.0550),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -1027,6 +1068,7 @@ XianglingPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_red", "on_black", ["bold"]),
     threshold=np.double(6.0591),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -1054,6 +1096,7 @@ XingqiuPrfl: GWeightsPrfl = GWeightsPrfl(
     DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
     threshold=np.double(6.3080),
+    crit2=True,
     legendary=True,
     v2=True,
 )
@@ -1487,12 +1530,12 @@ JeanPrfl: GWeightsPrfl = GWeightsPrfl(
 
 WeightsPrfls = {
     # General Miss
-    ATKMissPrfl.key: ATKMissPrfl,
-    HPMissPrfl.key: HPMissPrfl,
-    DEFMissPrfl.key: DEFMissPrfl,
+    # ATKMissPrfl.key: ATKMissPrfl,
+    # HPMissPrfl.key: HPMissPrfl,
+    # DEFMissPrfl.key: DEFMissPrfl,
     # General Count
-    CritScorePrfl.key: CritScorePrfl,
-    CritCountPrfl.key: CritCountPrfl,
+    # CritScorePrfl.key: CritScorePrfl,
+    # CritCountPrfl.key: CritCountPrfl,
     ATKCountPrfl.key: ATKCountPrfl,
     HPCountPrfl.key: HPCountPrfl,
     DEFCountPrfl.key: DEFCountPrfl,

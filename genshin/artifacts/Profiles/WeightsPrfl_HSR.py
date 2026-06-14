@@ -67,6 +67,7 @@ class HWeightsPrfl(WeightsPrflBase):
             textStyle=textStyle,
             threshold=threshold,
             misscount=misscount,
+            crit2=False,
             legendary=legendary,
             normalized=normalized,
             v2=v2 or v2perfect,
