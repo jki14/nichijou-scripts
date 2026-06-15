@@ -9,6 +9,11 @@ if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
 
+# Added by AIM CLI
+if [ -d "$HOME/.aim/mcp-servers" ]; then
+    export PATH="$HOME/.aim/mcp-servers:$PATH"
+fi
+
 # Codex CLI
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
