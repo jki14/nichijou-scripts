@@ -61,3 +61,6 @@ displayplacer "id:EBCB4DEF-3D6A-421C-BB99-C6918E4A7FE5 res:3440x1440 hz:60 color
 
 # 7cf34dea6f6d (P3223QE + internal)
 displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0" "id:839FCFD0-55CC-4CBD-8EA1-A6B8A6C575AD res:2560x1440 hz:60 color_depth:8 enabled:true scaling:on origin:(-524,-1440) degree:0"
+
+# 7cf34dea6f6d (U3415W in HND17 + internal)
+displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1512x982 hz:120 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0" "id:5E2D5C1E-5D99-4B4D-A89B-DF257F897098 res:3440x1440 hz:60 color_depth:8 enabled:true scaling:off origin:(-964,-1440) degree:0"
