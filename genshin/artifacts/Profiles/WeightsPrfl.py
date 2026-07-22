@@ -1101,30 +1101,6 @@ XingqiuPrfl: GWeightsPrfl = GWeightsPrfl(
     v2=True,
 )
 
-DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Dahlia Noblesse CR Score",
-    baseATK=np.double(189.03) + np.double(454),  # Dahlia + Favonius Sword
-    baseHP=np.double(12506.15),  # Dahlia
-    baseDEF=np.double(559.67),  # Dahlia
-    allowMainStatList=[
-        HP,
-        ATK,
-        ENERGY_RECHARGE.setWeight(np.double(1)),
-        HP_PCT.setWeight(np.double(0.5)),
-        CRIT_RATE.setWeight(np.double(1)),
-    ],
-    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
-    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
-    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
-    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
-    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
-    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
-    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
-    threshold=np.double(6.0),
-    legendary=True,
-)
-
 LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Lauma Deepwood/SMS ER Supre",
     baseATK=np.double(254.96) + np.double(510),  # Lauma + Etherlight Spindlelute
@@ -1147,6 +1123,30 @@ LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
     threshold=np.double(5.7353),
     legendary=True,
     v2perfect=True,
+)
+
+DahliaCRPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Dahlia Noblesse CR Supre",
+    baseATK=np.double(189.03) + np.double(454),  # Dahlia + Favonius Sword
+    baseHP=np.double(12506.15),  # Dahlia
+    baseDEF=np.double(559.67),  # Dahlia
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(0.5)),
+        CRIT_RATE.setWeight(np.double(1)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.5) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(6.0),
+    legendary=True,
 )
 
 CitlaliERPrfl: GWeightsPrfl = GWeightsPrfl(
