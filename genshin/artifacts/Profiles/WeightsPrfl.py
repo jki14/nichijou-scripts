@@ -1019,13 +1019,14 @@ RosariaDMGPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 FischlPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Fischl Troupe/Tenacity Score",
+    key="Fischl Celestial/Troupe/Tenacity Score",
     baseATK=np.double(244.26) + np.double(510),  # Fischl + The String­les
     baseHP=np.double(15307.39),  # Furina
     baseDEF=np.double(798.55),  # Noelle
     allowMainStatList=[
         HP,
         ATK,
+        ENERGY_RECHARGE.setWeight(np.double(1.0000)),
         ATK_PCT.setWeight(np.double(0.4080)),
         DMG_BONUS.setWeight(np.double(1.0000)),
         CRIT_RATE.setWeight(np.double(2.1477)),

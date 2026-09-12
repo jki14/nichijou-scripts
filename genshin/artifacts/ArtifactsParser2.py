@@ -234,7 +234,7 @@ class ArtifactsParser:
     def understanding(self, img):
         self.debugimg(img)
         stats_vec = np.zeros(stats_num(), dtype=np.double)
-        corrupted_pred: Callable[[str], bool] = lambda s: s == "" or "".join(filter(str.isdigit, s)) in ["5", "6", "8", "9"]
+        corrupted_pred: Callable[[str], bool] = lambda s: s == "" or "".join(filter(str.isdigit, s)) in ["5", "6", "8", "9"] or s == "C"
 
         if not self.regionPrfl.single:
             regionPrfl = self.regionPrfl

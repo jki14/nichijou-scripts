@@ -208,8 +208,9 @@ CastoriceScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(5.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 EvernightScorePrfl: HWeightsPrfl = HWeightsPrfl(
@@ -218,12 +219,12 @@ EvernightScorePrfl: HWeightsPrfl = HWeightsPrfl(
     baseHP=np.double(1319) + np.double(1164),  # Evernight + To Evernight's Stars
     baseDEF=np.double(582) + np.double(463),  # Evernight + To Evernight's Stars
     allowMainStatList=[
-        SPD.setWeight(np.double(1)),
+        SPD.setWeight(np.double(1.0000)),
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-        DMG_BOOST.setWeight(np.double(0)),
+        HP_PCT.setWeight(np.double(1.0000)),
+        CRIT_DMG.setWeight(np.double(1.0000)),
+        DMG_BOOST.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
@@ -235,8 +236,9 @@ EvernightScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(5.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 TribbieSlowScorePrfl: HWeightsPrfl = HWeightsPrfl(
