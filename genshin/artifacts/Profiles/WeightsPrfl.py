@@ -1102,6 +1102,29 @@ XingqiuPrfl: GWeightsPrfl = GWeightsPrfl(
     v2=True,
 )
 
+NicolePrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Nicole Celestial Supre",
+    baseATK=np.double(342.03) + np.double(674),  # Nicole + Skyward Atlas
+    baseHP=np.double(10409.02),  # Nicole
+    baseDEF=np.double(562.58),  # Nicole
+    allowMainStatList=[
+        HP,
+        ATK,
+        ATK_PCT.setWeight(np.double(3.5582)),
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(0.3333) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(1.0000) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.4313),
+    legendary=True,
+    v2perfect=True,
+)
+
 LaumaERPrfl: GWeightsPrfl = GWeightsPrfl(
     key="Lauma Deepwood/SMS ER Supre",
     baseATK=np.double(254.96) + np.double(510),  # Lauma + Etherlight Spindlelute
@@ -1364,7 +1387,7 @@ ZhongliPrfl: GWeightsPrfl = GWeightsPrfl(
 )
 
 MonaERPrfl: GWeightsPrfl = GWeightsPrfl(
-    key="Mona Noblesse ER Supre",
+    key="Mona Celestial/Noblesse ER Supre",
     baseATK=np.double(287.01) + np.double(401),  # Mona + Thrilling Tales of Dragon Slayers
     baseHP=np.double(10409.02),  # Mona
     baseDEF=np.double(653.27),  # Mona
@@ -1569,6 +1592,7 @@ WeightsPrfls = {
     XianglingPrfl.key: XianglingPrfl,
     XingqiuPrfl.key: XingqiuPrfl,
     # Support
+    NicolePrfl.key: NicolePrfl,
     LaumaERPrfl.key: LaumaERPrfl,
     DahliaCRPrfl.key: DahliaCRPrfl,
     CitlaliERPrfl.key: CitlaliERPrfl,
