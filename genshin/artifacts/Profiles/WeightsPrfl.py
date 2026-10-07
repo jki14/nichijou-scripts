@@ -1102,6 +1102,32 @@ XingqiuPrfl: GWeightsPrfl = GWeightsPrfl(
     v2=True,
 )
 
+CryoTravelerPrfl: GWeightsPrfl = GWeightsPrfl(
+    key="Cryo Traveler Furnace Supre",
+    baseATK=np.double(212.40) + np.double(454),  # Traveler + Favonius Sword
+    baseHP=np.double(10874.91),  # Traveler
+    baseDEF=np.double(682.52),  # Traveler
+    allowMainStatList=[
+        HP,
+        ATK,
+        ENERGY_RECHARGE.setWeight(np.double(2.8235)),
+        ATK_PCT,
+        CRIT_RATE.setWeight(np.double(2.8235))
+    ],
+    CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    CRIT_DMG=CRIT_RATE.setWeight(np.double(0.0000) / oneIncCoeExp),
+    ENERGY_RECHARGE=ENERGY_RECHARGE.setWeight(np.double(1.0000) / oneIncCoeExp),
+    ELEMENTAL_MASTERY=ELEMENTAL_MASTERY.setWeight(np.double(0.0000) / oneIncCoeExp),
+    ATK_PCT=ATK_PCT.setWeight(np.double(0.0000) / oneIncCoeExp),
+    HP_PCT=HP_PCT.setWeight(np.double(0.0000) / oneIncCoeExp),
+    DEF_PCT=DEF_PCT.setWeight(np.double(0.0000) / oneIncCoeExp),
+    textStyle=TextStyle("dark_grey", "on_black", ["bold"]),
+    threshold=np.double(5.6471),
+    crit2=False,
+    legendary=True,
+    v2=True,
+)
+
 NicolePrfl: GWeightsPrfl = GWeightsPrfl(
     key="Nicole Celestial Supre",
     baseATK=np.double(342.03) + np.double(674),  # Nicole + Skyward Atlas
@@ -1592,6 +1618,7 @@ WeightsPrfls = {
     XianglingPrfl.key: XianglingPrfl,
     XingqiuPrfl.key: XingqiuPrfl,
     # Support
+    CryoTravelerPrfl.key: CryoTravelerPrfl,
     NicolePrfl.key: NicolePrfl,
     LaumaERPrfl.key: LaumaERPrfl,
     DahliaCRPrfl.key: DahliaCRPrfl,
