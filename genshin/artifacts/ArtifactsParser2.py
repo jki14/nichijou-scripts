@@ -257,7 +257,10 @@ class ArtifactsParser:
                 else:
                     raise
             # Sub Stats
-            for substat in regionPrfl.substats:
+            substats = regionPrfl.substats
+            if self.game == Game.H and np.count_nonzero(np.all(np.asarray(img.convert("RGBA")) == (129, 216, 176, 255), axis=2)) > 200:
+                substats = [substat[:2] + (3354,) + substat[3:] for substat in substats]
+            for substat in substats:
                 sub_key, sub_value = None, None
                 if len(substat) == 4:
                     sub_kv = self.ocr(img, substat)
