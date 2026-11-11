@@ -194,9 +194,9 @@ CastoriceScorePrfl: HWeightsPrfl = HWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-        DMG_BOOST.setWeight(np.double(0)),
+        HP_PCT.setWeight(np.double(1.0000)),
+        CRIT_DMG.setWeight(np.double(1.0000)),
+        DMG_BOOST.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(0.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
@@ -225,6 +225,7 @@ EvernightScorePrfl: HWeightsPrfl = HWeightsPrfl(
         HP_PCT.setWeight(np.double(1.0000)),
         CRIT_DMG.setWeight(np.double(1.0000)),
         DMG_BOOST.setWeight(np.double(1.0000)),
+        ENERGY_REGENERATION.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
@@ -249,10 +250,10 @@ TribbieSlowScorePrfl: HWeightsPrfl = HWeightsPrfl(
     allowMainStatList=[
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-        ENERGY_REGENERATION.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.0000)),
+        CRIT_DMG.setWeight(np.double(1.0000)),
+        ENERGY_REGENERATION.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(0.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(1.0) / oneIncCoeExp),
@@ -264,8 +265,9 @@ TribbieSlowScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(1.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(5.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 TribbieFastScorePrfl: HWeightsPrfl = HWeightsPrfl(
@@ -274,13 +276,13 @@ TribbieFastScorePrfl: HWeightsPrfl = HWeightsPrfl(
     baseHP=np.double(1047) + np.double(846),  # Tribbie + Meshing Cogs
     baseDEF=np.double(727) + np.double(264),  # Tribbie + Meshing Cogs
     allowMainStatList=[
-        SPD.setWeight(np.double(1)),
+        SPD.setWeight(np.double(1.0000)),
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(1)),
-        CRIT_RATE.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-        ENERGY_REGENERATION.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1.0000)),
+        CRIT_RATE.setWeight(np.double(1.0000)),
+        CRIT_DMG.setWeight(np.double(1.0000)),
+        ENERGY_REGENERATION.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0.5) / oneIncCoeExp),
@@ -292,8 +294,9 @@ TribbieFastScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0.5) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(0.5) / oneIncCoeExp),
     textStyle=TextStyle("light_magenta", "on_black", ["bold"]),
-    threshold=np.double(5.0),
+    threshold=np.double(5.7353),
     legendary=True,
+    v2perfect=True,
 )
 
 TrailblazerScorePrfl: HWeightsPrfl = HWeightsPrfl(
@@ -302,12 +305,12 @@ TrailblazerScorePrfl: HWeightsPrfl = HWeightsPrfl(
     baseHP=np.double(1047) + np.double(846),  # Trailblazer + Victory In a Blink
     baseDEF=np.double(630) + np.double(396),  # Trailblazer + Victory In a Blink
     allowMainStatList=[
-        SPD.setWeight(np.double(1)),
+        SPD.setWeight(np.double(1.0000)),
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(1)),
-        CRIT_DMG.setWeight(np.double(1)),
-        ENERGY_REGENERATION.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1.0000)),
+        CRIT_DMG.setWeight(np.double(2.2035)),
+        ENERGY_REGENERATION.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0.34) / oneIncCoeExp),
@@ -319,8 +322,9 @@ TrailblazerScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(1.0) / oneIncCoeExp),
     textStyle=TextStyle("light_blue", "on_black", ["bold"]),
-    threshold=np.double(4.0),
+    threshold=np.double(6.6471),
     legendary=True,
+    v2perfect=True,
 )
 
 HyacineScorePrfl: HWeightsPrfl = HWeightsPrfl(
@@ -329,12 +333,12 @@ HyacineScorePrfl: HWeightsPrfl = HWeightsPrfl(
     baseHP=np.double(1086) + np.double(1164),  # Hyacine + Post-Op Conversation
     baseDEF=np.double(630) + np.double(529),  # Hyacine + Post-Op Conversation
     allowMainStatList=[
-        SPD.setWeight(np.double(2)),
+        SPD.setWeight(np.double(2.0000)),
         HP,
         ATK,
-        HP_PCT.setWeight(np.double(1)),
-        ENERGY_REGENERATION.setWeight(np.double(1)),
-        HEALING_BOOST.setWeight(np.double(1)),
+        HP_PCT.setWeight(np.double(1.6018)),
+        ENERGY_REGENERATION.setWeight(np.double(1.0000)),
+        HEALING_BOOST.setWeight(np.double(1.0000)),
     ],
     SPD=SPD.setWeight(np.double(1.0) / oneIncCoeExp),
     HP_PCT=HP_PCT.setWeight(np.double(0.67) / oneIncCoeExp),
@@ -346,8 +350,9 @@ HyacineScorePrfl: HWeightsPrfl = HWeightsPrfl(
     CRIT_RATE=CRIT_RATE.setWeight(np.double(0.0) / oneIncCoeExp),
     CRIT_DMG=CRIT_DMG.setWeight(np.double(0.34) / oneIncCoeExp),
     textStyle=TextStyle("light_green", "on_black", ["bold"]),
-    threshold=np.double(4.0),
+    threshold=np.double(6.0453),
     legendary=True,
+    v2perfect=True,
 )
 
 GallagherScorePrfl: HWeightsPrfl = HWeightsPrfl(
@@ -415,8 +420,8 @@ WeightsPrfls = {
     TribbieFastScorePrfl.key: TribbieFastScorePrfl,
     TrailblazerScorePrfl.key: TrailblazerScorePrfl,
     HyacineScorePrfl.key: HyacineScorePrfl,
-    GallagherScorePrfl.key: GallagherScorePrfl,
-    PelaScorePrfl.key: PelaScorePrfl,
+    # GallagherScorePrfl.key: GallagherScorePrfl,
+    # PelaScorePrfl.key: PelaScorePrfl,
 }
 
 
